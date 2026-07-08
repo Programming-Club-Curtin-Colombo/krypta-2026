@@ -162,7 +162,10 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-XEFQJCLG7G');
+            gtag('config', 'G-XEFQJCLG7G', {
+              cookie_domain: 'krypta-2026.vercel.app',
+              cookie_flags: 'SameSite=None;Secure'
+            });
           `}
         </Script>
         <Script id="microsoft-clarity" strategy="lazyOnload">
