@@ -28,11 +28,32 @@ export function StayUpdatedSection() {
 
     setFormState("loading");
 
-    // TODO: Replace this with a real API call, e.g.:
-    // await fetch("/api/notify", { method: "POST", body: JSON.stringify({ email }) });
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+    try {
+      const endpoint = process.env.NEXT_PUBLIC_EMAIL_SUBMISSION_ENDPOINT;
+      
+      if (!endpoint) {
+        console.error("Missing NEXT_PUBLIC_EMAIL_SUBMISSION_ENDPOINT environment variable.");
+        throw new Error("Submission endpoint not configured.");
+      }
 
-    setFormState("success");
+      const response = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit email.");
+      }
+
+      setFormState("success");
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("Something went wrong. Please try again.");
+      setFormState("error");
+    }
   }
 
   return (
