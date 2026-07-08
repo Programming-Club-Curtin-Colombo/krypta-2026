@@ -91,7 +91,6 @@ export function WhyParticipateSection() {
         {/* Benefits grid */}
         <div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
-          role="list"
           aria-label="Reasons to participate in KRYPTA 2026"
         >
           {BENEFITS.map((benefit, index) => (
@@ -105,7 +104,6 @@ export function WhyParticipateSection() {
                   "hover:-translate-y-1",
                   "transition-all duration-300"
                 )}
-                role="listitem"
                 aria-label={benefit.title}
               >
                 {/* Accent gradient on hover */}

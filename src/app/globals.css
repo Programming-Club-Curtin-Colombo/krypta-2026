@@ -24,8 +24,8 @@
   --color-border: #e2e8f0;
   --color-border-muted: #cbd5e1;
   --color-foreground: #0f172a;
-  --color-foreground-muted: #475569;
-  --color-foreground-subtle: #94a3b8;
+  --color-foreground-muted: #334155;
+  --color-foreground-subtle: #475569;
   --color-primary: #4f46e5;
   --color-primary-hover: #4338ca;
   --color-primary-foreground: #ffffff;
@@ -64,8 +64,8 @@
   --color-border: #1e293b;
   --color-border-muted: #334155;
   --color-foreground: #f9fafb;
-  --color-foreground-muted: #94a3b8;
-  --color-foreground-subtle: #64748b;
+  --color-foreground-muted: #cbd5e1;
+  --color-foreground-subtle: #94a3b8;
   --color-primary: #6366f1;
   --color-primary-hover: #4f46e5;
   --color-primary-foreground: #ffffff;
