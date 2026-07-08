@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+export const runtime = "nodejs";
 
 export const alt = "KRYPTA 2026 - Knowledge, Research & Yielding Parallel Technologies Arena";
 export const size = {
