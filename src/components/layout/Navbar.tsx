@@ -95,7 +95,7 @@ export function Navbar() {
                 "transition-all duration-200 shadow-sm",
                 "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
               )}
-              aria-label="Get notified about KRYPTA 2026"
+              aria-label="Notify Me - Get notified about KRYPTA 2026"
             >
               Notify Me
             </a>

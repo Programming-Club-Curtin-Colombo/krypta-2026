@@ -138,7 +138,7 @@ export function HeroSection() {
                 "transition-all duration-200 shadow-lg shadow-[var(--color-primary)]/25",
                 "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
               )}
-              aria-label="Get notified when KRYPTA 2026 launches"
+              aria-label="Notify Me - Get notified when KRYPTA 2026 launches"
             >
               Notify Me
               <ChevronRight className="h-4 w-4" aria-hidden="true" />
