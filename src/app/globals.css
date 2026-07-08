@@ -1,0 +1,214 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   KRYPTA 2026 — Design System
+   Brand palette: #0f172a | #4f46e5 | #8b5cf6 | #c4b5fd | #f9fafb
+───────────────────────────────────────────────────────────────────────────── */
+
+@theme {
+  /* ── Brand colors ── */
+  --color-brand-900: #0f172a;
+  --color-brand-800: #1e2a45;
+  --color-brand-700: #1e293b;
+  --color-brand-600: #334155;
+  --color-brand-indigo: #4f46e5;
+  --color-brand-indigo-hover: #4338ca;
+  --color-brand-violet: #8b5cf6;
+  --color-brand-violet-light: #c4b5fd;
+  --color-brand-white: #f9fafb;
+
+  /* ── Semantic light mode ── */
+  --color-background: #f9fafb;
+  --color-surface: #ffffff;
+  --color-surface-2: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-muted: #cbd5e1;
+  --color-foreground: #0f172a;
+  --color-foreground-muted: #475569;
+  --color-foreground-subtle: #94a3b8;
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #8b5cf6;
+  --color-accent: #c4b5fd;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-destructive: #ef4444;
+  --color-card: #ffffff;
+  --color-card-border: #e2e8f0;
+
+  /* ── Typography ── */
+  --font-display: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* ── Radii ── */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  /* ── Shadows ── */
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --shadow-card-hover: 0 10px 30px -5px rgb(79 70 229 / 0.15), 0 4px 6px -2px rgb(0 0 0 / 0.05);
+  --shadow-glow: 0 0 40px rgb(79 70 229 / 0.2);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Dark mode token overrides (class="dark")
+───────────────────────────────────────────────────────────────────────────── */
+.dark {
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-surface-2: #0f172a;
+  --color-border: #1e293b;
+  --color-border-muted: #334155;
+  --color-foreground: #f9fafb;
+  --color-foreground-muted: #94a3b8;
+  --color-foreground-subtle: #64748b;
+  --color-primary: #6366f1;
+  --color-primary-hover: #4f46e5;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #a78bfa;
+  --color-accent: #c4b5fd;
+  --color-card: #1e293b;
+  --color-card-border: #334155;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Base reset & global styles
+───────────────────────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Focus ring — accessible, branded
+───────────────────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Skip to content link
+───────────────────────────────────────────────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 9999;
+  padding: 0.5rem 1rem;
+  background: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Gradient utilities
+───────────────────────────────────────────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-brand-indigo) 0%, var(--color-brand-violet) 50%, var(--color-brand-violet-light) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-bg-subtle {
+  background: radial-gradient(ellipse at 60% 0%, rgba(79, 70, 229, 0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 0% 60%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+}
+
+.gradient-border {
+  background: linear-gradient(var(--color-card), var(--color-card)) padding-box,
+              linear-gradient(135deg, var(--color-brand-indigo), var(--color-brand-violet)) border-box;
+  border: 1px solid transparent;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Section spacing
+───────────────────────────────────────────────────────────────────────────── */
+.section {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+.container-xl {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .container-xl {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Reduced motion
+───────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Scrollbar (webkit only)
+───────────────────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-foreground-subtle);
+}
