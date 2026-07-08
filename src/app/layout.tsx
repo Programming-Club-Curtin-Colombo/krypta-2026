@@ -67,8 +67,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
+        width: 1080,
+        height: 1080,
         alt: "KRYPTA 2026 - Multi-Track Hackathon by Curtin University Colombo",
       },
     ],
