@@ -117,15 +117,37 @@ const organizationSchema = {
   ],
 };
 
-const eventSchema = {
+const eventSchemaOpenStage = {
   "@context": "https://schema.org",
   "@type": "Event",
-  name: "KRYPTA 2026",
-  description: SITE_DESCRIPTION,
+  name: "KRYPTA 2026 - Open Stage",
+  description: "The online preliminary round of KRYPTA 2026. " + SITE_DESCRIPTION,
   url: SITE_URL,
   image: `${SITE_URL}/opengraph-image.png`,
-  startDate: "2026-09-01",
-  endDate: "2026-09-30",
+  startDate: "2026-11-07",
+  endDate: "2026-11-08",
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+  location: {
+    "@type": "VirtualLocation",
+    url: SITE_URL,
+  },
+  organizer: {
+    "@type": "Organization",
+    name: "Programming Club - Curtin University Colombo",
+    url: SITE_URL,
+  },
+};
+
+const eventSchemaFinals = {
+  "@context": "https://schema.org",
+  "@type": "Event",
+  name: "KRYPTA 2026 - Grand Finals",
+  description: "The grand finals of KRYPTA 2026. " + SITE_DESCRIPTION,
+  url: SITE_URL,
+  image: `${SITE_URL}/opengraph-image.png`,
+  startDate: "2026-11-28",
+  endDate: "2026-11-29",
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
   location: {
@@ -180,7 +202,11 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify([organizationSchema, eventSchema]),
+            __html: JSON.stringify([
+              organizationSchema,
+              eventSchemaOpenStage,
+              eventSchemaFinals,
+            ]),
           }}
         />
       </head>
