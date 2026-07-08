@@ -110,8 +110,16 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Programming Club - Curtin University Colombo",
+  alternateName: "Curtin Colombo Programming Club",
+  description: "The official Programming Club of Curtin University Colombo, organizers of KRYPTA 2026.",
   url: SITE_URL,
   logo: `${SITE_URL}/logo/krypta-logo.png`,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Nawam Mawatha",
+    addressLocality: "Colombo",
+    addressCountry: "LK",
+  },
   sameAs: [
     "https://www.linkedin.com/showcase/krypta-2026",
   ],
