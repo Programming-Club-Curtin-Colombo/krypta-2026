@@ -10,7 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
-    // Future pages — uncomment as they are published:
+    // Future pages - uncomment as they are published:
     // { url: `${SITE_URL}/about`, changeFrequency: "monthly", priority: 0.8 },
     // { url: `${SITE_URL}/tracks`, changeFrequency: "monthly", priority: 0.8 },
     // { url: `${SITE_URL}/schedule`, changeFrequency: "weekly", priority: 0.7 },

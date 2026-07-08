@@ -79,7 +79,7 @@ export function CompetitionFocusSection() {
             <span className="gradient-text">podium.</span>
           </h2>
           <p className="mt-4 text-base text-[var(--color-foreground-muted)]">
-            Every KRYPTA team follows a structured engineering process — mirroring
+            Every KRYPTA team follows a structured engineering process - mirroring
             how professional teams tackle real-world challenges.
           </p>
         </AnimatedSection>
@@ -105,7 +105,7 @@ export function CompetitionFocusSection() {
                       "lg:py-6"
                     )}
                   >
-                    {/* Content — alternates sides on desktop */}
+                    {/* Content - alternates sides on desktop */}
                     <div
                       className={cn(
                         "flex gap-5 items-start",

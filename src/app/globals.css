@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   KRYPTA 2026 — Design System
+   KRYPTA 2026 - Design System
    Brand palette: #0f172a | #4f46e5 | #8b5cf6 | #c4b5fd | #f9fafb
 ───────────────────────────────────────────────────────────────────────────── */
 
@@ -78,7 +78,9 @@
 /* ─────────────────────────────────────────────────────────────────────────────
    Base reset & global styles
 ───────────────────────────────────────────────────────────────────────────── */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -97,7 +99,7 @@ body {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
-   Focus ring — accessible, branded
+   Focus ring - accessible, branded
 ───────────────────────────────────────────────────────────────────────────── */
 :focus-visible {
   outline: 2px solid var(--color-primary);
@@ -138,12 +140,12 @@ body {
 
 .gradient-bg-subtle {
   background: radial-gradient(ellipse at 60% 0%, rgba(79, 70, 229, 0.08) 0%, transparent 60%),
-              radial-gradient(ellipse at 0% 60%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+    radial-gradient(ellipse at 0% 60%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
 }
 
 .gradient-border {
   background: linear-gradient(var(--color-card), var(--color-card)) padding-box,
-              linear-gradient(135deg, var(--color-brand-indigo), var(--color-brand-violet)) border-box;
+    linear-gradient(135deg, var(--color-brand-indigo), var(--color-brand-violet)) border-box;
   border: 1px solid transparent;
 }
 
@@ -182,7 +184,10 @@ body {
    Reduced motion
 ───────────────────────────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

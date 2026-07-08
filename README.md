@@ -2,7 +2,7 @@
 
 > **Knowledge, Research & Yielding Parallel Technologies Arena**
 
-The official public landing page for **KRYPTA 2026** — a premier multi-track hackathon competition organized by the **Programming Club of Curtin University Colombo**.
+The official public landing page for **KRYPTA 2026** - a premier multi-track hackathon competition organized by the **Programming Club of Curtin University Colombo**.
 
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://krypta2026.vercel.app)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
@@ -45,7 +45,7 @@ krypta-2026/
 │   ├── app/
 │   │   ├── globals.css     # Full design system (tokens, light/dark mode)
 │   │   ├── layout.tsx      # Root layout: fonts, SEO metadata, JSON-LD, ThemeProvider
-│   │   ├── page.tsx        # Home page — section composition
+│   │   ├── page.tsx        # Home page - section composition
 │   │   ├── robots.ts       # robots.txt generation
 │   │   ├── sitemap.ts      # sitemap.xml generation
 │   │   └── manifest.ts     # PWA manifest generation
@@ -69,7 +69,7 @@ krypta-2026/
 │   │       ├── AnimatedSection.tsx
 │   │       └── ThemeToggle.tsx
 │   └── lib/
-│       └── utils.ts        # cn() — Tailwind class merging utility
+│       └── utils.ts        # cn() - Tailwind class merging utility
 ├── .env.example            # Environment variable template
 ├── .prettierrc
 ├── next.config.ts
@@ -162,19 +162,19 @@ The `sitemap.xml`, `robots.txt`, and `manifest.webmanifest` are auto-generated a
 
 The following pages are planned for future expansion. The sitemap already contains commented-out entries for each:
 
-- `/about` — Full About page
-- `/tracks` — Competition tracks detail
-- `/schedule` — Event schedule
-- `/sponsors` — Sponsors showcase
-- `/judges` — Judges panel
-- `/faq` — Frequently Asked Questions
-- `/register` — Registration portal
-- `/workshops` — Workshop listing
-- `/rules` — Competition rules
-- `/contact` — Contact form
+- `/about` - Full About page
+- `/tracks` - Competition tracks detail
+- `/schedule` - Event schedule
+- `/sponsors` - Sponsors showcase
+- `/judges` - Judges panel
+- `/faq` - Frequently Asked Questions
+- `/register` - Registration portal
+- `/workshops` - Workshop listing
+- `/rules` - Competition rules
+- `/contact` - Contact form
 
 ---
 
 ## License
 
-© 2026 Programming Club — Curtin University Colombo. All rights reserved.
+© 2026 Programming Club - Curtin University Colombo. All rights reserved.

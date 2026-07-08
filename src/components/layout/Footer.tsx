@@ -140,7 +140,7 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 pt-8 border-t border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-[var(--color-foreground-subtle)] text-center sm:text-left">
-            &copy; {new Date().getFullYear()} Programming Club — Curtin
+            &copy; {new Date().getFullYear()} Programming Club - Curtin
             University Colombo. All rights reserved.
           </p>
           <p className="text-xs text-[var(--color-foreground-subtle)]">

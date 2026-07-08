@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "KRYPTA 2026",
     short_name: "KRYPTA",
     description:
-      "Knowledge, Research & Yielding Parallel Technologies Arena — Multi-Track Hackathon by Curtin University Colombo.",
+      "Knowledge, Research & Yielding Parallel Technologies Arena - Multi-Track Hackathon by Curtin University Colombo.",
     start_url: "/",
     display: "standalone",
     background_color: "#0f172a",

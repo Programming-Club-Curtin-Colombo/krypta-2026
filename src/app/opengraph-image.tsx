@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "KRYPTA 2026 — Knowledge, Research & Yielding Parallel Technologies Arena";
+export const alt = "KRYPTA 2026 - Knowledge, Research & Yielding Parallel Technologies Arena";
 export const size = {
   width: 1200,
   height: 630,
@@ -102,7 +102,7 @@ export default async function Image() {
           >
             2026
           </div>
-          
+
           {/* Subtitle */}
           <div
             style={{

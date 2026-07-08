@@ -59,7 +59,7 @@ export function StayUpdatedSection() {
               Be the first to know.
             </h2>
             <p className="text-base text-[var(--color-foreground-muted)]">
-              Registration details, workshop announcements, and event updates —
+              Registration details, workshop announcements, and event updates -
               delivered directly to your inbox.
             </p>
           </div>

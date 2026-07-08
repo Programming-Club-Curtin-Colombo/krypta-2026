@@ -23,7 +23,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as any },
   },
 };
 
@@ -119,7 +119,7 @@ export function HeroSection() {
             className="max-w-xl text-base sm:text-lg text-[var(--color-foreground-muted)] leading-relaxed"
           >
             A premier multi-track hackathon competition organized by the
-            Programming Club of Curtin University Colombo — where engineering
+            Programming Club of Curtin University Colombo - where engineering
             meets innovation under structured, real-world constraints.
           </motion.p>
 

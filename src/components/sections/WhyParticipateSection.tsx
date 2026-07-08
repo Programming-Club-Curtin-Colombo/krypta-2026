@@ -22,7 +22,7 @@ const BENEFITS = [
     icon: BrainCircuit,
     title: "Tackle Real Problems",
     description:
-      "Work on challenges sourced from actual industry pain points — not contrived exercises with predetermined answers.",
+      "Work on challenges sourced from actual industry pain points - not contrived exercises with predetermined answers.",
   },
   {
     icon: Medal,
@@ -40,7 +40,7 @@ const BENEFITS = [
     icon: Briefcase,
     title: "Career Opportunities",
     description:
-      "Demonstrate your ability to deliver under pressure — a signal that stands out to recruiters and industry partners.",
+      "Demonstrate your ability to deliver under pressure - a signal that stands out to recruiters and industry partners.",
   },
   {
     icon: GitBranch,

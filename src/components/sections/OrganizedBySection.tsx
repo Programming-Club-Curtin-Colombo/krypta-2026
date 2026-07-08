@@ -1,7 +1,7 @@
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
 
-// Partner placeholder data — replace with real logos once available
+// Partner placeholder data - replace with real logos once available
 const PARTNERS = [
   { name: "Partner 01", label: "Coming Soon" },
   { name: "Partner 02", label: "Coming Soon" },
@@ -46,7 +46,7 @@ export function OrganizedBySection() {
               "shadow-[var(--shadow-card)]"
             )}
           >
-            {/* Logo placeholder — replace with <Image> pointing to the actual logo */}
+            {/* Logo placeholder - replace with <Image> pointing to the actual logo */}
             <div
               className="h-20 w-20 rounded-2xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 flex items-center justify-center"
               aria-hidden="true"
@@ -77,7 +77,7 @@ export function OrganizedBySection() {
               className="text-xs font-semibold uppercase tracking-widest text-[var(--color-foreground-subtle)] mb-6"
               style={{ fontFamily: "var(--font-display)" }}
             >
-              Partners & Sponsors — Announcements Coming Soon
+              Partners & Sponsors - Announcements Coming Soon
             </p>
             <div
               className="flex flex-wrap justify-center gap-4"
@@ -94,7 +94,7 @@ export function OrganizedBySection() {
                     "border border-dashed border-[var(--color-border-muted)]",
                     "bg-[var(--color-surface-2)]"
                   )}
-                  aria-label={`${partner.name} — ${partner.label}`}
+                  aria-label={`${partner.name} - ${partner.label}`}
                 >
                   <span className="text-xs font-medium text-[var(--color-foreground-subtle)]">
                     {partner.label}

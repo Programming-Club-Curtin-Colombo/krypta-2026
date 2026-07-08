@@ -52,7 +52,7 @@ export function Navbar() {
           <Link
             href="/"
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-            aria-label="KRYPTA 2026 — Home"
+            aria-label="KRYPTA 2026 - Home"
           >
             <Image
               src="/logo/krypta-logo.png"

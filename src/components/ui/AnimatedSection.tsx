@@ -1,12 +1,12 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion, HTMLMotionProps } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface AnimatedSectionProps {
-  children: React.ReactNode;
+interface AnimatedSectionProps extends HTMLMotionProps<"div"> {
+  children: ReactNode;
   className?: string;
   delay?: number;
   once?: boolean;
@@ -17,6 +17,7 @@ export function AnimatedSection({
   className,
   delay = 0,
   once = true,
+  ...props
 }: AnimatedSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -28,8 +29,8 @@ export function AnimatedSection({
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.55,
-        ease: [0.22, 1, 0.36, 1],
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1] as any,
         delay,
       },
     },
@@ -42,6 +43,7 @@ export function AnimatedSection({
       animate={isInView ? "visible" : "hidden"}
       variants={variants}
       className={cn(className)}
+      {...props}
     >
       {children}
     </motion.div>

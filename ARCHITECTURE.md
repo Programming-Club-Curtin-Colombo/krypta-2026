@@ -1,4 +1,4 @@
-# KRYPTA 2026 — Architecture
+# KRYPTA 2026 - Architecture
 
 This document describes the high-level design and architectural decisions of the KRYPTA 2026 landing page project.
 

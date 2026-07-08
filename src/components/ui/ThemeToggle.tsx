@@ -9,7 +9,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Avoid hydration mismatch — only render after mount
+  // Avoid hydration mismatch - only render after mount
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {

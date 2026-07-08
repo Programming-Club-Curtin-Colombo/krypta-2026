@@ -30,7 +30,7 @@ const MILESTONES: Milestone[] = [
   {
     icon: ClipboardList,
     title: "Registrations Open",
-    description: "Team registration portal goes live. Secure your spot early — slots are limited.",
+    description: "Team registration portal goes live. Secure your spot early - slots are limited.",
     date: "Q2 2026",
     status: "upcoming",
   },
@@ -44,7 +44,7 @@ const MILESTONES: Milestone[] = [
   {
     icon: Code2,
     title: "Hackathon Weekend",
-    description: "The main competition — design, build, and deliver your solution within the time limit.",
+    description: "The main competition - design, build, and deliver your solution within the time limit.",
     date: "Q3 2026",
     status: "tbd",
   },

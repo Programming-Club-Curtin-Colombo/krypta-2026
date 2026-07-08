@@ -63,7 +63,7 @@ export function AboutSection() {
                 The event brings together students, mentors, judges, industry
                 partners, and technical communities through competitive
                 hackathon challenges, technical workshops, and structured
-                judging — all fostering engineering excellence and
+                judging - all fostering engineering excellence and
                 collaboration between academia and industry.
               </p>
             </div>

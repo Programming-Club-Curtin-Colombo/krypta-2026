@@ -20,7 +20,7 @@ const inter = Inter({
 const SITE_URL = "https://krypta2026.vercel.app";
 const SITE_NAME = "KRYPTA 2026";
 const SITE_DESCRIPTION =
-  "KRYPTA 2026 — Knowledge, Research & Yielding Parallel Technologies Arena. A premier multi-track hackathon competition organized by the Programming Club of Curtin University Colombo.";
+  "KRYPTA 2026 - Knowledge, Research & Yielding Parallel Technologies Arena. A premier multi-track hackathon competition organized by the Programming Club of Curtin University Colombo.";
 
 // ── Metadata ─────────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
@@ -42,9 +42,9 @@ export const metadata: Metadata = {
     "student hackathon",
     "innovation",
   ],
-  authors: [{ name: "Programming Club — Curtin University Colombo" }],
-  creator: "Programming Club — Curtin University Colombo",
-  publisher: "Programming Club — Curtin University Colombo",
+  authors: [{ name: "Programming Club - Curtin University Colombo" }],
+  creator: "Programming Club - Curtin University Colombo",
+  publisher: "Programming Club - Curtin University Colombo",
   robots: {
     index: true,
     follow: true,
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "KRYPTA 2026 — Multi-Track Hackathon by Curtin University Colombo",
+        alt: "KRYPTA 2026 - Multi-Track Hackathon by Curtin University Colombo",
       },
     ],
   },
@@ -104,7 +104,7 @@ export const viewport: Viewport = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Programming Club — Curtin University Colombo",
+  name: "Programming Club - Curtin University Colombo",
   url: SITE_URL,
   logo: `${SITE_URL}/logo/krypta-logo.png`,
   sameAs: [
@@ -133,7 +133,7 @@ const eventSchema = {
   },
   organizer: {
     "@type": "Organization",
-    name: "Programming Club — Curtin University Colombo",
+    name: "Programming Club - Curtin University Colombo",
     url: SITE_URL,
   },
 };
