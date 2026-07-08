@@ -29,17 +29,10 @@ export function StayUpdatedSection() {
     setFormState("loading");
 
     try {
-      const endpoint = process.env.NEXT_PUBLIC_EMAIL_SUBMISSION_ENDPOINT;
-      
-      if (!endpoint) {
-        console.error("Missing NEXT_PUBLIC_EMAIL_SUBMISSION_ENDPOINT environment variable.");
-        throw new Error("Submission endpoint not configured.");
-      }
-
-      const response = await fetch(endpoint, {
+      const response = await fetch("/api/subscribe", {
         method: "POST",
         headers: {
-          "Content-Type": "text/plain;charset=utf-8",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
       });
