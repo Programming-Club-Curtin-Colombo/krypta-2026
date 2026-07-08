@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
 
@@ -46,17 +47,18 @@ export function OrganizedBySection() {
               "shadow-[var(--shadow-card)]"
             )}
           >
-            {/* Logo placeholder - replace with <Image> pointing to the actual logo */}
             <div
-              className="h-20 w-20 rounded-2xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 flex items-center justify-center"
+              className="relative h-24 w-24 rounded-2xl bg-[var(--color-primary)]/5 border border-[var(--color-primary)]/20 flex items-center justify-center p-2"
               aria-hidden="true"
             >
-              <span
-                className="text-2xl font-bold gradient-text"
-                style={{ fontFamily: "var(--font-display)" }}
-              >
-                PCC
-              </span>
+              <Image
+                src="/logo/club-logo.png"
+                alt="Programming Club Logo"
+                width={80}
+                height={80}
+                className="object-contain"
+                unoptimized
+              />
             </div>
             <div className="text-center">
               <p

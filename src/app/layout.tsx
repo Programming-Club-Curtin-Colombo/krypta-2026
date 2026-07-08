@@ -113,7 +113,7 @@ const organizationSchema = {
   alternateName: "Curtin Colombo Programming Club",
   description: "The official Programming Club of Curtin University Colombo, organizers of KRYPTA 2026.",
   url: SITE_URL,
-  logo: `${SITE_URL}/logo/krypta-logo.png`,
+  logo: `${SITE_URL}/logo/club-logo.png`,
   address: {
     "@type": "PostalAddress",
     streetAddress: "Nawam Mawatha",
