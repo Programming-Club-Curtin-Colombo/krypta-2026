@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const SITE_URL = "https://krypta2026.vercel.app";
+const SITE_URL = "https://krypta-2026.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

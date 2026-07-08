@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://krypta2026.vercel.app/sitemap.xml",
+    sitemap: "https://krypta-2026.vercel.app/sitemap.xml",
   };
 }
