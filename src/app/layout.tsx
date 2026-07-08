@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import "./globals.css";
@@ -81,13 +82,17 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
-      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/logo/krypta-icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/logo/krypta-icon-512.png", type: "image/png", sizes: "512x512" },
     ],
-    apple: "/apple-touch-icon.png",
+    apple: "/logo/krypta-icon-192.png",
   },
   manifest: "/manifest.webmanifest",
   alternates: {
     canonical: SITE_URL,
+  },
+  verification: {
+    google: "qIrgChiJDqg0X_dmLbIniAPVl6-JGF2GfHgqH-AZ4nQ",
   },
 };
 
@@ -151,6 +156,15 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
       <head>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-XEFQJCLG7G" strategy="afterInteractive" />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-XEFQJCLG7G');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
