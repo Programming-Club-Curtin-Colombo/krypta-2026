@@ -27,7 +27,7 @@ const SITE_DESCRIPTION =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} | Multi-Track Hackathon by Curtin University Colombo`,
+    default: `${SITE_NAME} | Multi-Track Hackathon by Programming Club of Curtin University Colombo`,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1080,
         height: 1080,
-        alt: "KRYPTA 2026 - Multi-Track Hackathon by Curtin University Colombo",
+        alt: "KRYPTA 2026 - Multi-Track Hackathon by Programming Club of Curtin University Colombo",
       },
     ],
   },
