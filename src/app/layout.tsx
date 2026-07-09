@@ -21,7 +21,7 @@ const inter = Inter({
 const SITE_URL = "https://krypta-2026.vercel.app";
 const SITE_NAME = "KRYPTA 2026";
 const SITE_DESCRIPTION =
-  "KRYPTA 2026 - Knowledge, Research & Yielding Parallel Technologies Arena. A premier multi-track hackathon competition organized by the Programming Club of Curtin University Colombo.";
+  "KRYPTA 2026: A premier multi-track hackathon organized by the Programming Club of Curtin University Colombo.";
 
 // ── Metadata ─────────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
