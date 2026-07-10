@@ -84,7 +84,6 @@ jobs:
   # =========================================
   # LINT
   # Reports: eslint.sarif (SARIF 2.1.0)
-  #          lint-summary.json
   # =========================================
   lint:
     name: Lint
@@ -182,32 +181,12 @@ jobs:
         run: npm run type-check
         continue-on-error: true
 
-      - name: Emit lint-summary.json
-        if: always()
-        run: |
-          node -e "
-          const fs = require('fs');
-          const eslintOk   = '${{ steps.eslint.outcome }}'   === 'success';
-          const typecheckOk = '${{ steps.typecheck.outcome }}' === 'success';
-          const passed = eslintOk && typecheckOk;
-          fs.writeFileSync('lint-summary.json', JSON.stringify({
-            job: 'lint',
-            status: passed ? 'passed' : 'failed',
-            reports: [
-              { name: 'ESLint',              status: eslintOk   ? 'passed' : 'failed', comment: eslintOk   ? 'No lint violations.' : 'ESLint found violations.' },
-              { name: 'TypeScript typecheck', status: typecheckOk ? 'passed' : 'failed', comment: typecheckOk ? 'Type check clean.' : 'Type errors found.' }
-            ]
-          }, null, 2));
-          "
-
       - name: Upload Lint Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lint-report
-          path: |
-            eslint.sarif
-            lint-summary.json
+          path: eslint.sarif
 
       - name: Set Lint Result
         id: result
@@ -226,7 +205,6 @@ jobs:
   # =========================================
   # STATIC ANALYSIS
   # Reports: codeql.sarif (SARIF 2.1.0)
-  #          static-summary.json
   # =========================================
   static:
     name: Static Analysis
@@ -349,33 +327,12 @@ jobs:
           console.log(`Generated codeql.sarif with ${results.length} finding(s).`);
           EOF
 
-      - name: Emit static-summary.json
-        if: always()
-        run: |
-          node -e "
-          const fs = require('fs');
-          let findings = 0;
-          try {
-            const sarif = JSON.parse(fs.readFileSync('codeql.sarif', 'utf8'));
-            findings = sarif.runs?.[0]?.results?.length ?? 0;
-          } catch {}
-          fs.writeFileSync('static-summary.json', JSON.stringify({
-            job: 'static',
-            status: 'passed',
-            reports: [{ name: 'CodeQL (ts-prune + depcheck)', status: 'passed', comment: findings + ' finding(s) — informational only.' }]
-          }, null, 2));
-          "
-
       - name: Upload Static Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: static-report
-          path: |
-            codeql.sarif
-            static-summary.json
-            ts-prune.txt
-            depcheck.txt
+          path: codeql.sarif
 
       - name: Set Static Result
         id: result
@@ -386,7 +343,6 @@ jobs:
   # =========================================
   # TEST
   # Reports: junit.xml (JUnit XML)
-  #          test-summary.json
   # =========================================
   test:
     name: Test
@@ -413,37 +369,12 @@ jobs:
         run: npm run test:ci
         continue-on-error: true
 
-      - name: Emit test-summary.json
-        if: always()
-        run: |
-          node -e "
-          const fs = require('fs');
-          const passed = '${{ steps.test_step.outcome }}' === 'success';
-
-          let tests = 0, failures = 0;
-          try {
-            const xml = fs.readFileSync('junit.xml', 'utf8');
-            const tMatch = xml.match(/tests=\"(\d+)\"/);
-            const fMatch = xml.match(/failures=\"(\d+)\"/);
-            if (tMatch) tests = parseInt(tMatch[1], 10);
-            if (fMatch) failures = parseInt(fMatch[1], 10);
-          } catch {}
-
-          fs.writeFileSync('test-summary.json', JSON.stringify({
-            job: 'test',
-            status: passed ? 'passed' : 'failed',
-            reports: [{ name: 'Vitest', status: passed ? 'passed' : 'failed', comment: tests + ' test(s) run, ' + failures + ' failure(s).' }]
-          }, null, 2));
-          "
-
       - name: Upload Test Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: |
-            junit.xml
-            test-summary.json
+          path: junit.xml
 
       - name: Set Test Result
         id: result
@@ -459,9 +390,8 @@ jobs:
 
   # =========================================
   # COVERAGE
-  # Reports: lcov.info  (LCOV)
+  # Reports: lcov.info   (LCOV)
   #          coverage.xml (Cobertura XML)
-  #          coverage-summary.json
   # =========================================
   coverage:
     name: Coverage
@@ -504,27 +434,6 @@ jobs:
 
           cp coverage/cobertura-coverage.xml coverage.xml 2>/dev/null || echo '<?xml version="1.0"?><coverage version="1" line-rate="0" branch-rate="0" lines-valid="0" lines-covered="0" branches-covered="0" branches-valid="0" complexity="0"><packages/></coverage>' > coverage.xml
 
-      - name: Emit coverage-summary.json
-        if: always()
-        run: |
-          node -e "
-          const fs = require('fs');
-          const passed = '${{ steps.coverage_step.outcome }}' === 'success';
-
-          let lineRate = '0.00';
-          try {
-            const xml = fs.readFileSync('coverage.xml', 'utf8');
-            const match = xml.match(/line-rate=\"([0-9.]+)\"/);
-            if (match) lineRate = parseFloat(match[1]).toFixed(2);
-          } catch {}
-
-          fs.writeFileSync('coverage-summary.json', JSON.stringify({
-            job: 'coverage',
-            status: passed ? 'passed' : 'failed',
-            reports: [{ name: 'Coverage', status: passed ? 'passed' : 'failed', comment: 'Line rate: ' + (parseFloat(lineRate) * 100).toFixed(1) + '%.' }]
-          }, null, 2));
-          "
-
       - name: Upload Coverage Reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -533,7 +442,6 @@ jobs:
           path: |
             lcov.info
             coverage.xml
-            coverage-summary.json
 
       - name: Set Coverage Result
         id: result
@@ -544,7 +452,6 @@ jobs:
   # =========================================
   # SECURITY
   # Reports: trivy.sarif (SARIF 2.1.0)
-  #          security-summary.json
   # =========================================
   security:
     name: Security
@@ -654,32 +561,12 @@ jobs:
           console.log(`Generated trivy.sarif with ${results.length} finding(s).`);
           EOF
 
-      - name: Emit security-summary.json
-        if: always()
-        run: |
-          node -e "
-          const fs = require('fs');
-          const passed = '${{ steps.audit.outcome }}' === 'success';
-          let count = 0;
-          try {
-            const sarif = JSON.parse(fs.readFileSync('trivy.sarif', 'utf8'));
-            count = sarif.runs?.[0]?.results?.length ?? 0;
-          } catch {}
-          fs.writeFileSync('security-summary.json', JSON.stringify({
-            job: 'security',
-            status: passed ? 'passed' : 'failed',
-            reports: [{ name: 'Trivy (npm audit)', status: passed ? 'passed' : 'failed', comment: count + ' vulnerability(s) found.' }]
-          }, null, 2));
-          "
-
       - name: Upload Security Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: security-report
-          path: |
-            trivy.sarif
-            security-summary.json
+          path: trivy.sarif
 
       - name: Set Security Result
         id: result
@@ -696,7 +583,6 @@ jobs:
   # =========================================
   # SBOM
   # Reports: cyclonedx.json (CycloneDX 1.4)
-  #          sbom-summary.json
   # =========================================
   sbom:
     name: SBOM
@@ -726,31 +612,12 @@ jobs:
             --output-file cyclonedx.json || true
         continue-on-error: true
 
-      - name: Emit sbom-summary.json
-        if: always()
-        run: |
-          node -e "
-          const fs = require('fs');
-          let componentCount = 0;
-          try {
-            const sbom = JSON.parse(fs.readFileSync('cyclonedx.json', 'utf8'));
-            componentCount = sbom.components?.length ?? 0;
-          } catch {}
-          fs.writeFileSync('sbom-summary.json', JSON.stringify({
-            job: 'sbom',
-            status: 'passed',
-            reports: [{ name: 'CycloneDX', status: 'passed', comment: 'SBOM generated with ' + componentCount + ' component(s).' }]
-          }, null, 2));
-          "
-
       - name: Upload SBOM Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sbom-report
-          path: |
-            cyclonedx.json
-            sbom-summary.json
+          path: cyclonedx.json
 
       - name: Set SBOM Result
         id: result
@@ -760,8 +627,7 @@ jobs:
 
   # =========================================
   # BENCHMARK
-  # Reports: benchmark.json (custom JSON)
-  #          benchmark-summary.json
+  # Reports: benchmark.json (JSON)
   # =========================================
   benchmark:
     name: Benchmark
@@ -807,27 +673,12 @@ jobs:
           }, null, 2));
           "
 
-      - name: Emit benchmark-summary.json
-        if: always()
-        run: |
-          node -e "
-          const fs = require('fs');
-          const duration = parseInt('${{ steps.bench_step.outputs.duration_ms }}', 10) || 0;
-          fs.writeFileSync('benchmark-summary.json', JSON.stringify({
-            job: 'benchmark',
-            status: 'passed',
-            reports: [{ name: 'Performance', status: 'passed', comment: 'Test suite completed in ' + duration + ' ms.' }]
-          }, null, 2));
-          "
-
       - name: Upload Benchmark Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: benchmark-report
-          path: |
-            benchmark.json
-            benchmark-summary.json
+          path: benchmark.json
 
       - name: Set Benchmark Result
         id: result
