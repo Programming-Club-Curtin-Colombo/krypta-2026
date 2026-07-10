@@ -4,6 +4,10 @@ on:
   pull_request:
   push:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
 
   # =========================================
@@ -13,7 +17,7 @@ jobs:
   # =========================================
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     outputs:
       passed: ${{ steps.result.outputs.passed }}
@@ -83,7 +87,7 @@ jobs:
   # =========================================
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     outputs:
       passed: ${{ steps.result.outputs.passed }}
@@ -208,7 +212,7 @@ jobs:
   # =========================================
   static:
     name: Static Analysis
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     outputs:
       passed: ${{ steps.result.outputs.passed }}
@@ -352,7 +356,7 @@ jobs:
   # =========================================
   test:
     name: Test
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     outputs:
       passed: ${{ steps.result.outputs.passed }}
@@ -406,7 +410,7 @@ jobs:
   # =========================================
   security:
     name: Security
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     outputs:
       passed: ${{ steps.result.outputs.passed }}
@@ -549,7 +553,7 @@ jobs:
   # =========================================
   governance:
     name: Governance
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     if: always()
 
     needs:
@@ -602,7 +606,7 @@ jobs:
   # =========================================
   enforce:
     name: Enforce Governance
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     needs:
       - governance
