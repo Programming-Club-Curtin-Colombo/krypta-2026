@@ -14,7 +14,7 @@ export default defineConfig({
     // Reporters: lcov (for CI tools) + text (for terminal summary).
     coverage: {
       provider: "v8",
-      reporter: ["lcov", "text"],
+      reporter: ["lcov", "cobertura", "text"],
       reportsDirectory: "coverage",
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
