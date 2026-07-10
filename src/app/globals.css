@@ -87,14 +87,14 @@
 
 html {
   color-scheme: light;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
   font-family: var(--font-body);
   line-height: 1.6;
   transition: background-color 0.2s ease, color 0.2s ease;
