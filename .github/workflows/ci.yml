@@ -8,6 +8,8 @@ jobs:
 
   # =========================================
   # BUILD
+  # Reports: build.log (plain text)
+  #          build-summary.json (custom JSON)
   # =========================================
   build:
     name: Build
@@ -20,26 +22,64 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[BUILD] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Production Build
+        id: build_step
         run: |
-          echo '{"job": "build", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > build-report.json
+          set -o pipefail
+          npm run build 2>&1 | tee build.log
+        continue-on-error: true
 
-      - name: Upload Build Report
+      - name: Generate Build Summary
+        if: always()
+        run: |
+          node -e "
+          const fs = require('fs');
+          const passed = '${{ steps.build_step.outcome }}' === 'success';
+          fs.writeFileSync('build-summary.json', JSON.stringify({
+            job: 'build',
+            status: passed ? 'passed' : 'failed',
+            timestamp: new Date().toISOString(),
+            reports: [{
+              name: 'Next.js Build',
+              status: passed ? 'passed' : 'failed',
+              comment: passed ? 'Production build succeeded.' : 'Production build failed — see build.log.'
+            }]
+          }, null, 2));
+          "
+
+      - name: Upload Build Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: build-report
-          path: build-report.json
+          path: |
+            build.log
+            build-summary.json
 
       - name: Set Build Result
         id: result
-        run: echo "passed=true" >> $GITHUB_OUTPUT
+        if: always()
+        run: |
+          if [ "${{ steps.build_step.outcome }}" = "success" ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
 
   # =========================================
   # LINT
+  # Reports: eslint.sarif (SARIF 2.1.0)
   # =========================================
   lint:
     name: Lint
@@ -52,26 +92,119 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[LINT] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: ESLint
+        id: eslint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Generate ESLint SARIF
+        if: always()
         run: |
-          echo '{"job": "lint", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > lint-report.json
+          # Emit JSON so the node script can build a proper SARIF document.
+          npx eslint --format json --output-file eslint-results.json . || true
+
+          node << 'EOF'
+          const fs = require('fs');
+
+          let eslintResults = [];
+          try {
+            eslintResults = JSON.parse(fs.readFileSync('eslint-results.json', 'utf8'));
+          } catch { /* leave empty on parse failure */ }
+
+          const rulesSet = new Set();
+          const results = [];
+
+          for (const file of eslintResults) {
+            // Make paths workspace-relative for portability
+            const uri = file.filePath
+              .replace(/\\/g, '/')
+              .replace(/^.*\/(?=src\/)/, '');
+
+            for (const msg of file.messages) {
+              const ruleId = msg.ruleId ?? 'unknown';
+              rulesSet.add(ruleId);
+              results.push({
+                ruleId,
+                level: msg.severity === 2 ? 'error' : 'warning',
+                message: { text: msg.message },
+                locations: [{
+                  physicalLocation: {
+                    artifactLocation: { uri },
+                    region: {
+                      startLine: msg.line ?? 1,
+                      startColumn: msg.column ?? 1,
+                    },
+                  },
+                }],
+              });
+            }
+          }
+
+          const sarif = {
+            $schema: 'https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0.json',
+            version: '2.1.0',
+            runs: [{
+              tool: {
+                driver: {
+                  name: 'ESLint',
+                  informationUri: 'https://eslint.org',
+                  rules: [...rulesSet].map(id => ({
+                    id,
+                    name: id.replace(/\//g, '-').replace(/-([a-z])/g, (_, c) => c.toUpperCase()),
+                    helpUri: `https://eslint.org/docs/rules/${id}`,
+                    shortDescription: { text: `ESLint rule: ${id}` },
+                  })),
+                },
+              },
+              results,
+            }],
+          };
+
+          fs.writeFileSync('eslint.sarif', JSON.stringify(sarif, null, 2));
+          console.log(`Generated eslint.sarif with ${results.length} finding(s).`);
+          EOF
+
+      - name: TypeScript Type Check
+        id: typecheck
+        if: always()
+        run: npm run type-check
+        continue-on-error: true
 
       - name: Upload Lint Report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lint-report
-          path: lint-report.json
+          path: eslint.sarif
 
       - name: Set Lint Result
         id: result
-        run: echo "passed=true" >> $GITHUB_OUTPUT
+        if: always()
+        run: |
+          ESLINT="${{ steps.eslint.outcome }}"
+          TYPECHECK="${{ steps.typecheck.outcome }}"
+          if [ "$ESLINT" = "success" ] && [ "$TYPECHECK" = "success" ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
 
   # =========================================
   # STATIC ANALYSIS
+  # Reports: static.sarif (SARIF 2.1.0)
+  #          ts-prune.txt  (raw tool output)
+  #          depcheck.txt  (raw tool output)
   # =========================================
   static:
     name: Static Analysis
@@ -84,26 +217,138 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[STATIC] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Unused Export Detection (ts-prune)
+        if: always()
+        run: npx --yes ts-prune 2>&1 | tee ts-prune.txt || true
+
+      - name: Unused Dependency Detection (depcheck)
+        if: always()
         run: |
-          echo '{"job": "static", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > static-report.json
+          npx --yes depcheck \
+            --ignores="@types/*,eslint-*,postcss,tailwindcss,@tailwindcss/*" \
+            2>&1 | tee depcheck.txt || true
 
-      - name: Upload Static Report
+      - name: Generate Static Analysis SARIF
+        if: always()
+        run: |
+          node << 'EOF'
+          const fs = require('fs');
+
+          const results = [];
+
+          // --- ts-prune: unused exports ---
+          // Output format: "src/path/to/file.ts:10 - exportName"
+          // Suffix "(used in module)" marks re-exports — skip those.
+          if (fs.existsSync('ts-prune.txt')) {
+            const lines = fs.readFileSync('ts-prune.txt', 'utf8').split('\n').filter(Boolean);
+            for (const line of lines) {
+              const match = line.match(/^(.+?):(\d+) - (.+)$/);
+              if (!match) continue;
+              const [, filePath, lineNum, exportName] = match;
+              if (exportName.includes('(used in module)')) continue;
+              results.push({
+                ruleId: 'ts-prune/unused-export',
+                level: 'warning',
+                message: { text: `Unused export: '${exportName.trim()}'` },
+                locations: [{
+                  physicalLocation: {
+                    artifactLocation: { uri: filePath.replace(/\\/g, '/') },
+                    region: { startLine: parseInt(lineNum, 10) },
+                  },
+                }],
+              });
+            }
+          }
+
+          // --- depcheck: unused dependencies ---
+          // Report as informational notes; they do not block the build.
+          if (fs.existsSync('depcheck.txt')) {
+            const text = fs.readFileSync('depcheck.txt', 'utf8');
+            const section = text.match(/Unused dependencies\n([\s\S]*?)(?:\n\n|$)/);
+            if (section) {
+              const deps = section[1]
+                .split('\n')
+                .map(l => l.replace(/^\*\s*/, '').trim())
+                .filter(Boolean);
+              for (const dep of deps) {
+                results.push({
+                  ruleId: 'depcheck/unused-dependency',
+                  level: 'note',
+                  message: { text: `'${dep}' is listed in package.json but not imported anywhere.` },
+                  locations: [{
+                    physicalLocation: {
+                      artifactLocation: { uri: 'package.json' },
+                      region: { startLine: 1 },
+                    },
+                  }],
+                });
+              }
+            }
+          }
+
+          const sarif = {
+            $schema: 'https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0.json',
+            version: '2.1.0',
+            runs: [{
+              tool: {
+                driver: {
+                  name: 'static-analysis',
+                  version: '1.0.0',
+                  rules: [
+                    {
+                      id: 'ts-prune/unused-export',
+                      name: 'UnusedExport',
+                      shortDescription: { text: 'Exported symbol is never imported outside its own module.' },
+                      helpUri: 'https://github.com/nadeesha/ts-prune',
+                      defaultConfiguration: { level: 'warning' },
+                    },
+                    {
+                      id: 'depcheck/unused-dependency',
+                      name: 'UnusedDependency',
+                      shortDescription: { text: 'Package declared in package.json but not imported in source.' },
+                      helpUri: 'https://github.com/depcheck/depcheck',
+                      defaultConfiguration: { level: 'note' },
+                    },
+                  ],
+                },
+              },
+              results,
+            }],
+          };
+
+          fs.writeFileSync('static.sarif', JSON.stringify(sarif, null, 2));
+          console.log(`Generated static.sarif with ${results.length} finding(s).`);
+          EOF
+
+      - name: Upload Static Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: static-report
-          path: static-report.json
+          path: |
+            static.sarif
+            ts-prune.txt
+            depcheck.txt
 
       - name: Set Static Result
         id: result
+        if: always()
         run: echo "passed=true" >> $GITHUB_OUTPUT
 
 
   # =========================================
   # TEST
+  # Reports: junit.xml    (JUnit XML)
+  #          lcov.info    (LCOV coverage)
   # =========================================
   test:
     name: Test
@@ -116,26 +361,48 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[TEST] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
-        run: |
-          echo '{"job": "test", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > test-report.json
+      - name: Install Dependencies
+        run: npm ci
 
-      - name: Upload Test Report
+      - name: Run Tests (JUnit + LCOV coverage)
+        id: test_step
+        # test:ci runs vitest with:
+        #   --reporter=junit      → junit.xml
+        #   --coverage            → coverage/lcov.info (via vitest.config.ts)
+        run: npm run test:ci
+        continue-on-error: true
+
+      - name: Upload Test Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: test-report.json
+          path: |
+            junit.xml
+            coverage/lcov.info
 
       - name: Set Test Result
         id: result
-        run: echo "passed=true" >> $GITHUB_OUTPUT
+        if: always()
+        run: |
+          if [ "${{ steps.test_step.outcome }}" = "success" ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
 
   # =========================================
   # SECURITY
+  # Reports: dependency.sarif (SARIF 2.1.0)
+  #          cyclonedx.json   (CycloneDX SBOM)
   # =========================================
   security:
     name: Security
@@ -148,22 +415,133 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[SECURITY] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: NPM Audit (enforce — high/critical threshold)
+        id: audit
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
+      - name: Generate Dependency SARIF
+        if: always()
         run: |
-          echo '{"job": "security", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > security-report.json
+          # Capture full JSON output regardless of audit exit code.
+          npm audit --json > npm-audit-raw.json 2>/dev/null || true
 
-      - name: Upload Security Report
+          node << 'EOF'
+          const fs = require('fs');
+
+          const SEVERITY_TO_LEVEL = {
+            critical: 'error',
+            high:     'error',
+            moderate: 'warning',
+            low:      'note',
+            info:     'none',
+          };
+
+          let auditData = { vulnerabilities: {} };
+          try {
+            auditData = JSON.parse(fs.readFileSync('npm-audit-raw.json', 'utf8'));
+          } catch { /* use empty fallback */ }
+
+          const results = [];
+          const vulns = auditData.vulnerabilities ?? {};
+
+          for (const [pkgName, vuln] of Object.entries(vulns)) {
+            const severity  = vuln.severity ?? 'unknown';
+            const level     = SEVERITY_TO_LEVEL[severity] ?? 'note';
+            const range     = vuln.range ?? '*';
+
+            // Collect CVE IDs from the `via` array (entries that are objects have CVE data).
+            const cves = (vuln.via ?? [])
+              .filter(v => typeof v === 'object' && v.cve)
+              .map(v => v.cve)
+              .join(', ');
+
+            const fix = vuln.fixAvailable
+              ? (typeof vuln.fixAvailable === 'object'
+                  ? `upgrade to ${vuln.fixAvailable.name}@${vuln.fixAvailable.version}`
+                  : 'run npm audit fix')
+              : 'no automated fix available';
+
+            results.push({
+              ruleId: `npm-audit/${severity}`,
+              level,
+              message: {
+                text: [
+                  `${pkgName}@${range}: ${severity} severity.`,
+                  cves ? `CVE(s): ${cves}.` : '',
+                  `Fix: ${fix}.`,
+                ].filter(Boolean).join(' '),
+              },
+              locations: [{
+                physicalLocation: {
+                  artifactLocation: { uri: 'package.json' },
+                  region: { startLine: 1 },
+                },
+              }],
+            });
+          }
+
+          const sarif = {
+            $schema: 'https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0.json',
+            version: '2.1.0',
+            runs: [{
+              tool: {
+                driver: {
+                  name: 'npm-audit',
+                  informationUri: 'https://docs.npmjs.com/cli/v10/commands/npm-audit',
+                  rules: ['critical', 'high', 'moderate', 'low', 'info'].map(s => ({
+                    id: `npm-audit/${s}`,
+                    name: `${s[0].toUpperCase() + s.slice(1)}Vulnerability`,
+                    shortDescription: { text: `${s} severity CVE found in the dependency tree.` },
+                    defaultConfiguration: {
+                      level: SEVERITY_TO_LEVEL[s] ?? 'note',
+                    },
+                  })),
+                },
+              },
+              results,
+            }],
+          };
+
+          fs.writeFileSync('dependency.sarif', JSON.stringify(sarif, null, 2));
+          console.log(`Generated dependency.sarif with ${results.length} finding(s).`);
+          EOF
+
+      - name: Generate CycloneDX SBOM
+        if: always()
+        run: |
+          npx --yes @cyclonedx/cyclonedx-npm \
+            --output-format json \
+            --output-file cyclonedx.json || true
+
+      - name: Upload Security Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: security-report
-          path: security-report.json
+          path: |
+            dependency.sarif
+            cyclonedx.json
 
       - name: Set Security Result
         id: result
-        run: echo "passed=true" >> $GITHUB_OUTPUT
+        if: always()
+        run: |
+          if [ "${{ steps.audit.outcome }}" = "success" ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
 
   # =========================================

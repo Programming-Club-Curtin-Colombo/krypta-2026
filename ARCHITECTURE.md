@@ -16,6 +16,7 @@ This document describes the high-level design and architectural decisions of the
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **Icons**: [Lucide React](https://lucide.dev/)
+- **Testing**: [Vitest](https://vitest.dev/)
 - **Hosting**: [Vercel](https://vercel.com/)
 
 ## 3. Core Architecture
@@ -25,7 +26,7 @@ The project utilizes the Next.js App Router for server-centric routing and rende
 ### 3.1 App Layer (`src/app/`)
 - Handles routing, global layouts, global CSS, and metadata.
 - Employs Next.js conventions for `robots.ts`, `sitemap.ts`, and `manifest.ts` to automatically generate SEO assets.
-- `opengraph-image.tsx` dynamically generates the OpenGraph image.
+- A static `opengraph-image.png` in `public/` serves as the OpenGraph image.
 
 ### 3.2 Components (`src/components/`)
 Separated into logical directories for clear responsibility:
@@ -50,9 +51,21 @@ Separated into logical directories for clear responsibility:
 - **Keyboard Navigation**: Focus rings (`:focus-visible`) are styled consistently. A "skip to content" link is implemented in the root layout.
 - **Structured Data**: JSON-LD scripts for `Organization` and `Event` schema are injected into the root `<head>`.
 
-## 5. Future Expansion Path
+## 5. CI/CD Pipeline
+
+Every push and pull request triggers the **Standard CI Pipeline** defined in `.github/workflows/ci.yml`. The Governance Engine requires all five stages to pass before a merge is permitted.
+
+| Stage | Tool | Purpose |
+|---|---|---|
+| **Build** | `next build` | Validates compile-time correctness and page rendering |
+| **Lint** | ESLint + `tsc --noEmit` | Enforces code style and TypeScript type safety |
+| **Static** | `ts-prune` + `depcheck` | Detects unused exports and orphaned dependencies |
+| **Test** | Vitest (`tests/unit/`) | Verifies correctness of pure logic functions |
+| **Security** | `npm audit` | Flags high and critical CVEs in the dependency tree |
+
+## 6. Future Expansion Path
 
 The architecture is built to support iterative development as KRYPTA 2026 approaches:
 1. **Dynamic Routes**: Current sections (e.g., `TimelineSection`, `WhatToExpectSection`) can be relocated to dedicated routes (`/schedule`, `/tracks`) when more detail is available.
-2. **Data Fetching**: The `StayUpdatedSection` form component is currently client-side and UI-only. It is designed to easily connect to a Next.js API Route (`/api/notify`) when the backend email service is finalized.
+2. **Data Fetching**: The `StayUpdatedSection` form component proxies to `POST /api/subscribe`. It is designed to forward to any external email service via the `NEXT_PUBLIC_EMAIL_SUBMISSION_ENDPOINT` environment variable.
 3. **Asset Integration**: Placeholder logo components and Partner boxes are structured to be swapped with `next/image` tags once the official PNGs are provided in `public/logo/`.

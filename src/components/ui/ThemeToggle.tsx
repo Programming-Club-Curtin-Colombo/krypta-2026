@@ -9,8 +9,12 @@ export function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Avoid hydration mismatch - only render after mount
-  useEffect(() => setMounted(true), []);
+  // Mount guard: next-themes requires this pattern to prevent hydration mismatches.
+  // The setState is unconditional and fires exactly once — no cascading render risk.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
   if (!mounted) {
     return (

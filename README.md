@@ -4,6 +4,7 @@
 
 The official public landing page for **KRYPTA 2026** - a premier multi-track hackathon competition organized by the **Programming Club of Curtin University Colombo**.
 
+[![CI](https://github.com/Programming-Club-Curtin-Colombo/krypta-2026/actions/workflows/ci.yml/badge.svg)](https://github.com/Programming-Club-Curtin-Colombo/krypta-2026/actions/workflows/ci.yml)
 [![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://krypta2026.vercel.app)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://typescriptlang.org)
@@ -28,6 +29,7 @@ This repository contains the **Coming Soon / Event Announcement** landing page f
 | Icons | Lucide React |
 | Theme | next-themes |
 | Fonts | Space Grotesk (headings), Inter (body) via `next/font` |
+| Testing | Vitest |
 | Linting | ESLint (Next.js config) |
 | Formatting | Prettier |
 | Deployment | Vercel |
@@ -43,6 +45,8 @@ krypta-2026/
 │   └── favicon.ico
 ├── src/
 │   ├── app/
+│   │   ├── api/
+│   │   │   └── subscribe/  # POST /api/subscribe - email subscription proxy
 │   │   ├── globals.css     # Full design system (tokens, light/dark mode)
 │   │   ├── layout.tsx      # Root layout: fonts, SEO metadata, JSON-LD, ThemeProvider
 │   │   ├── page.tsx        # Home page - section composition
@@ -70,8 +74,12 @@ krypta-2026/
 │   │       └── ThemeToggle.tsx
 │   └── lib/
 │       └── utils.ts        # cn() - Tailwind class merging utility
+├── tests/
+│   └── unit/
+│       └── utils.test.ts   # Vitest unit tests
 ├── .env.example            # Environment variable template
 ├── .prettierrc
+├── vitest.config.ts
 ├── next.config.ts
 ├── tsconfig.json
 └── README.md
@@ -83,8 +91,8 @@ krypta-2026/
 
 ### Prerequisites
 
-- Node.js 18+
-- npm 9+
+- Node.js 20+
+- npm 10+
 
 ### Installation
 
@@ -116,12 +124,28 @@ npm run build
 npm run start
 ```
 
-### Linting
+### Checks
 
 ```bash
-npm run lint
-npx tsc --noEmit   # TypeScript strict check
+npm run lint        # ESLint
+npm run type-check  # TypeScript strict type check
+npm test            # Vitest unit tests
+npm audit --audit-level=high  # Dependency security audit
 ```
+
+---
+
+## CI Pipeline
+
+Every push and pull request triggers the **Standard CI Pipeline**. All five stages must pass before the Governance Engine permits a merge.
+
+| Stage | Tool | What it checks |
+|---|---|---|
+| **Build** | `next build` | Compile-time correctness, page rendering |
+| **Lint** | ESLint + `tsc --noEmit` | Code style and type safety |
+| **Static** | `ts-prune` + `depcheck` | Unused exports and dependencies |
+| **Test** | Vitest | Unit test correctness |
+| **Security** | `npm audit` | High/critical CVEs in dependencies |
 
 ---
 
@@ -141,7 +165,7 @@ See [`public/logo/README.md`](./public/logo/README.md) for full usage instructio
 
 ## Connecting the Email Form
 
-The **Stay Updated** section (`src/components/sections/StayUpdatedSection.tsx`) is UI-only. Search for `// TODO` to find the integration point and wire it to your preferred backend (e.g., Resend, Mailchimp, Loops, or a custom API route).
+The **Stay Updated** section (`src/components/sections/StayUpdatedSection.tsx`) submits to `POST /api/subscribe`. Set the `NEXT_PUBLIC_EMAIL_SUBMISSION_ENDPOINT` environment variable to your external email collection endpoint (e.g., a Google Apps Script web app URL). See [`API.md`](./API.md) for the full route specification.
 
 ---
 
@@ -172,6 +196,12 @@ The following pages are planned for future expansion. The sitemap already contai
 - `/workshops` - Workshop listing
 - `/rules` - Competition rules
 - `/contact` - Contact form
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for branch naming, commit format, local check commands, and the PR checklist.
 
 ---
 
