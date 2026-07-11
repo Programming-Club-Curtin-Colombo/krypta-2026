@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Privacy Policy | KRYPTA 2026",
     description:
-      "How KRYPTA 2026 handles your data — email collection, analytics, and cookies.",
+      "How KRYPTA 2026 handles your data - email collection, analytics, and cookies.",
     url: `${SITE_URL}/privacy-policy`,
     type: "website",
   },
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Privacy Policy — KRYPTA 2026",
+  name: "Privacy Policy - KRYPTA 2026",
   description:
     "Privacy Policy for the KRYPTA 2026 hackathon website, operated by the Programming Club of Curtin University Colombo.",
   url: `${SITE_URL}/privacy-policy`,
@@ -171,7 +171,7 @@ export default function PrivacyPolicyPage() {
           <Section id="section-email" title="3. Email Collection">
             <p>
               If you submit your email address via our notification form, we
-              use it solely to send you updates about KRYPTA 2026 — such as
+              use it solely to send you updates about KRYPTA 2026 - such as
               registration openings, schedule announcements, and event
               outcomes. We will not sell, rent, or share your email address
               with third parties for marketing purposes.
