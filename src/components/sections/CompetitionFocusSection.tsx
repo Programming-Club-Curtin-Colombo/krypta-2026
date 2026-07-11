@@ -88,7 +88,7 @@ export function CompetitionFocusSection() {
         <div className="relative">
           {/* Vertical connector line (desktop) */}
           <div
-            className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-[var(--color-border)] to-transparent"
+            className="hidden lg:block absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-transparent via-[var(--color-primary)]/30 to-transparent"
             aria-hidden="true"
           />
 
