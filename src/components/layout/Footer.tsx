@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Linkedin, Instagram, Github, Mail } from "lucide-react";
+import { Linkedin, Instagram, Mail } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -11,9 +11,9 @@ const FOOTER_LINKS = {
     { label: "Timeline", href: "#timeline" },
   ],
   info: [
-    { label: "Privacy Policy", href: "#" },
-    { label: "Terms & Conditions", href: "#" },
-    { label: "Contact", href: "mailto:contact@krypta2026.vercel.app" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms & Conditions", href: "/terms" },
+    { label: "Contact", href: "mailto:krypta.pc.cuc@gmail.com" },
   ],
 };
 
@@ -26,17 +26,12 @@ const SOCIAL_LINKS = [
   {
     icon: Instagram,
     label: "Follow KRYPTA 2026 on Instagram",
-    href: "#",
-  },
-  {
-    icon: Github,
-    label: "KRYPTA 2026 on GitHub",
-    href: "#",
+    href: "https://www.instagram.com/krypta.pc.cuc/",
   },
   {
     icon: Mail,
     label: "Email KRYPTA 2026",
-    href: "mailto:contact@krypta2026.vercel.app",
+    href: "mailto:krypta.pc.cuc@gmail.com",
   },
 ];
 
@@ -125,12 +120,21 @@ export function Footer() {
             <ul className="space-y-2.5" role="list">
               {FOOTER_LINKS.info.map((link) => (
                 <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="text-sm text-[var(--color-foreground-muted)] hover:text-[var(--color-foreground)] transition-colors duration-150"
-                  >
-                    {link.label}
-                  </a>
+                  {link.href.startsWith("/") ? (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-[var(--color-foreground-muted)] hover:text-[var(--color-foreground)] transition-colors duration-150"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className="text-sm text-[var(--color-foreground-muted)] hover:text-[var(--color-foreground)] transition-colors duration-150"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

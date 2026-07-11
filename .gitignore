@@ -49,3 +49,8 @@ logs/
 .vercel
 next-env.d.ts
 *.tsbuildinfo
+
+# Testing
+coverage/
+junit.xml
+next-env.d.ts

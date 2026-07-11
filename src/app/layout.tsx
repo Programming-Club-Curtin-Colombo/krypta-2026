@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { headers } from "next/headers";
 import Script from "next/script";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -21,7 +22,7 @@ const inter = Inter({
 const SITE_URL = "https://krypta-2026.vercel.app";
 const SITE_NAME = "KRYPTA 2026";
 const SITE_DESCRIPTION =
-  "KRYPTA 2026: A premier multi-track hackathon organized by the Programming Club of Curtin University Colombo.";
+  "KRYPTA 2026: A premier dual-track hackathon organized by the Programming Club of Curtin University Colombo, featuring a Buildathon and a Capture The Flag (CTF) competition.";
 
 // ── Metadata ─────────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
@@ -34,11 +35,15 @@ export const metadata: Metadata = {
   keywords: [
     "KRYPTA 2026",
     "hackathon",
+    "buildathon",
+    "CTF",
+    "Capture The Flag",
     "Curtin University Colombo",
     "Programming Club",
-    "multi-track hackathon",
+    "dual-track hackathon",
     "technology competition",
     "engineering challenge",
+    "cybersecurity competition",
     "Sri Lanka hackathon",
     "student hackathon",
     "innovation",
@@ -97,15 +102,23 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f9fafb" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
-  ],
-  colorScheme: "light dark",
-  width: "device-width",
-  initialScale: 1,
-};
+export async function generateViewport(): Promise<Viewport> {
+  const headersList = await headers();
+  const userAgent = headersList.get("user-agent") || "";
+  const isSamsungBrowser = userAgent.includes("SamsungBrowser");
+
+  return {
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: "#f9fafb" },
+      { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+    ],
+    // Samsung Internet's forced dark mode algorithm destroys manual dark themes.
+    // 'only light' forces it to opt out, while others get full 'light dark' support.
+    colorScheme: isSamsungBrowser ? "only light" : "light dark",
+    width: "device-width",
+    initialScale: 1,
+  };
+}
 
 // ── JSON-LD Structured Data ───────────────────────────────────────────────────
 const organizationSchema = {

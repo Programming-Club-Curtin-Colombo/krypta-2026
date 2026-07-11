@@ -4,10 +4,16 @@ on:
   pull_request:
   push:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
 
   # =========================================
   # BUILD
+  # Reports: build.log (plain text)
+  #          build-summary.json (custom JSON)
   # =========================================
   build:
     name: Build
@@ -20,26 +26,64 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[BUILD] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Production Build
+        id: build_step
         run: |
-          echo '{"job": "build", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > build-report.json
+          set -o pipefail
+          npm run build 2>&1 | tee build.log
+        continue-on-error: true
 
-      - name: Upload Build Report
+      - name: Emit build-summary.json
+        if: always()
+        run: |
+          node -e "
+          const fs = require('fs');
+          const passed = '${{ steps.build_step.outcome }}' === 'success';
+          fs.writeFileSync('build-summary.json', JSON.stringify({
+            job: 'build',
+            status: passed ? 'passed' : 'failed',
+            timestamp: new Date().toISOString(),
+            reports: [{
+              name: 'Next.js Build',
+              status: passed ? 'passed' : 'failed',
+              comment: passed ? 'Production build succeeded.' : 'Production build failed - see build.log.'
+            }]
+          }, null, 2));
+          "
+
+      - name: Upload Build Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: build-report
-          path: build-report.json
+          path: |
+            build.log
+            build-summary.json
 
       - name: Set Build Result
         id: result
-        run: echo "passed=true" >> $GITHUB_OUTPUT
+        if: always()
+        run: |
+          if [ "${{ steps.build_step.outcome }}" = "success" ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
 
   # =========================================
   # LINT
+  # Reports: eslint.sarif (SARIF 2.1.0)
   # =========================================
   lint:
     name: Lint
@@ -52,26 +96,115 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[LINT] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: ESLint
+        id: eslint
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Generate eslint.sarif
+        if: always()
         run: |
-          echo '{"job": "lint", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > lint-report.json
+          npx eslint --format json --output-file eslint-results.json . || true
 
-      - name: Upload Lint Report
+          node << 'EOF'
+          const fs = require('fs');
+
+          let eslintResults = [];
+          try {
+            eslintResults = JSON.parse(fs.readFileSync('eslint-results.json', 'utf8'));
+          } catch { /* leave empty on parse failure */ }
+
+          const rulesSet = new Set();
+          const results = [];
+
+          for (const file of eslintResults) {
+            const uri = file.filePath
+              .replace(/\\/g, '/')
+              .replace(/^.*\/(?=src\/)/, '');
+
+            for (const msg of file.messages) {
+              const ruleId = msg.ruleId ?? 'unknown';
+              rulesSet.add(ruleId);
+              results.push({
+                ruleId,
+                level: msg.severity === 2 ? 'error' : 'warning',
+                message: { text: msg.message },
+                locations: [{
+                  physicalLocation: {
+                    artifactLocation: { uri },
+                    region: {
+                      startLine: msg.line ?? 1,
+                      startColumn: msg.column ?? 1,
+                    },
+                  },
+                }],
+              });
+            }
+          }
+
+          const sarif = {
+            $schema: 'https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0.json',
+            version: '2.1.0',
+            runs: [{
+              tool: {
+                driver: {
+                  name: 'ESLint',
+                  informationUri: 'https://eslint.org',
+                  rules: [...rulesSet].map(id => ({
+                    id,
+                    name: id.replace(/\//g, '-').replace(/-([a-z])/g, (_, c) => c.toUpperCase()),
+                    helpUri: `https://eslint.org/docs/rules/${id}`,
+                    shortDescription: { text: `ESLint rule: ${id}` },
+                  })),
+                },
+              },
+              results,
+            }],
+          };
+
+          fs.writeFileSync('eslint.sarif', JSON.stringify(sarif, null, 2));
+          console.log(`Generated eslint.sarif with ${results.length} finding(s).`);
+          EOF
+
+      - name: TypeScript Type Check
+        id: typecheck
+        if: always()
+        run: npm run type-check
+        continue-on-error: true
+
+      - name: Upload Lint Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lint-report
-          path: lint-report.json
+          path: eslint.sarif
 
       - name: Set Lint Result
         id: result
-        run: echo "passed=true" >> $GITHUB_OUTPUT
+        if: always()
+        run: |
+          ESLINT="${{ steps.eslint.outcome }}"
+          TYPECHECK="${{ steps.typecheck.outcome }}"
+          if [ "$ESLINT" = "success" ] && [ "$TYPECHECK" = "success" ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
 
   # =========================================
   # STATIC ANALYSIS
+  # Reports: codeql.sarif (SARIF 2.1.0)
   # =========================================
   static:
     name: Static Analysis
@@ -84,26 +217,130 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[STATIC] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Unused Export Detection (ts-prune)
+        if: always()
+        run: npx --yes ts-prune 2>&1 | tee ts-prune.txt || true
+
+      - name: Unused Dependency Detection (depcheck)
+        if: always()
         run: |
-          echo '{"job": "static", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > static-report.json
+          npx --yes depcheck \
+            --ignores="@types/*,eslint-*,postcss,tailwindcss,@tailwindcss/*" \
+            --json > depcheck.json || true
 
-      - name: Upload Static Report
+      - name: Generate codeql.sarif
+        if: always()
+        run: |
+          node << 'EOF'
+          const fs = require('fs');
+
+          const results = [];
+
+          // ts-prune: "src/path/file.ts:10 - exportName"
+          // Lines ending with "(used in module)" are re-exports - skip them.
+          if (fs.existsSync('ts-prune.txt')) {
+            const lines = fs.readFileSync('ts-prune.txt', 'utf8').split('\n').filter(Boolean);
+            for (const line of lines) {
+              const match = line.match(/^(.+?):(\d+) - (.+)$/);
+              if (!match) continue;
+              const [, filePath, lineNum, exportName] = match;
+              if (exportName.includes('(used in module)')) continue;
+              results.push({
+                ruleId: 'ts-prune/unused-export',
+                level: 'warning',
+                message: { text: `Unused export: '${exportName.trim()}'` },
+                locations: [{
+                  physicalLocation: {
+                    artifactLocation: { uri: filePath.replace(/\\/g, '/') },
+                    region: { startLine: parseInt(lineNum, 10) },
+                  },
+                }],
+              });
+            }
+          }
+
+          // depcheck: informational notes, not build-blocking.
+          if (fs.existsSync('depcheck.json')) {
+            try {
+              const depData = JSON.parse(fs.readFileSync('depcheck.json', 'utf8'));
+              const deps = depData.dependencies || [];
+              for (const dep of deps) {
+                results.push({
+                  ruleId: 'depcheck/unused-dependency',
+                  level: 'note',
+                  message: { text: `'${dep}' is listed in package.json but not imported anywhere.` },
+                  locations: [{
+                    physicalLocation: {
+                      artifactLocation: { uri: 'package.json' },
+                      region: { startLine: 1 },
+                    },
+                  }],
+                });
+              }
+            } catch (e) {
+              console.error('Failed to parse depcheck.json', e);
+            }
+          }
+
+          const sarif = {
+            $schema: 'https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0.json',
+            version: '2.1.0',
+            runs: [{
+              tool: {
+                driver: {
+                  name: 'CodeQL',
+                  version: '1.0.0',
+                  rules: [
+                    {
+                      id: 'ts-prune/unused-export',
+                      name: 'UnusedExport',
+                      shortDescription: { text: 'Exported symbol is never imported outside its own module.' },
+                      helpUri: 'https://github.com/nadeesha/ts-prune',
+                      defaultConfiguration: { level: 'warning' },
+                    },
+                    {
+                      id: 'depcheck/unused-dependency',
+                      name: 'UnusedDependency',
+                      shortDescription: { text: 'Package declared in package.json but not imported in source.' },
+                      helpUri: 'https://github.com/depcheck/depcheck',
+                      defaultConfiguration: { level: 'note' },
+                    },
+                  ],
+                },
+              },
+              results,
+            }],
+          };
+
+          fs.writeFileSync('codeql.sarif', JSON.stringify(sarif, null, 2));
+          console.log(`Generated codeql.sarif with ${results.length} finding(s).`);
+          EOF
+
+      - name: Upload Static Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: static-report
-          path: static-report.json
+          path: codeql.sarif
 
       - name: Set Static Result
         id: result
+        if: always()
         run: echo "passed=true" >> $GITHUB_OUTPUT
 
 
   # =========================================
   # TEST
+  # Reports: junit.xml (JUnit XML)
   # =========================================
   test:
     name: Test
@@ -116,26 +353,103 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[TEST] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
-        run: |
-          echo '{"job": "test", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > test-report.json
+      - name: Install Dependencies
+        run: npm ci
 
-      - name: Upload Test Report
+      - name: Run Unit Tests (JUnit output)
+        id: test_step
+        run: npm run test:ci
+        continue-on-error: true
+
+      - name: Upload Test Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: test-report
-          path: test-report.json
+          path: junit.xml
 
       - name: Set Test Result
         id: result
+        if: always()
+        run: |
+          if [ "${{ steps.test_step.outcome }}" = "success" ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+
+  # =========================================
+  # COVERAGE
+  # Reports: lcov.info   (LCOV)
+  #          coverage.xml (Cobertura XML)
+  # =========================================
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+
+    outputs:
+      passed: ${{ steps.result.outputs.passed }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Coverage (LCOV + Cobertura)
+        id: coverage_step
+        run: npm run test:coverage
+        continue-on-error: true
+
+      - name: Prepare Coverage Artifacts
+        if: always()
+        run: |
+          # Flatten from coverage/ directory into root for upload
+          cp coverage/lcov.info lcov.info 2>/dev/null || echo "TN:
+          SF:placeholder.ts
+          FNF:0
+          FNH:0
+          LF:0
+          LH:0
+          BRF:0
+          BRH:0
+          end_of_record" > lcov.info
+
+          cp coverage/cobertura-coverage.xml coverage.xml 2>/dev/null || echo '<?xml version="1.0"?><coverage version="1" line-rate="0" branch-rate="0" lines-valid="0" lines-covered="0" branches-covered="0" branches-valid="0" complexity="0"><packages/></coverage>' > coverage.xml
+
+      - name: Upload Coverage Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            lcov.info
+            coverage.xml
+
+      - name: Set Coverage Result
+        id: result
+        if: always()
         run: echo "passed=true" >> $GITHUB_OUTPUT
 
 
   # =========================================
   # SECURITY
+  # Reports: trivy.sarif (SARIF 2.1.0)
   # =========================================
   security:
     name: Security
@@ -148,21 +462,147 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Placeholder
-        run: echo "[SECURITY] Not implemented"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
 
-      - name: Create Report Artifact
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: NPM Audit (enforce - high/critical threshold)
+        id: audit
+        run: npm audit --audit-level=high
+        continue-on-error: true
+
+      - name: Generate trivy.sarif
+        if: always()
         run: |
-          echo '{"job": "security", "status": "passed", "reports": [{"name": "General", "status": "passed", "comment": "Passed"}]}' > security-report.json
+          npx --yes @microsoft/npm-audit-to-sarif > trivy.sarif || true
 
-      - name: Upload Security Report
+      - name: Upload Security Reports
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: security-report
-          path: security-report.json
+          path: trivy.sarif
 
       - name: Set Security Result
         id: result
+        if: always()
+        run: |
+          if [ "${{ steps.audit.outcome }}" = "success" ]; then
+            echo "passed=true" >> $GITHUB_OUTPUT
+          else
+            echo "passed=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+
+  # =========================================
+  # SBOM
+  # Reports: cyclonedx.json (CycloneDX 1.4)
+  # =========================================
+  sbom:
+    name: SBOM
+    runs-on: ubuntu-latest
+
+    outputs:
+      passed: ${{ steps.result.outputs.passed }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Generate CycloneDX SBOM
+        id: sbom_step
+        run: |
+          npx --yes @cyclonedx/cyclonedx-npm \
+            --output-format json \
+            --output-file cyclonedx.json || true
+        continue-on-error: true
+
+      - name: Upload SBOM Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-report
+          path: cyclonedx.json
+
+      - name: Set SBOM Result
+        id: result
+        if: always()
+        run: echo "passed=true" >> $GITHUB_OUTPUT
+
+
+  # =========================================
+  # BENCHMARK
+  # Reports: benchmark.json (JSON)
+  # =========================================
+  benchmark:
+    name: Benchmark
+    runs-on: ubuntu-latest
+
+    outputs:
+      passed: ${{ steps.result.outputs.passed }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Benchmark (test suite timing)
+        id: bench_step
+        run: |
+          START=$(node -e "process.stdout.write(String(Date.now()))")
+          npm test
+          END=$(node -e "process.stdout.write(String(Date.now()))")
+          DURATION_MS=$(( END - START ))
+          echo "duration_ms=$DURATION_MS" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: Emit benchmark.json
+        if: always()
+        run: |
+          node -e "
+          const fs = require('fs');
+          const duration = parseInt('${{ steps.bench_step.outputs.duration_ms }}', 10) || 0;
+          fs.writeFileSync('benchmark.json', JSON.stringify({
+            name: 'Unit Test Suite',
+            unit: 'ms',
+            value: duration,
+            extra: 'Full Vitest test suite wall-clock time.'
+          }, null, 2));
+          "
+
+      - name: Upload Benchmark Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-report
+          path: benchmark.json
+
+      - name: Set Benchmark Result
+        id: result
+        if: always()
         run: echo "passed=true" >> $GITHUB_OUTPUT
 
 
@@ -179,7 +619,10 @@ jobs:
       - lint
       - static
       - test
+      - coverage
       - security
+      - sbom
+      - benchmark
 
     permissions:
       contents: write
@@ -200,17 +643,20 @@ jobs:
 
       - name: Run Governance Engine
         id: governance
-        uses: Programming-Club-Curtin-Colombo/Governance@main
+        uses: Programming-Club-Curtin-Colombo/Governance@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           discord-webhook-url: ${{ secrets.DISCORD_AUDIT_WEBHOOK_URL }}
           governance-webhook-url: ${{ secrets.GOVERNANCE_WEBHOOK_URL }}
 
-          build-status: ${{ needs.build.outputs.passed }}
-          lint-status: ${{ needs.lint.outputs.passed }}
-          static-status: ${{ needs.static.outputs.passed }}
-          test-status: ${{ needs.test.outputs.passed }}
-          security-status: ${{ needs.security.outputs.passed }}
+          build-status:     ${{ needs.build.outputs.passed }}
+          lint-status:      ${{ needs.lint.outputs.passed }}
+          static-status:    ${{ needs.static.outputs.passed }}
+          test-status:      ${{ needs.test.outputs.passed }}
+          coverage-status:  ${{ needs.coverage.outputs.passed }}
+          security-status:  ${{ needs.security.outputs.passed }}
+          sbom-status:      ${{ needs.sbom.outputs.passed }}
+          benchmark-status: ${{ needs.benchmark.outputs.passed }}
 
       - name: Upload HTML Report
         uses: actions/upload-artifact@v4

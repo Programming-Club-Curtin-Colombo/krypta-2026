@@ -110,12 +110,12 @@ export function TimelineSection() {
             <li key={milestone.title}>
               <AnimatedSection
                 delay={index * 0.1}
-                className="relative flex gap-6 sm:gap-8 pb-10 last:pb-0"
+                className="relative flex items-start gap-6 sm:gap-8 h-24 sm:h-28"
               >
                 {/* Node */}
                 <div
                   className={cn(
-                    "relative z-10 flex h-12 w-12 sm:h-16 sm:w-16 flex-shrink-0 items-center justify-center rounded-2xl",
+                    "relative z-10 flex h-12 w-12 sm:h-14 sm:w-14 flex-shrink-0 items-center justify-center rounded-2xl",
                     "border-2 bg-[var(--color-card)]",
                     index === 0
                       ? "border-[var(--color-primary)] shadow-[0_0_20px_rgba(79,70,229,0.3)]"
@@ -134,7 +134,7 @@ export function TimelineSection() {
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col justify-center gap-1 pt-2 sm:pt-3">
+                <div className="flex flex-col justify-center gap-1.5 min-h-[3.5rem]">
                   <div className="flex flex-wrap items-center gap-2">
                     <h3
                       className="text-base sm:text-lg font-bold text-[var(--color-foreground)]"
