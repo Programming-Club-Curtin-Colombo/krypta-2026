@@ -97,66 +97,68 @@ export function CompetitionFocusSection() {
               const isEven = index % 2 === 0;
 
               return (
-            <li key={step.step} className="relative">
-                <AnimatedSection
-                  delay={index * 0.1}
-                  className={cn(
-                    "lg:grid lg:grid-cols-2 lg:gap-8 items-center",
-                    "lg:py-6"
-                  )}
-                >
-                  {/* Content - alternates sides on desktop */}
-                  <div
+                <li key={step.step} className="relative">
+                  <AnimatedSection
+                    delay={index * 0.1}
                     className={cn(
-                      "flex gap-5 items-start",
-                      isEven
-                        ? "lg:col-start-1 lg:justify-end lg:text-right lg:flex-row-reverse"
-                        : "lg:col-start-2 lg:justify-start"
+                      "lg:grid lg:grid-cols-2 items-center",
+                      "py-4 lg:py-8"
                     )}
                   >
-                    <div
-                      className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20"
-                      aria-hidden="true"
-                    >
-                      <step.icon className="h-6 w-6 text-[var(--color-primary)]" />
-                    </div>
+                    {/* Content - alternates sides on desktop */}
                     <div
                       className={cn(
-                        "space-y-1.5",
-                        isEven ? "lg:text-right" : "lg:text-left"
+                        "flex flex-row lg:flex-col gap-5 lg:gap-1.5 items-start",
+                        isEven
+                          ? "lg:col-start-1 lg:items-end lg:pr-14"
+                          : "lg:col-start-2 lg:items-start lg:pl-14"
                       )}
                     >
-                      <p
-                        className="text-xs font-bold text-[var(--color-primary)] tracking-widest"
-                        style={{ fontFamily: "var(--font-display)" }}
+                      {/* Mobile Icon */}
+                      <div
+                        className="lg:hidden flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20"
+                        aria-hidden="true"
                       >
-                        STEP {step.step}
-                      </p>
-                      <h3
-                        className="text-xl font-bold text-[var(--color-foreground)]"
-                        style={{ fontFamily: "var(--font-display)" }}
-                      >
-                        {step.title}
-                      </h3>
-                      <p className="text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-xs">
-                        {step.description}
-                      </p>
-                    </div>
-                  </div>
+                        <step.icon className="h-6 w-6 text-[var(--color-primary)]" />
+                      </div>
 
-                  {/* Center dot — sits on the vertical axis line */}
-                  <div
-                    className={cn(
-                      "hidden lg:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full",
-                      "border-2 border-[var(--color-primary)] bg-[var(--color-background)]",
-                      "items-center justify-center"
-                    )}
-                    aria-hidden="true"
-                  >
-                    <div className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
-                  </div>
-                </AnimatedSection>
-              </li>
+                      {/* Text */}
+                      <div className={cn("space-y-1.5", isEven ? "lg:text-right" : "lg:text-left")}>
+                        <p
+                          className="text-xs font-bold text-[var(--color-primary)] tracking-widest"
+                          style={{ fontFamily: "var(--font-display)" }}
+                        >
+                          STEP {step.step}
+                        </p>
+                        <h3
+                          className="text-xl font-bold text-[var(--color-foreground)]"
+                          style={{ fontFamily: "var(--font-display)" }}
+                        >
+                          {step.title}
+                        </h3>
+                        <p className={cn(
+                          "text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-xs",
+                          isEven ? "lg:ml-auto" : ""
+                        )}>
+                          {step.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Desktop Center Icon */}
+                    <div
+                      className={cn(
+                        "hidden lg:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2",
+                        "h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-background)] p-1.5"
+                      )}
+                      aria-hidden="true"
+                    >
+                      <div className="flex h-full w-full items-center justify-center rounded-xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 shadow-sm">
+                        <step.icon className="h-5 w-5 text-[var(--color-primary)]" />
+                      </div>
+                    </div>
+                  </AnimatedSection>
+                </li>
               );
             })}
           </ol>
