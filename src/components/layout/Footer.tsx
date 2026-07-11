@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Linkedin, Instagram, Github, Mail } from "lucide-react";
+import { Linkedin, Instagram, Mail } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +13,7 @@ const FOOTER_LINKS = {
   info: [
     { label: "Privacy Policy", href: "#" },
     { label: "Terms & Conditions", href: "#" },
-    { label: "Contact", href: "mailto:contact@krypta2026.vercel.app" },
+    { label: "Contact", href: "mailto:krypta.pc.cuc@gmail.com" },
   ],
 };
 
@@ -26,17 +26,12 @@ const SOCIAL_LINKS = [
   {
     icon: Instagram,
     label: "Follow KRYPTA 2026 on Instagram",
-    href: "#",
-  },
-  {
-    icon: Github,
-    label: "KRYPTA 2026 on GitHub",
-    href: "#",
+    href: "https://www.instagram.com/krypta.pc.cuc/",
   },
   {
     icon: Mail,
     label: "Email KRYPTA 2026",
-    href: "mailto:contact@krypta2026.vercel.app",
+    href: "mailto:krypta.pc.cuc@gmail.com",
   },
 ];
 

@@ -15,28 +15,28 @@ const PROCESS_STEPS = [
     step: "01",
     title: "Identify",
     description:
-      "Understand the problem space. Define the challenge, scope, and constraints before touching any code.",
+      "Understand the problem space. For Buildathon teams, define the product; for CTF players, analyse the challenge category and attack surface.",
   },
   {
     icon: PenLine,
     step: "02",
     title: "Design",
     description:
-      "Architect the solution. Plan the technical approach, data flow, and user experience before building.",
+      "Architect the solution. Plan technical approach, stack, and data flow before writing a single line of code or crafting an exploit.",
   },
   {
     icon: Hammer,
     step: "03",
     title: "Build",
     description:
-      "Execute with precision under time pressure. Write clean, functional code that solves the defined problem.",
+      "Execute with precision under time pressure. Ship clean, functional code or develop your CTF methodology within the allotted time.",
   },
   {
     icon: FlaskConical,
     step: "04",
     title: "Test",
     description:
-      "Validate rigorously. Ensure your solution is robust, handles edge cases, and delivers reliable output.",
+      "Validate rigorously. Ensure your build handles edge cases, or verify your CTF solution is reproducible and well-documented.",
   },
   {
     icon: Presentation,
@@ -50,7 +50,7 @@ const PROCESS_STEPS = [
     step: "06",
     title: "Compete",
     description:
-      "Stand measured against the best. Receive structured feedback and recognition for engineering excellence.",
+      "Stand measured against the best. Receive structured feedback and recognition for engineering and security excellence.",
   },
 ];
 
@@ -97,66 +97,66 @@ export function CompetitionFocusSection() {
               const isEven = index % 2 === 0;
 
               return (
-                <li key={step.step}>
-                  <AnimatedSection
-                    delay={index * 0.1}
+            <li key={step.step} className="relative">
+                <AnimatedSection
+                  delay={index * 0.1}
+                  className={cn(
+                    "lg:grid lg:grid-cols-2 lg:gap-8 items-center",
+                    "lg:py-6"
+                  )}
+                >
+                  {/* Content - alternates sides on desktop */}
+                  <div
                     className={cn(
-                      "lg:grid lg:grid-cols-2 lg:gap-16 items-center",
-                      "lg:py-6"
+                      "flex gap-5 items-start",
+                      isEven
+                        ? "lg:col-start-1 lg:justify-end lg:text-right lg:flex-row-reverse"
+                        : "lg:col-start-2 lg:justify-start"
                     )}
                   >
-                    {/* Content - alternates sides on desktop */}
                     <div
-                      className={cn(
-                        "flex gap-5 items-start",
-                        isEven
-                          ? "lg:col-start-1 lg:justify-end lg:text-right lg:flex-row-reverse"
-                          : "lg:col-start-2 lg:justify-start"
-                      )}
-                    >
-                      <div
-                        className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20"
-                        aria-hidden="true"
-                      >
-                        <step.icon className="h-6 w-6 text-[var(--color-primary)]" />
-                      </div>
-                      <div
-                        className={cn(
-                          "space-y-1.5",
-                          isEven ? "lg:text-right" : "lg:text-left"
-                        )}
-                      >
-                        <p
-                          className="text-xs font-bold text-[var(--color-primary)] tracking-widest"
-                          style={{ fontFamily: "var(--font-display)" }}
-                        >
-                          STEP {step.step}
-                        </p>
-                        <h3
-                          className="text-xl font-bold text-[var(--color-foreground)]"
-                          style={{ fontFamily: "var(--font-display)" }}
-                        >
-                          {step.title}
-                        </h3>
-                        <p className="text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-xs">
-                          {step.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Center node (desktop only) */}
-                    <div
-                      className={cn(
-                        "hidden lg:flex absolute left-1/2 -translate-x-1/2 h-5 w-5 rounded-full",
-                        "border-2 border-[var(--color-primary)] bg-[var(--color-background)]",
-                        "items-center justify-center"
-                      )}
+                      className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20"
                       aria-hidden="true"
                     >
-                      <div className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
+                      <step.icon className="h-6 w-6 text-[var(--color-primary)]" />
                     </div>
-                  </AnimatedSection>
-                </li>
+                    <div
+                      className={cn(
+                        "space-y-1.5",
+                        isEven ? "lg:text-right" : "lg:text-left"
+                      )}
+                    >
+                      <p
+                        className="text-xs font-bold text-[var(--color-primary)] tracking-widest"
+                        style={{ fontFamily: "var(--font-display)" }}
+                      >
+                        STEP {step.step}
+                      </p>
+                      <h3
+                        className="text-xl font-bold text-[var(--color-foreground)]"
+                        style={{ fontFamily: "var(--font-display)" }}
+                      >
+                        {step.title}
+                      </h3>
+                      <p className="text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-xs">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Center dot — sits on the vertical axis line */}
+                  <div
+                    className={cn(
+                      "hidden lg:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 h-5 w-5 rounded-full",
+                      "border-2 border-[var(--color-primary)] bg-[var(--color-background)]",
+                      "items-center justify-center"
+                    )}
+                    aria-hidden="true"
+                  >
+                    <div className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
+                  </div>
+                </AnimatedSection>
+              </li>
               );
             })}
           </ol>

@@ -5,7 +5,7 @@ import { ArrowDown, ChevronRight, Cpu, Users, Zap, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const STATS = [
-  { icon: Cpu, label: "Multi-track Hackathon" },
+  { icon: Cpu, label: "Buildathon & CTF Tracks" },
   { icon: Users, label: "Industry Mentors" },
   { icon: Zap, label: "Real-world Challenges" },
   { icon: MapPin, label: "Curtin University Colombo" },
@@ -77,8 +77,8 @@ export function HeroSection() {
             <span
               className={cn(
                 "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold",
-                "border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/10",
-                "text-[var(--color-primary)] dark:text-[var(--color-accent)]"
+                "border border-[var(--color-primary)]/40 bg-[var(--color-primary)]/15",
+                "text-[var(--color-primary)]"
               )}
               role="status"
               aria-label="Event status: Coming Soon"
@@ -91,7 +91,7 @@ export function HeroSection() {
           {/* Event name */}
           <motion.div variants={resolvedItemVariants} className="space-y-2">
             <h1
-              className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter gradient-text leading-none"
+              className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter gradient-text leading-tight pb-1"
               style={{ fontFamily: "var(--font-display)" }}
             >
               KRYPTA
@@ -118,9 +118,12 @@ export function HeroSection() {
             variants={resolvedItemVariants}
             className="max-w-xl text-base sm:text-lg text-[var(--color-foreground-muted)] leading-relaxed"
           >
-            A premier multi-track hackathon competition organized by the
-            Programming Club of Curtin University Colombo - where engineering
-            meets innovation under structured, real-world constraints.
+            A premier dual-track competition by the Programming Club of Curtin
+            University Colombo — featuring a{" "}
+            <span className="text-[var(--color-foreground)] font-medium">Buildathon</span>
+            {" "}for full-stack builders and a{" "}
+            <span className="text-[var(--color-foreground)] font-medium">CTF</span>
+            {" "}for security challengers.
           </motion.p>
 
           {/* CTAs */}

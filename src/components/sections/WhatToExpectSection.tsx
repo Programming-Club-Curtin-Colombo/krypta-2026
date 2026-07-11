@@ -14,33 +14,33 @@ import { cn } from "@/lib/utils";
 const FEATURES = [
   {
     icon: Layers,
-    title: "Multiple Competition Tracks",
+    title: "Buildathon Track",
     description:
-      "Compete across diverse technology domains, each with distinct challenges and judging criteria tailored to the track's focus.",
+      "Design and ship a full-stack product within the competition window. Real constraints, real deliverables, real impact.",
   },
   {
     icon: BrainCircuit,
-    title: "Industry Mentorship",
+    title: "CTF Track",
     description:
-      "Gain direct access to experienced professionals and industry leaders who guide teams through design and implementation.",
+      "Tackle security challenges across cryptography, web exploitation, reverse engineering, and forensics.",
   },
   {
     icon: Wrench,
     title: "Technical Workshops",
     description:
-      "Attend hands-on workshops before and during the event to sharpen relevant skills and prepare for the competition.",
+      "Attend hands-on workshops before and during the event to sharpen relevant skills and prepare for your chosen track.",
   },
   {
     icon: Users,
-    title: "Team Collaboration",
+    title: "Industry Mentorship",
     description:
-      "Build meaningful partnerships with peers, combining complementary skills to deliver cohesive technical solutions.",
+      "Gain direct access to experienced professionals who guide teams through design, implementation, and security strategy.",
   },
   {
     icon: Code2,
     title: "Prototype Development",
     description:
-      "Move from idea to working prototype within a fixed timeframe - real execution, real constraints, real outcomes.",
+      "Move from idea to working prototype within a fixed timeframe — real execution, real constraints, real outcomes.",
   },
   {
     icon: Monitor,
@@ -52,7 +52,7 @@ const FEATURES = [
     icon: Scale,
     title: "Professional Judging",
     description:
-      "Submissions are evaluated by qualified industry and academic judges against transparent, structured criteria.",
+      "Submissions evaluated by qualified industry and academic judges against transparent, structured criteria for each track.",
   },
   {
     icon: Network,
