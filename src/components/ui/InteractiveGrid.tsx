@@ -27,9 +27,11 @@ export function InteractiveGrid() {
     const hoverRadius = 300;
     const warpStrength = 40; 
     
+    type GridNode = { bx: number; by: number; cx: number; cy: number; vx: number; vy: number };
+
     let cols = 0;
     let rows = 0;
-    let nodes: { bx: number; by: number; cx: number; cy: number; vx: number; vy: number }[][] = [];
+    let nodes: GridNode[][] = [];
 
     const mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
 
@@ -42,20 +44,16 @@ export function InteractiveGrid() {
       cols = Math.ceil(width / spacing) + 1;
       rows = Math.ceil(height / spacing) + 1;
 
-      nodes = [];
-      for (let i = 0; i < cols; i++) {
-        nodes[i] = [];
-        for (let j = 0; j < rows; j++) {
-          nodes[i][j] = {
-            bx: i * spacing,
-            by: j * spacing,
-            cx: i * spacing,
-            cy: j * spacing,
-            vx: 0,
-            vy: 0,
-          };
-        }
-      }
+      nodes = Array.from({ length: cols }, (_, i) =>
+        Array.from({ length: rows }, (__, j) => ({
+          bx: i * spacing,
+          by: j * spacing,
+          cx: i * spacing,
+          cy: j * spacing,
+          vx: 0,
+          vy: 0,
+        }))
+      );
     };
 
     window.addEventListener("resize", resize);
