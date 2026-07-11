@@ -110,7 +110,7 @@ export function TimelineSection() {
             <li key={milestone.title}>
               <AnimatedSection
                 delay={index * 0.1}
-                className="relative flex items-start gap-6 sm:gap-8 h-32 sm:h-40"
+                className="relative flex items-start gap-6 sm:gap-8 h-24 sm:h-28"
               >
                 {/* Node */}
                 <div
