@@ -35,6 +35,12 @@ export function InteractiveGrid() {
 
     const mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
 
+    const getNode = (x: number, y: number) => {
+      const row = nodes[x];
+      if (!row) return undefined;
+      return row[y];
+    };
+
     const resize = () => {
       width = window.innerWidth;
       height = window.innerHeight;
@@ -97,7 +103,8 @@ export function InteractiveGrid() {
       // Update nodes physics
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows; j++) {
-          const node = nodes[i][j];
+          const node = getNode(i, j);
+          if (!node) continue;
 
           const dx = mouse.x - node.bx;
           const dy = mouse.y - node.by;
@@ -133,16 +140,20 @@ export function InteractiveGrid() {
       ctx.beginPath();
       for (let j = 0; j < rows; j++) {
         for (let i = 0; i < cols - 1; i++) {
-          const n1 = nodes[i][j];
-          const n2 = nodes[i + 1][j];
+          const n1 = getNode(i, j);
+          const n2 = getNode(i + 1, j);
+          if (!n1 || !n2) continue;
+
           if (i === 0) ctx.moveTo(n1.cx, n1.cy);
           ctx.lineTo(n2.cx, n2.cy);
         }
       }
       for (let i = 0; i < cols; i++) {
         for (let j = 0; j < rows - 1; j++) {
-          const n1 = nodes[i][j];
-          const n2 = nodes[i][j + 1];
+          const n1 = getNode(i, j);
+          const n2 = getNode(i, j + 1);
+          if (!n1 || !n2) continue;
+
           if (j === 0) ctx.moveTo(n1.cx, n1.cy);
           ctx.lineTo(n2.cx, n2.cy);
         }
@@ -155,8 +166,10 @@ export function InteractiveGrid() {
       if (mouse.x !== -1000) {
         for (let j = 0; j < rows; j++) {
           for (let i = 0; i < cols - 1; i++) {
-            const n1 = nodes[i][j];
-            const n2 = nodes[i + 1][j];
+            const n1 = getNode(i, j);
+            const n2 = getNode(i + 1, j);
+            if (!n1 || !n2) continue;
+
             const midX = (n1.cx + n2.cx) / 2;
             const midY = (n1.cy + n2.cy) / 2;
             
@@ -178,8 +191,10 @@ export function InteractiveGrid() {
 
         for (let i = 0; i < cols; i++) {
           for (let j = 0; j < rows - 1; j++) {
-            const n1 = nodes[i][j];
-            const n2 = nodes[i][j + 1];
+            const n1 = getNode(i, j);
+            const n2 = getNode(i, j + 1);
+            if (!n1 || !n2) continue;
+
             const midX = (n1.cx + n2.cx) / 2;
             const midY = (n1.cy + n2.cy) / 2;
             
