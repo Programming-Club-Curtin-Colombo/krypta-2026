@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Linkedin, Instagram, Mail } from "lucide-react";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { cn } from "@/lib/utils";
@@ -12,6 +12,24 @@ const NAV_LINKS = [
   { label: "What to Expect", href: "#what-to-expect" },
   { label: "Timeline", href: "#timeline" },
   { label: "Organized By", href: "#organized-by" },
+];
+
+const SOCIAL_LINKS = [
+  {
+    icon: Linkedin,
+    label: "Follow KRYPTA 2026 on LinkedIn",
+    href: "https://www.linkedin.com/showcase/krypta-2026",
+  },
+  {
+    icon: Instagram,
+    label: "Follow KRYPTA 2026 on Instagram",
+    href: "https://www.instagram.com/krypta.pc.cuc/",
+  },
+  {
+    icon: Mail,
+    label: "Email KRYPTA 2026",
+    href: "mailto:krypta.pc.cuc@gmail.com",
+  },
 ];
 
 export function Navbar() {
@@ -86,6 +104,25 @@ export function Navbar() {
 
           {/* Desktop actions */}
           <div className="hidden md:flex items-center gap-3">
+            <div className="flex items-center gap-1 mr-2" aria-label="Social media links">
+              {SOCIAL_LINKS.map(({ icon: Icon, label, href }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  aria-label={label}
+                  className={cn(
+                    "h-8 w-8 rounded-md flex items-center justify-center",
+                    "text-[var(--color-foreground-muted)] hover:text-[var(--color-primary)]",
+                    "hover:bg-[var(--color-surface-2)]",
+                    "transition-all duration-200"
+                  )}
+                >
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </a>
+              ))}
+            </div>
             <ThemeToggle />
             <a
               href="#stay-updated"
@@ -152,7 +189,27 @@ export function Navbar() {
                 </Link>
               </li>
             ))}
-            <li className="pt-2 mt-1 border-t border-[var(--color-border)]">
+            <li className="pt-4 mt-2 border-t border-[var(--color-border)]">
+              <div className="flex items-center justify-center gap-4 mb-4" aria-label="Social media links">
+                {SOCIAL_LINKS.map(({ icon: Icon, label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    aria-label={label}
+                    className={cn(
+                      "h-10 w-10 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]",
+                      "flex items-center justify-center",
+                      "text-[var(--color-foreground-muted)] hover:text-[var(--color-primary)]",
+                      "hover:border-[var(--color-primary)]",
+                      "transition-all duration-200"
+                    )}
+                  >
+                    <Icon className="h-4 w-4" aria-hidden="true" />
+                  </a>
+                ))}
+              </div>
               <a
                 href="#stay-updated"
                 onClick={() => setMobileOpen(false)}

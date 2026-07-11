@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ChevronRight, Cpu, Users, Zap, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { InteractiveGrid } from "@/components/ui/InteractiveGrid";
 
 const STATS = [
   { icon: Cpu, label: "Buildathon & CTF Tracks" },
@@ -43,16 +44,8 @@ export function HeroSection() {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden gradient-bg-subtle"
       aria-label="KRYPTA 2026 hero"
     >
-      {/* Background grid decoration */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
-        style={{
-          backgroundImage:
-            "linear-gradient(var(--color-foreground) 1px, transparent 1px), linear-gradient(90deg, var(--color-foreground) 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-        aria-hidden="true"
-      />
+      {/* Interactive Background grid decoration */}
+      <InteractiveGrid />
 
       {/* Glow orbs */}
       <div
