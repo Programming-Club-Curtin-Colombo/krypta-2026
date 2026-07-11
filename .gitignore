@@ -53,3 +53,4 @@ next-env.d.ts
 # Testing
 coverage/
 junit.xml
+next-env.d.ts
