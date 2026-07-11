@@ -40,7 +40,7 @@ const FEATURES = [
     icon: Code2,
     title: "Prototype Development",
     description:
-      "Move from idea to working prototype within a fixed timeframe — real execution, real constraints, real outcomes.",
+      "Move from idea to working prototype within a fixed timeframe - real execution, real constraints, real outcomes.",
   },
   {
     icon: Monitor,

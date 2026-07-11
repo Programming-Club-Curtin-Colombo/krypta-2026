@@ -10,7 +10,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   const [mounted, setMounted] = useState(false);
 
   // Mount guard: next-themes requires this pattern to prevent hydration mismatches.
-  // The setState is unconditional and fires exactly once — no cascading render risk.
+  // The setState is unconditional and fires exactly once - no cascading render risk.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);

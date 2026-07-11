@@ -55,7 +55,7 @@ jobs:
             reports: [{
               name: 'Next.js Build',
               status: passed ? 'passed' : 'failed',
-              comment: passed ? 'Production build succeeded.' : 'Production build failed — see build.log.'
+              comment: passed ? 'Production build succeeded.' : 'Production build failed - see build.log.'
             }]
           }, null, 2));
           "
@@ -246,7 +246,7 @@ jobs:
           const results = [];
 
           // ts-prune: "src/path/file.ts:10 - exportName"
-          // Lines ending with "(used in module)" are re-exports — skip them.
+          // Lines ending with "(used in module)" are re-exports - skip them.
           if (fs.existsSync('ts-prune.txt')) {
             const lines = fs.readFileSync('ts-prune.txt', 'utf8').split('\n').filter(Boolean);
             for (const line of lines) {
@@ -471,7 +471,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: NPM Audit (enforce — high/critical threshold)
+      - name: NPM Audit (enforce - high/critical threshold)
         id: audit
         run: npm audit --audit-level=high
         continue-on-error: true

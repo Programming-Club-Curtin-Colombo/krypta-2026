@@ -119,7 +119,7 @@ export function HeroSection() {
             className="max-w-xl text-base sm:text-lg text-[var(--color-foreground-muted)] leading-relaxed"
           >
             A premier dual-track competition by the Programming Club of Curtin
-            University Colombo — featuring a{" "}
+            University Colombo - featuring a{" "}
             <span className="text-[var(--color-foreground)] font-medium">Buildathon</span>
             {" "}for full-stack builders and a{" "}
             <span className="text-[var(--color-foreground)] font-medium">CTF</span>
