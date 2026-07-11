@@ -12,7 +12,7 @@ const FOOTER_LINKS = {
   ],
   info: [
     { label: "Privacy Policy", href: "/privacy-policy" },
-    { label: "Terms & Conditions", href: "#" },
+    { label: "Terms & Conditions", href: "/terms" },
     { label: "Contact", href: "mailto:krypta.pc.cuc@gmail.com" },
   ],
 };

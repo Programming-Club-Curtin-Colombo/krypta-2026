@@ -16,6 +16,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    {
+      url: `${SITE_URL}/terms`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
     // Future pages - uncomment as they are published:
     // { url: `${SITE_URL}/about`, changeFrequency: "monthly", priority: 0.8 },
     // { url: `${SITE_URL}/tracks`, changeFrequency: "monthly", priority: 0.8 },
