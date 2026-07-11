@@ -10,7 +10,7 @@ const CONTACT_EMAIL = "krypta.pc.cuc@gmail.com";
 export const metadata: Metadata = {
   title: "Terms & Conditions",
   description:
-    "Terms and Conditions for KRYPTA 2026 — the dual-track Buildathon and CTF hackathon organised by the Programming Club of Curtin University Colombo.",
+    "Terms and Conditions for KRYPTA 2026 - the dual-track Buildathon and CTF hackathon organised by the Programming Club of Curtin University Colombo.",
   alternates: {
     canonical: `${SITE_URL}/terms`,
   },
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
-  name: "Terms & Conditions — KRYPTA 2026",
+  name: "Terms & Conditions - KRYPTA 2026",
   description:
     "Terms and Conditions for participating in KRYPTA 2026, operated by the Programming Club of Curtin University Colombo.",
   url: `${SITE_URL}/terms`,
@@ -238,8 +238,8 @@ export default function TermsPage() {
               of showcasing KRYPTA 2026.
             </p>
             <p>
-              All content on the Site — including but not limited to text,
-              graphics, logos, and software — is the property of the Organiser
+              All content on the Site - including but not limited to text,
+              graphics, logos, and software - is the property of the Organiser
               or its licensors and is protected by applicable intellectual
               property laws. You may not reproduce or redistribute any Site
               content without prior written permission.
