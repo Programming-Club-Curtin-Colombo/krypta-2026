@@ -130,7 +130,7 @@ export function Navbar() {
               ))}
             </div>
             <ThemeToggle />
-            <a
+            <Link
               href="/#stay-updated"
               className={cn(
                 "inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold",
@@ -142,7 +142,7 @@ export function Navbar() {
               aria-label="Notify Me - Get notified about KRYPTA 2026"
             >
               Notify Me
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -223,7 +223,7 @@ export function Navbar() {
                   </a>
                 ))}
               </div>
-              <a
+              <Link
                 href="/#stay-updated"
                 onClick={() => setMobileOpen(false)}
                 className={cn(
@@ -234,7 +234,7 @@ export function Navbar() {
                 )}
               >
                 Notify Me
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
