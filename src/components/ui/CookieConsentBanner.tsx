@@ -123,8 +123,9 @@ export function CookieConsentBanner() {
                     "flex-1 sm:flex-none px-4 py-2.5 rounded-lg text-sm font-semibold",
                     "bg-[var(--color-primary)] text-white",
                     "hover:bg-[var(--color-primary-hover)]",
-                    "transition-all duration-200",
-                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+                    "transition-all duration-200 shadow-sm",
+                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2",
+                    "focus-visible:outline-none"
                   )}
                 >
                   Accept All
@@ -134,10 +135,11 @@ export function CookieConsentBanner() {
                   className={cn(
                     "flex-1 sm:flex-none px-4 py-2.5 rounded-lg text-sm font-semibold",
                     "border border-[var(--color-border)] bg-[var(--color-surface)]",
-                    "text-[var(--color-foreground)] hover:border-[var(--color-border-muted)]",
+                    "text-[var(--color-foreground)] hover:border-[var(--color-primary)]/50",
                     "hover:bg-[var(--color-surface-2)]",
                     "transition-all duration-200",
-                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2",
+                    "focus-visible:outline-none"
                   )}
                 >
                   Reject Non-Essential
@@ -148,7 +150,8 @@ export function CookieConsentBanner() {
                     "flex-1 sm:flex-none px-4 py-2.5 rounded-lg text-sm font-semibold",
                     "text-[var(--color-foreground-subtle)] hover:text-[var(--color-foreground)]",
                     "transition-all duration-200",
-                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2",
+                    "focus-visible:outline-none"
                   )}
                 >
                   Customize
@@ -203,8 +206,8 @@ export function CookieConsentBanner() {
                     </p>
                   </div>
                   <div className="flex-shrink-0">
-                    <div className="w-12 h-6 rounded-full bg-[var(--color-success)]/20 flex items-center px-1">
-                      <div className="w-4 h-4 rounded-full bg-[var(--color-success)] ml-auto" />
+                    <div className="w-12 h-6 rounded-full bg-[var(--color-success)]/20 flex items-center px-1 border border-[var(--color-success)]/30">
+                      <div className="w-4 h-4 rounded-full bg-[var(--color-success)] ml-auto shadow-sm" />
                     </div>
                   </div>
                 </div>
@@ -222,10 +225,10 @@ export function CookieConsentBanner() {
                   <button
                     onClick={() => setAnalyticsEnabled(!analyticsEnabled)}
                     className={cn(
-                      "flex-shrink-0 relative w-12 h-6 rounded-full transition-colors duration-200",
+                      "flex-shrink-0 relative w-12 h-6 rounded-full transition-colors duration-200 border",
                       analyticsEnabled
-                        ? "bg-[var(--color-primary)]"
-                        : "bg-[var(--color-border)]"
+                        ? "bg-[var(--color-primary)] border-[var(--color-primary)]"
+                        : "bg-[var(--color-surface-2)] border-[var(--color-border)]"
                     )}
                     role="switch"
                     aria-checked={analyticsEnabled}
@@ -237,7 +240,7 @@ export function CookieConsentBanner() {
                         x: analyticsEnabled ? 24 : 0,
                       }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm"
+                      className="absolute top-1 left-1 w-4 h-4 rounded-full bg-white shadow-sm border border-[var(--color-border)]/20"
                     />
                   </button>
                 </div>
@@ -250,8 +253,9 @@ export function CookieConsentBanner() {
                     "flex-1 px-4 py-2.5 rounded-lg text-sm font-semibold",
                     "bg-[var(--color-primary)] text-white",
                     "hover:bg-[var(--color-primary-hover)]",
-                    "transition-all duration-200",
-                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+                    "transition-all duration-200 shadow-sm",
+                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2",
+                    "focus-visible:outline-none"
                   )}
                 >
                   Save Preferences
@@ -261,10 +265,11 @@ export function CookieConsentBanner() {
                   className={cn(
                     "px-4 py-2.5 rounded-lg text-sm font-semibold",
                     "border border-[var(--color-border)] bg-[var(--color-surface)]",
-                    "text-[var(--color-foreground)] hover:border-[var(--color-border-muted)]",
+                    "text-[var(--color-foreground)] hover:border-[var(--color-primary)]/50",
                     "hover:bg-[var(--color-surface-2)]",
                     "transition-all duration-200",
-                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2"
+                    "focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] focus-visible:ring-offset-2",
+                    "focus-visible:outline-none"
                   )}
                 >
                   Cancel
