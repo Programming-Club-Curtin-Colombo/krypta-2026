@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Linkedin, Instagram, Mail } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { CookiePreferencesButton } from "@/components/ui/CookiePreferencesButton";
 
 const FOOTER_LINKS = {
   event: [
@@ -14,6 +15,7 @@ const FOOTER_LINKS = {
   info: [
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms & Conditions", href: "/terms" },
+    { label: "Cookie Preferences", isCookieButton: true, href: "" },
     { label: "Contact", href: "mailto:krypta.pc.cuc@gmail.com" },
   ],
 };
@@ -125,7 +127,9 @@ export function Footer() {
             <ul className="space-y-2.5" role="list">
               {FOOTER_LINKS.info.map((link) => (
                 <li key={link.label}>
-                  {link.href.startsWith("/") ? (
+                  {"isCookieButton" in link ? (
+                    <CookiePreferencesButton />
+                  ) : link.href?.startsWith("/") ? (
                     <Link
                       href={link.href}
                       className="text-sm text-[var(--color-foreground-muted)] hover:text-[var(--color-foreground)] transition-colors duration-150"

@@ -245,6 +245,32 @@ export default function PrivacyPolicyPage() {
                   .
                 </p>
               </div>
+              <hr className="border-[var(--color-border)]" />
+              <div>
+                <p className="font-semibold text-[var(--color-foreground)] mb-1">
+                  Vercel Speed Insights
+                </p>
+                <p>
+                  We use Vercel Speed Insights to collect Core Web Vitals and
+                  real-user performance metrics. This service helps us monitor
+                  and improve the Site&apos;s speed, stability, and overall user
+                  experience. Performance analytics are only enabled after you
+                  have granted consent where required by applicable privacy laws.
+                  Vercel Speed Insights may process technical information such as
+                  browser type, device information, pages visited, and similar
+                  usage data. Data is processed by Vercel Inc. Vercel&apos;s
+                  privacy policy is available at{" "}
+                  <a
+                    href="https://vercel.com/legal/privacy-policy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[var(--color-primary)] hover:underline"
+                  >
+                    vercel.com/legal/privacy-policy
+                  </a>
+                  .
+                </p>
+              </div>
             </div>
           </Section>
 
@@ -256,25 +282,36 @@ export default function PrivacyPolicyPage() {
             <ul className="list-disc pl-5 space-y-2">
               <li>
                 <strong className="text-[var(--color-foreground)]">
-                  Strictly necessary cookies:
+                  Essential cookies:
                 </strong>{" "}
                 Required for the Site to function, such as remembering your
-                theme preference (light/dark). These cannot be disabled.
+                theme preference (light/dark) and your cookie consent choices.
+                These are always enabled and cannot be disabled.
               </li>
               <li>
                 <strong className="text-[var(--color-foreground)]">
                   Analytics cookies:
                 </strong>{" "}
-                Set by Google Analytics and Microsoft Clarity to collect
-                anonymised usage statistics. You can block these via your
-                browser settings or an ad-blocking extension without affecting
-                Site functionality.
+                Set by Google Analytics, Microsoft Clarity, and Vercel Speed
+                Insights to collect anonymised usage statistics and performance
+                metrics. These are only enabled after you grant consent through
+                our cookie consent banner. You can block these via your browser
+                settings or an ad-blocking extension without affecting Site
+                functionality.
               </li>
             </ul>
             <p>
-              You can manage or delete cookies at any time through your browser
-              settings. Blocking analytics cookies will not prevent you from
-              using any part of the Site.
+              When you first visit the Site, you will see a cookie consent banner
+              that allows you to accept or reject non-essential cookies. You can
+              change your cookie preferences at any time by clicking the
+              &ldquo;Cookie Preferences&rdquo; link in the website footer. If you
+              withdraw your consent, we will stop future analytics collection and
+              remove non-essential cookies where possible.
+            </p>
+            <p>
+              You can also manage or delete cookies at any time through your
+              browser settings. Blocking analytics cookies will not prevent you
+              from using any part of the Site.
             </p>
           </Section>
 
