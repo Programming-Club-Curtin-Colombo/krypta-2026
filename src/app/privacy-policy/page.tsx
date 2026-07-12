@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 const SITE_URL = "https://krypta-2026.vercel.app";
@@ -84,21 +86,8 @@ export default function PrivacyPolicyPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
       />
 
-      <div className="min-h-screen bg-[var(--color-background)]">
-        {/* Header strip */}
-        <header className="border-b border-[var(--color-border)] bg-[var(--color-surface)] py-4">
-          <div className="container-xl">
-            <Link
-              href="/"
-              className="text-sm text-[var(--color-foreground-muted)] hover:text-[var(--color-primary)] transition-colors duration-150"
-              aria-label="Back to KRYPTA 2026 home"
-            >
-              ← Back to KRYPTA 2026
-            </Link>
-          </div>
-        </header>
-
-        <main id="main-content" className="container-xl py-16 max-w-3xl">
+      <Navbar />
+      <main id="main-content" className="container-xl py-16 max-w-3xl">
           {/* Page heading */}
           <div className="mb-12">
             <p
@@ -384,7 +373,7 @@ export default function PrivacyPolicyPage() {
             </Link>
           </div>
         </main>
-      </div>
+      <Footer />
     </>
   );
 }
