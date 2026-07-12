@@ -1,7 +1,6 @@
 "use client";
 
 import { useCookieConsent } from "@/contexts/CookieConsentContext";
-import { Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function CookiePreferencesButton() {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Check, Settings } from "lucide-react";
+import { Check, Settings } from "lucide-react";
 import { useCookieConsent } from "@/contexts/CookieConsentContext";
 import { cn } from "@/lib/utils";
 
@@ -70,7 +70,7 @@ export function CookieConsentBanner() {
                     className="mt-2 text-sm text-[var(--color-foreground-muted)] leading-relaxed"
                   >
                     We use cookies to enhance your browsing experience and analyze
-                    site traffic. By clicking "Accept All", you consent to our use
+                    site traffic. By clicking &ldquo;Accept All&rdquo;, you consent to our use
                     of analytics cookies. You can manage your preferences at any
                     time.
                   </p>

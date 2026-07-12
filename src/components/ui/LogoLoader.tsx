@@ -44,7 +44,7 @@ export function LogoLoader() {
       clearTimeout(fadeOutTimer);
       clearTimeout(removeTimer);
     };
-  }, []);
+  }, [controls, totalAnimationDuration]);
 
   if (!isVisible) {
     return null;
