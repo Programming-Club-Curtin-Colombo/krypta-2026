@@ -22,7 +22,7 @@ const inter = Inter({
 const SITE_URL = "https://krypta-2026.vercel.app";
 const SITE_NAME = "KRYPTA 2026";
 const SITE_DESCRIPTION =
-  "KRYPTA 2026: A premier dual-track hackathon organized by the Programming Club of Curtin University Colombo, featuring a Buildathon and a Capture The Flag (CTF) competition.";
+  "KRYPTA 2026: A premier multi-track competition organized by the Programming Club of Curtin University Colombo, featuring Buildathon, Capture The Flag (CTF), and Engineering tracks.";
 
 // ── Metadata ─────────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     "Capture The Flag",
     "Curtin University Colombo",
     "Programming Club",
-    "dual-track hackathon",
+    "multi-track competition",
     "technology competition",
     "engineering challenge",
     "cybersecurity competition",
@@ -126,7 +126,8 @@ const organizationSchema = {
   "@type": "Organization",
   name: "Programming Club - Curtin University Colombo",
   alternateName: "Curtin Colombo Programming Club",
-  description: "The official Programming Club of Curtin University Colombo, organizers of KRYPTA 2026.",
+  description:
+    "The official Programming Club of Curtin University Colombo, organizers of KRYPTA 2026.",
   url: SITE_URL,
   logo: `${SITE_URL}/logo/club-logo.png`,
   address: {
@@ -135,16 +136,15 @@ const organizationSchema = {
     addressLocality: "Colombo",
     addressCountry: "LK",
   },
-  sameAs: [
-    "https://www.linkedin.com/showcase/krypta-2026",
-  ],
+  sameAs: ["https://www.linkedin.com/showcase/krypta-2026"],
 };
 
 const eventSchemaOpenStage = {
   "@context": "https://schema.org",
   "@type": "Event",
   name: "KRYPTA 2026 - Open Stage",
-  description: "The online preliminary round of KRYPTA 2026. " + SITE_DESCRIPTION,
+  description:
+    "The online preliminary round of KRYPTA 2026. " + SITE_DESCRIPTION,
   url: SITE_URL,
   image: `${SITE_URL}/opengraph-image.png`,
   startDate: "2026-11-07",
@@ -201,7 +201,10 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
       <head>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-XEFQJCLG7G" strategy="lazyOnload" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-XEFQJCLG7G"
+          strategy="lazyOnload"
+        />
         <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];

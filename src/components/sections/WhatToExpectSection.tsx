@@ -1,6 +1,7 @@
 import {
   Layers,
   BrainCircuit,
+  Cog,
   Wrench,
   Users,
   Code2,
@@ -23,6 +24,12 @@ const FEATURES = [
     title: "CTF Track",
     description:
       "Tackle security challenges across cryptography, web exploitation, reverse engineering, and forensics.",
+  },
+  {
+    icon: Cog,
+    title: "Engineering Track",
+    description:
+      "Apply engineering fundamentals, practical reasoning, and teamwork to solve a focused real-world challenge.",
   },
   {
     icon: Wrench,
@@ -83,8 +90,7 @@ export function WhatToExpectSection() {
             className="text-3xl sm:text-4xl font-bold text-[var(--color-foreground)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            What to Expect at{" "}
-            <span className="gradient-text">KRYPTA 2026</span>
+            What to Expect at <span className="gradient-text">KRYPTA 2026</span>
           </h2>
         </AnimatedSection>
 
@@ -95,7 +101,11 @@ export function WhatToExpectSection() {
           aria-label="KRYPTA 2026 features"
         >
           {FEATURES.map((feature, index) => (
-            <AnimatedSection key={feature.title} delay={index * 0.06} role="listitem">
+            <AnimatedSection
+              key={feature.title}
+              delay={index * 0.06}
+              role="listitem"
+            >
               <article
                 className={cn(
                   "group h-full flex flex-col gap-4 p-6 rounded-2xl",
