@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import Script from "next/script";
 import { Space_Grotesk, Inter } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { LogoLoader } from "@/components/ui/LogoLoader";
 import "./globals.css";
@@ -244,6 +245,7 @@ export default function RootLayout({
         </a>
         <LogoLoader />
         <ThemeProvider>{children}</ThemeProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
