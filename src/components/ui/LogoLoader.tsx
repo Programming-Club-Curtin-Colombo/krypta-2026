@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useEffect, useState } from "react";
 
 const LOGO_PATHS = [
   "m 572.58525,422.97867 -153.06759,97.89723 -160.69722,103.686 -0.0398,408.4971 125.49799,78.3757 3.11648,-4.0638 -0.0881,-253.8048 -2.37843,-0.79511 c 0.39237,-50.90616 0.0553,-101.74662 -1.01808,-152.51966 v 0 l 3.34638,1.41219 C 488.31554,634.58549 589.34482,568.43567 690.34818,503.21234 v 0 l 2.18483,-5.00056 c 1.23069,-0.69313 0.98525,-1.39145 -0.006,-2.26262 v 0 l 0.0692,-3.48812 c -39.14854,-23.81705 -78.28877,-47.63063 -117.4238,-71.43903 v 0 z",
@@ -20,48 +20,51 @@ const LOGO_PATHS = [
 ];
 
 export function LogoLoader() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const controls = useAnimation();
-  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Calculate total animation duration: stagger delay + path duration
+  const totalAnimationDuration = LOGO_PATHS.length * 0.15 + 2.5;
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoaded(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    if (isLoaded) {
+    // Start fade out after all paths complete + brief pause
+    const fadeOutTimer = setTimeout(() => {
       controls.start({
         opacity: 0,
-        scale: 1.1,
-        transition: { duration: 0.5, ease: "easeInOut" },
+        transition: { duration: 0.8, ease: "easeInOut" },
       });
-    }
-  }, [isLoaded, controls]);
+    }, (totalAnimationDuration + 0.5) * 1000);
 
-  if (isLoaded) {
+    // Remove from DOM after fade out completes
+    const removeTimer = setTimeout(() => {
+      setIsVisible(false);
+    }, (totalAnimationDuration + 0.5 + 0.8) * 1000);
+
+    return () => {
+      clearTimeout(fadeOutTimer);
+      clearTimeout(removeTimer);
+    };
+  }, []);
+
+  if (!isVisible) {
     return null;
   }
 
   return (
     <motion.div
-      ref={containerRef}
       initial={{ opacity: 1 }}
       animate={controls}
       className="fixed inset-0 z-[100] flex items-center justify-center bg-[var(--color-background)]"
       aria-hidden="true"
     >
-      <div className="relative w-32 h-32 sm:w-48 sm:h-48">
+      <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80">
         <svg
           viewBox="0 0 1440 1440"
           className="w-full h-full"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g transform="translate(-14.142136,52.325902) scale(0.8)">
+          <g transform="translate(-14.142136,52.325902) scale(0.9)">
             {LOGO_PATHS.map((path, index) => (
               <motion.path
                 key={index}
@@ -72,23 +75,17 @@ export function LogoLoader() {
                   opacity: 1,
                 }}
                 transition={{
-                  duration: 1.5,
-                  delay: index * 0.1,
+                  duration: 2.5,
+                  delay: index * 0.15,
                   ease: "easeInOut",
                 }}
-                fill="url(#gradient)"
+                fill="none"
                 stroke="var(--color-primary)"
-                strokeWidth="2"
+                strokeWidth="3"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             ))}
-            <defs>
-              <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="var(--color-primary)" />
-                <stop offset="100%" stopColor="var(--color-primary-hover)" />
-              </linearGradient>
-            </defs>
           </g>
         </svg>
       </div>
