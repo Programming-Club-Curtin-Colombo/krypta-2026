@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const PROCESS_STEPS = [
   {
@@ -108,7 +109,9 @@ export function CompetitionFocusSection() {
                     )}
                   >
                     {/* Content - alternates sides on desktop */}
-                    <div
+                    <motion.div
+                      whileHover={{ x: isEven ? -4 : 4 }}
+                      transition={{ duration: 0.2 }}
                       className={cn(
                         "flex flex-row lg:flex-col gap-5 lg:gap-1.5 items-start",
                         isEven
@@ -117,12 +120,14 @@ export function CompetitionFocusSection() {
                       )}
                     >
                       {/* Mobile Icon */}
-                      <div
+                      <motion.div
+                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        transition={{ duration: 0.2 }}
                         className="lg:hidden flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20"
                         aria-hidden="true"
                       >
                         <step.icon className="h-6 w-6 text-[var(--color-primary)]" />
-                      </div>
+                      </motion.div>
 
                       {/* Text */}
                       <div
@@ -152,10 +157,12 @@ export function CompetitionFocusSection() {
                           {step.description}
                         </p>
                       </div>
-                    </div>
+                    </motion.div>
 
                     {/* Desktop Center Icon */}
-                    <div
+                    <motion.div
+                      whileHover={{ scale: 1.15, rotate: 10 }}
+                      transition={{ duration: 0.3 }}
                       className={cn(
                         "hidden lg:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2",
                         "h-14 w-14 items-center justify-center rounded-2xl bg-[var(--color-background)] p-1.5"
@@ -165,7 +172,7 @@ export function CompetitionFocusSection() {
                       <div className="flex h-full w-full items-center justify-center rounded-xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 shadow-sm">
                         <step.icon className="h-5 w-5 text-[var(--color-primary)]" />
                       </div>
-                    </div>
+                    </motion.div>
                   </AnimatedSection>
                 </li>
               );
