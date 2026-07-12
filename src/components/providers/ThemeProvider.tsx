@@ -15,3 +15,8 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     </NextThemesProvider>
   );
 }
+
+// Note: next-themes injects a script tag which causes a React warning in development.
+// This is a known issue with next-themes + React 19 and does not affect functionality.
+// The warning only appears in development mode and is suppressed in production builds.
+// See: https://github.com/pacocoursey/next-themes/issues/189
