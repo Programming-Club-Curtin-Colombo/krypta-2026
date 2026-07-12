@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Target,
   Lightbulb,
@@ -9,6 +11,7 @@ import {
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const OBJECTIVES = [
   { icon: Target, label: "Rapid Problem Solving" },
@@ -85,25 +88,29 @@ export function AboutSection() {
               </p>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3" role="list">
                 {OBJECTIVES.map(({ icon: Icon, label }) => (
-                  <li
+                  <motion.li
                     key={label}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    transition={{ duration: 0.2 }}
                     className={cn(
                       "flex items-center gap-3 p-3 rounded-xl",
                       "border border-[var(--color-border)] bg-[var(--color-card)]",
-                      "hover:border-[var(--color-primary)]/50 hover:shadow-sm",
-                      "transition-all duration-200"
+                      "hover:border-[var(--color-primary)]/50 hover:shadow-md",
+                      "transition-all duration-200 cursor-default"
                     )}
                   >
-                    <span
+                    <motion.span
+                      whileHover={{ rotate: 5, scale: 1.1 }}
+                      transition={{ duration: 0.2 }}
                       className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-[var(--color-primary)]/10"
                       aria-hidden="true"
                     >
                       <Icon className="h-4 w-4 text-[var(--color-primary)]" />
-                    </span>
+                    </motion.span>
                     <span className="text-sm font-medium text-[var(--color-foreground)]">
                       {label}
                     </span>
-                  </li>
+                  </motion.li>
                 ))}
               </ul>
             </div>

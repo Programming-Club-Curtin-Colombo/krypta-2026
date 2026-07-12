@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ChevronRight, Cpu, Users, Zap, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { InteractiveGrid } from "@/components/ui/InteractiveGrid";
+import { useEffect, useState } from "react";
 
 const STATS = [
   { icon: Cpu, label: "Three Competition Tracks" },
@@ -33,6 +34,7 @@ const itemVariants = {
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const resolvedContainerVariants = shouldReduceMotion ? {} : containerVariants;
   const resolvedItemVariants = shouldReduceMotion
@@ -42,6 +44,17 @@ export function HeroSection() {
       }
     : itemVariants;
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      setMousePosition({ x, y });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
     <section
       id="hero"
@@ -50,6 +63,17 @@ export function HeroSection() {
     >
       {/* Interactive Background grid decoration */}
       <InteractiveGrid />
+
+      {/* Mouse-following spotlight */}
+      <div
+        className="pointer-events-none fixed inset-0 z-0"
+        style={{
+          background: shouldReduceMotion
+            ? "none"
+            : `radial-gradient(600px circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(79, 70, 229, 0.08), transparent 40%)`,
+        }}
+        aria-hidden="true"
+      />
 
       {/* Glow orbs */}
       <div
@@ -139,9 +163,11 @@ export function HeroSection() {
             variants={resolvedItemVariants}
             className="flex flex-col sm:flex-row items-center gap-3 mt-2"
           >
-            <a
+            <motion.a
               href="#stay-updated"
               id="hero-notify-btn"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               className={cn(
                 "inline-flex items-center gap-2 px-6 py-3 rounded-xl text-base font-semibold",
                 "bg-[var(--color-primary)] text-white",
@@ -151,12 +177,22 @@ export function HeroSection() {
               )}
               aria-label="Notify Me - Get notified when KRYPTA 2026 launches"
             >
-              Notify Me
+              <span className="relative">
+                Notify Me
+                <motion.span
+                  className="absolute -bottom-1 left-0 right-0 h-0.5 bg-white/50"
+                  initial={{ scaleX: 0 }}
+                  whileHover={{ scaleX: 1 }}
+                  transition={{ duration: 0.2 }}
+                />
+              </span>
               <ChevronRight className="h-4 w-4" aria-hidden="true" />
-            </a>
-            <a
+            </motion.a>
+            <motion.a
               href="#about"
               id="hero-learn-more-btn"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
               className={cn(
                 "inline-flex items-center gap-2 px-6 py-3 rounded-xl text-base font-semibold",
                 "border border-[var(--color-border)] bg-[var(--color-surface)]",
@@ -167,7 +203,7 @@ export function HeroSection() {
               aria-label="Learn more about KRYPTA 2026"
             >
               Learn More
-            </a>
+            </motion.a>
           </motion.div>
 
           {/* Stats pills */}

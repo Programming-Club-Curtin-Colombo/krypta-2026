@@ -4,6 +4,7 @@ import { useState, useId } from "react";
 import { Send, CheckCircle, Loader2 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
@@ -80,7 +81,10 @@ export function StayUpdatedSection() {
 
           {/* Form or success state */}
           {formState === "success" ? (
-            <div
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.3 }}
               className={cn(
                 "flex flex-col items-center gap-3 p-6 rounded-2xl",
                 "border border-[var(--color-success)]/30 bg-[var(--color-success)]/10"
@@ -88,16 +92,25 @@ export function StayUpdatedSection() {
               role="alert"
               aria-live="polite"
             >
-              <CheckCircle className="h-8 w-8 text-[var(--color-success)]" aria-hidden="true" />
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              >
+                <CheckCircle className="h-8 w-8 text-[var(--color-success)]" aria-hidden="true" />
+              </motion.div>
               <p className="font-semibold text-[var(--color-foreground)]">
                 You&apos;re on the list!
               </p>
               <p className="text-sm text-[var(--color-foreground-muted)]">
                 We&apos;ll notify you as soon as KRYPTA 2026 details are confirmed.
               </p>
-            </div>
+            </motion.div>
           ) : (
-            <form
+            <motion.form
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
               onSubmit={handleSubmit}
               noValidate
               aria-label="Email notification signup"
@@ -108,7 +121,9 @@ export function StayUpdatedSection() {
                   <label htmlFor={emailInputId} className="sr-only">
                     Email address
                   </label>
-                  <input
+                  <motion.input
+                    whileFocus={{ scale: 1.01 }}
+                    transition={{ duration: 0.2 }}
                     id={emailInputId}
                     type="email"
                     value={email}
@@ -136,7 +151,9 @@ export function StayUpdatedSection() {
                     )}
                   />
                 </div>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   type="submit"
                   disabled={formState === "loading"}
                   className={cn(
@@ -161,25 +178,27 @@ export function StayUpdatedSection() {
                       <span>Notify Me</span>
                     </>
                   )}
-                </button>
+                </motion.button>
               </div>
 
               {/* Error message */}
               {errorMessage && (
-                <p
+                <motion.p
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
                   id="email-error"
                   className="text-sm text-[var(--color-destructive)] text-left"
                   role="alert"
                   aria-live="polite"
                 >
                   {errorMessage}
-                </p>
+                </motion.p>
               )}
 
               <p className="text-xs text-[var(--color-foreground-subtle)]">
                 No spam. Unsubscribe at any time.
               </p>
-            </form>
+            </motion.form>
           )}
         </AnimatedSection>
       </div>

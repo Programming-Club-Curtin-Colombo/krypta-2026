@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Layers,
   BrainCircuit,
@@ -11,6 +13,7 @@ import {
 } from "lucide-react";
 import { AnimatedSection } from "@/components/ui/AnimatedSection";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 const FEATURES = [
   {
@@ -106,23 +109,26 @@ export function WhatToExpectSection() {
               delay={index * 0.06}
               role="listitem"
             >
-              <article
+              <motion.article
+                whileHover={{ y: -4, scale: 1.02 }}
+                transition={{ duration: 0.2 }}
                 className={cn(
                   "group h-full flex flex-col gap-4 p-6 rounded-2xl",
                   "border border-[var(--color-card-border)] bg-[var(--color-card)]",
                   "hover:border-[var(--color-primary)]/40",
                   "hover:shadow-[var(--shadow-card-hover)]",
-                  "hover:-translate-y-1",
                   "transition-all duration-300"
                 )}
                 aria-label={feature.title}
               >
-                <div
+                <motion.div
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.4 }}
                   className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 group-hover:bg-[var(--color-primary)]/20 transition-colors duration-200"
                   aria-hidden="true"
                 >
                   <feature.icon className="h-5 w-5 text-[var(--color-primary)]" />
-                </div>
+                </motion.div>
                 <div>
                   <h3
                     className="text-sm font-semibold text-[var(--color-foreground)] mb-2"
@@ -134,7 +140,7 @@ export function WhatToExpectSection() {
                     {feature.description}
                   </p>
                 </div>
-              </article>
+              </motion.article>
             </AnimatedSection>
           ))}
         </div>
