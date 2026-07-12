@@ -8,11 +8,11 @@ import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { label: "About", href: "#about" },
+  { label: "About", href: "/#about" },
   { label: "Tracks", href: "/tracks" },
-  { label: "What to Expect", href: "#what-to-expect" },
-  { label: "Timeline", href: "#timeline" },
-  { label: "Organized By", href: "#organized-by" },
+  { label: "What to Expect", href: "/#what-to-expect" },
+  { label: "Timeline", href: "/#timeline" },
+  { label: "Organized By", href: "/#organized-by" },
 ];
 
 const SOCIAL_LINKS = [
@@ -130,8 +130,8 @@ export function Navbar() {
               ))}
             </div>
             <ThemeToggle />
-            <a
-              href="#stay-updated"
+            <Link
+              href="/#stay-updated"
               className={cn(
                 "inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold",
                 "bg-[var(--color-primary)] text-white",
@@ -142,7 +142,7 @@ export function Navbar() {
               aria-label="Notify Me - Get notified about KRYPTA 2026"
             >
               Notify Me
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -223,8 +223,8 @@ export function Navbar() {
                   </a>
                 ))}
               </div>
-              <a
-                href="#stay-updated"
+              <Link
+                href="/#stay-updated"
                 onClick={() => setMobileOpen(false)}
                 className={cn(
                   "block px-3 py-2.5 text-sm font-semibold rounded-md text-center",
@@ -234,7 +234,7 @@ export function Navbar() {
                 )}
               >
                 Notify Me
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

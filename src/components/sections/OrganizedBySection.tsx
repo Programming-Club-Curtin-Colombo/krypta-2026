@@ -104,6 +104,21 @@ export function OrganizedBySection() {
                 </div>
               ))}
             </div>
+            
+            {/* Sponsor contact CTA */}
+            <div className="mt-8">
+              <a
+                href="mailto:krypta.pc.cuc@gmail.com?subject=Sponsorship Inquiry - KRYPTA 2026"
+                className={cn(
+                  "inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold",
+                  "border border-[var(--color-primary)] text-[var(--color-primary)]",
+                  "hover:bg-[var(--color-primary)] hover:text-white",
+                  "transition-all duration-200"
+                )}
+              >
+                Interested in Sponsoring? Contact Us
+              </a>
+            </div>
           </div>
         </AnimatedSection>
       </div>

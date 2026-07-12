@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Clock3, Flag, Globe2, MapPin, ShieldCheck, Users } from "lucide-react";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 const SITE_URL = "https://krypta-2026.vercel.app";
 
@@ -91,20 +92,8 @@ export default function CtfPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
       />
 
-      <div className="min-h-screen bg-[var(--color-background)]">
-        <header className="border-b border-[var(--color-border)] bg-[var(--color-surface)] py-4">
-          <div className="container-xl">
-            <Link
-              href="/tracks"
-              className="text-sm text-[var(--color-foreground-muted)] hover:text-[var(--color-primary)] transition-colors duration-150"
-              aria-label="Back to KRYPTA 2026 tracks"
-            >
-              ← Back to Tracks
-            </Link>
-          </div>
-        </header>
-
-        <main id="main-content" className="container-xl py-16 max-w-3xl">
+      <Navbar />
+      <main id="main-content" className="container-xl py-16 max-w-3xl">
           <div className="mb-12">
             <div
               className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 mb-5"
@@ -211,7 +200,7 @@ export default function CtfPage() {
             </p>
           </Section>
         </main>
-      </div>
+      <Footer />
     </>
   );
 }
