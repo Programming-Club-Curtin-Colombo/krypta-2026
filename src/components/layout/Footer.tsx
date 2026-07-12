@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 const FOOTER_LINKS = {
   event: [
     { label: "About", href: "#about" },
+    { label: "Tracks", href: "/tracks" },
     { label: "What to Expect", href: "#what-to-expect" },
     { label: "Competition Focus", href: "#competition-focus" },
     { label: "Timeline", href: "#timeline" },
@@ -60,18 +61,22 @@ export function Footer() {
             </Link>
             <p className="text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-xs mb-6">
               Knowledge, Research & Yielding Parallel Technologies Arena.
-              <br />
-              A multi-track hackathon by the Programming Club of Curtin
+              <br />A multi-track hackathon by the Programming Club of Curtin
               University Colombo.
             </p>
             {/* Social icons */}
-            <div className="flex items-center gap-2" aria-label="Social media links">
+            <div
+              className="flex items-center gap-2"
+              aria-label="Social media links"
+            >
               {SOCIAL_LINKS.map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}
                   href={href}
                   target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  rel={
+                    href.startsWith("http") ? "noopener noreferrer" : undefined
+                  }
                   aria-label={label}
                   className={cn(
                     "h-9 w-9 rounded-lg border border-[var(--color-border)]",

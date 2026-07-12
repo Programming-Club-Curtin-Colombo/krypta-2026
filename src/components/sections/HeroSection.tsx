@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 import { InteractiveGrid } from "@/components/ui/InteractiveGrid";
 
 const STATS = [
-  { icon: Cpu, label: "Buildathon & CTF Tracks" },
+  { icon: Cpu, label: "Three Competition Tracks" },
   { icon: Users, label: "Industry Mentors" },
   { icon: Zap, label: "Real-world Challenges" },
   { icon: MapPin, label: "Curtin University Colombo" },
@@ -24,18 +24,22 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    transition: {
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+    },
   },
 };
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
 
-  const resolvedContainerVariants = shouldReduceMotion
-    ? {}
-    : containerVariants;
+  const resolvedContainerVariants = shouldReduceMotion ? {} : containerVariants;
   const resolvedItemVariants = shouldReduceMotion
-    ? { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { duration: 0.3 } } }
+    ? {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.3 } },
+      }
     : itemVariants;
 
   return (
@@ -76,7 +80,10 @@ export function HeroSection() {
               role="status"
               aria-label="Event status: Coming Soon"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)] animate-pulse" aria-hidden="true" />
+              <span
+                className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)] animate-pulse"
+                aria-hidden="true"
+              />
               Coming Soon
             </span>
           </motion.div>
@@ -111,12 +118,20 @@ export function HeroSection() {
             variants={resolvedItemVariants}
             className="max-w-xl text-base sm:text-lg text-[var(--color-foreground-muted)] leading-relaxed"
           >
-            A premier dual-track competition by the Programming Club of Curtin
+            A premier multi-track competition by the Programming Club of Curtin
             University Colombo - featuring a{" "}
-            <span className="text-[var(--color-foreground)] font-medium">Buildathon</span>
-            {" "}for full-stack builders and a{" "}
-            <span className="text-[var(--color-foreground)] font-medium">CTF</span>
-            {" "}for security challengers.
+            <span className="text-[var(--color-foreground)] font-medium">
+              Buildathon
+            </span>{" "}
+            for full-stack builders, a{" "}
+            <span className="text-[var(--color-foreground)] font-medium">
+              CTF
+            </span>{" "}
+            for security challengers, and an{" "}
+            <span className="text-[var(--color-foreground)] font-medium">
+              Engineering track
+            </span>{" "}
+            for practical problem-solvers.
           </motion.p>
 
           {/* CTAs */}
@@ -172,7 +187,10 @@ export function HeroSection() {
                   "text-[var(--color-foreground-muted)]"
                 )}
               >
-                <Icon className="h-3.5 w-3.5 text-[var(--color-primary)]" aria-hidden="true" />
+                <Icon
+                  className="h-3.5 w-3.5 text-[var(--color-primary)]"
+                  aria-hidden="true"
+                />
                 {label}
               </div>
             ))}

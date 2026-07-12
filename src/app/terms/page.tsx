@@ -10,7 +10,7 @@ const CONTACT_EMAIL = "krypta.pc.cuc@gmail.com";
 export const metadata: Metadata = {
   title: "Terms & Conditions",
   description:
-    "Terms and Conditions for KRYPTA 2026 - the dual-track Buildathon and CTF hackathon organised by the Programming Club of Curtin University Colombo.",
+    "Terms and Conditions for KRYPTA 2026 - the multi-track Buildathon, CTF, and Engineering competition organised by the Programming Club of Curtin University Colombo.",
   alternates: {
     canonical: `${SITE_URL}/terms`,
   },
@@ -149,8 +149,8 @@ export default function TermsPage() {
 
           <Section id="section-event" title="2. About KRYPTA 2026">
             <p>
-              KRYPTA 2026 is a dual-track hackathon competition comprising two
-              distinct tracks:
+              KRYPTA 2026 is a multi-track competition comprising three distinct
+              tracks:
             </p>
             <ul className="list-disc pl-5 space-y-1">
               <li>
@@ -169,12 +169,19 @@ export default function TermsPage() {
                 security-focused challenges spanning cryptography, web
                 exploitation, reverse engineering, and forensics.
               </li>
+              <li>
+                <strong className="text-[var(--color-foreground)]">
+                  Engineering Track:
+                </strong>{" "}
+                A practical engineering and problem-solving competition where
+                participants develop and communicate an evidence-backed solution
+                within a defined timeframe.
+              </li>
             </ul>
             <p>
               All specific rules, formats, prize structures, and judging
               criteria for each track will be published separately prior to
-              registration. Those rules form part of these Terms when
-              published.
+              registration. Those rules form part of these Terms when published.
             </p>
           </Section>
 
@@ -205,7 +212,10 @@ export default function TermsPage() {
             </ul>
           </Section>
 
-          <Section id="section-registration" title="4. Registration & Notification Sign-Up">
+          <Section
+            id="section-registration"
+            title="4. Registration & Notification Sign-Up"
+          >
             <p>
               Registration for the Event will open on a date to be announced.
               Providing your email address on the Site enrolls you in
@@ -230,12 +240,12 @@ export default function TermsPage() {
           <Section id="section-ip" title="5. Intellectual Property">
             <p>
               Participants retain full ownership of all original work,
-              inventions, and intellectual property created during the Event.
-              By participating, you grant the Organiser a non-exclusive,
+              inventions, and intellectual property created during the Event. By
+              participating, you grant the Organiser a non-exclusive,
               royalty-free licence to feature your project name, description,
               screenshots, and team name in post-event communications,
-              promotional materials, and social media, solely for the purpose
-              of showcasing KRYPTA 2026.
+              promotional materials, and social media, solely for the purpose of
+              showcasing KRYPTA 2026.
             </p>
             <p>
               All content on the Site - including but not limited to text,
@@ -255,9 +265,9 @@ export default function TermsPage() {
             </p>
             <ul className="list-disc pl-5 space-y-1">
               <li>
-                Harassment, discrimination, or intimidation of any kind based
-                on race, gender, religion, disability, age, sexual orientation,
-                or any other characteristic.
+                Harassment, discrimination, or intimidation of any kind based on
+                race, gender, religion, disability, age, sexual orientation, or
+                any other characteristic.
               </li>
               <li>
                 Plagiarism, submission of pre-existing work as original, or
@@ -268,8 +278,8 @@ export default function TermsPage() {
                 over other participants.
               </li>
               <li>
-                For the CTF track: attacking competition infrastructure or
-                other participants&apos; systems outside of designated challenge
+                For the CTF track: attacking competition infrastructure or other
+                participants&apos; systems outside of designated challenge
                 boundaries.
               </li>
             </ul>
@@ -280,7 +290,9 @@ export default function TermsPage() {
           </Section>
 
           <Section id="section-site-use" title="7. Use of the Site">
-            <p>You agree to use the Site only for lawful purposes. You must not:</p>
+            <p>
+              You agree to use the Site only for lawful purposes. You must not:
+            </p>
             <ul className="list-disc pl-5 space-y-1">
               <li>
                 Attempt to gain unauthorised access to any part of the Site or
@@ -299,11 +311,11 @@ export default function TermsPage() {
 
           <Section id="section-disclaimer" title="8. Disclaimer of Warranties">
             <p>
-              The Site and all information on it are provided on an
-              &ldquo;as is&rdquo; and &ldquo;as available&rdquo; basis without
-              any warranties of any kind, express or implied, including
-              warranties of merchantability, fitness for a particular purpose,
-              or non-infringement. We do not warrant that the Site will be
+              The Site and all information on it are provided on an &ldquo;as
+              is&rdquo; and &ldquo;as available&rdquo; basis without any
+              warranties of any kind, express or implied, including warranties
+              of merchantability, fitness for a particular purpose, or
+              non-infringement. We do not warrant that the Site will be
               uninterrupted, error-free, or free of viruses or other harmful
               components.
             </p>
@@ -326,10 +338,10 @@ export default function TermsPage() {
 
           <Section id="section-photos" title="10. Photography & Media">
             <p>
-              The Event may be photographed or recorded by the Organiser or
-              its appointed representatives. By attending the Event in person
-              or virtually, you grant the Organiser permission to use your
-              likeness in photographs, videos, and recordings for promotional,
+              The Event may be photographed or recorded by the Organiser or its
+              appointed representatives. By attending the Event in person or
+              virtually, you grant the Organiser permission to use your likeness
+              in photographs, videos, and recordings for promotional,
               educational, and journalistic purposes without compensation.
             </p>
             <p>
@@ -345,14 +357,17 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section id="section-changes-event" title="11. Event Changes & Cancellation">
+          <Section
+            id="section-changes-event"
+            title="11. Event Changes & Cancellation"
+          >
             <p>
               The Organiser reserves the right to modify, postpone, or cancel
               the Event at any time due to circumstances beyond its reasonable
               control, including but not limited to natural disasters, public
               health emergencies, or security concerns. In such cases, the
-              Organiser will endeavour to provide reasonable notice via the
-              Site and registered email addresses.
+              Organiser will endeavour to provide reasonable notice via the Site
+              and registered email addresses.
             </p>
             <p>
               The Organiser reserves the right to amend competition rules,
@@ -385,7 +400,10 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section id="section-changes-terms" title="14. Changes to These Terms">
+          <Section
+            id="section-changes-terms"
+            title="14. Changes to These Terms"
+          >
             <p>
               We may update these Terms from time to time. Changes will be
               indicated by an updated effective date at the top of this page.
@@ -395,9 +413,7 @@ export default function TermsPage() {
           </Section>
 
           <Section id="section-contact" title="15. Contact">
-            <p>
-              For questions about these Terms, please contact us at:
-            </p>
+            <p>For questions about these Terms, please contact us at:</p>
             <address className="not-italic">
               <a
                 href={`mailto:${CONTACT_EMAIL}`}

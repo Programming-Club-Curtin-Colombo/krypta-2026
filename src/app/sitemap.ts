@@ -22,9 +22,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
+    {
+      url: `${SITE_URL}/tracks`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/tracks/buildathon`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/tracks/ctf`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${SITE_URL}/tracks/engineering`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
     // Future pages - uncomment as they are published:
     // { url: `${SITE_URL}/about`, changeFrequency: "monthly", priority: 0.8 },
-    // { url: `${SITE_URL}/tracks`, changeFrequency: "monthly", priority: 0.8 },
     // { url: `${SITE_URL}/schedule`, changeFrequency: "weekly", priority: 0.7 },
     // { url: `${SITE_URL}/sponsors`, changeFrequency: "monthly", priority: 0.6 },
     // { url: `${SITE_URL}/judges`, changeFrequency: "monthly", priority: 0.6 },
@@ -35,4 +58,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // { url: `${SITE_URL}/contact`, changeFrequency: "monthly", priority: 0.5 },
   ];
 }
-

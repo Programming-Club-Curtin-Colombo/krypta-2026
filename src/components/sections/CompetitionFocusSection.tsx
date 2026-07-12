@@ -15,7 +15,7 @@ const PROCESS_STEPS = [
     step: "01",
     title: "Identify",
     description:
-      "Understand the problem space. For Buildathon teams, define the product; for CTF players, analyse the challenge category and attack surface.",
+      "Understand the problem space. Define the product, analyse the security challenge, or frame the engineering problem for your chosen track.",
   },
   {
     icon: PenLine,
@@ -75,12 +75,11 @@ export function CompetitionFocusSection() {
             className="text-3xl sm:text-4xl font-bold text-[var(--color-foreground)]"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            From problem to{" "}
-            <span className="gradient-text">podium.</span>
+            From problem to <span className="gradient-text">podium.</span>
           </h2>
           <p className="mt-4 text-base text-[var(--color-foreground-muted)]">
-            Every KRYPTA team follows a structured engineering process - mirroring
-            how professional teams tackle real-world challenges.
+            Every KRYPTA team follows a structured engineering process -
+            mirroring how professional teams tackle real-world challenges.
           </p>
         </AnimatedSection>
 
@@ -92,7 +91,10 @@ export function CompetitionFocusSection() {
             aria-hidden="true"
           />
 
-          <ol className="flex flex-col gap-8 lg:gap-0" aria-label="Competition process steps">
+          <ol
+            className="flex flex-col gap-8 lg:gap-0"
+            aria-label="Competition process steps"
+          >
             {PROCESS_STEPS.map((step, index) => {
               const isEven = index % 2 === 0;
 
@@ -123,7 +125,12 @@ export function CompetitionFocusSection() {
                       </div>
 
                       {/* Text */}
-                      <div className={cn("space-y-1.5", isEven ? "lg:text-right" : "lg:text-left")}>
+                      <div
+                        className={cn(
+                          "space-y-1.5",
+                          isEven ? "lg:text-right" : "lg:text-left"
+                        )}
+                      >
                         <p
                           className="text-xs font-bold text-[var(--color-primary)] tracking-widest"
                           style={{ fontFamily: "var(--font-display)" }}
@@ -136,10 +143,12 @@ export function CompetitionFocusSection() {
                         >
                           {step.title}
                         </h3>
-                        <p className={cn(
-                          "text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-xs",
-                          isEven ? "lg:ml-auto" : ""
-                        )}>
+                        <p
+                          className={cn(
+                            "text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-xs",
+                            isEven ? "lg:ml-auto" : ""
+                          )}
+                        >
                           {step.description}
                         </p>
                       </div>

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { label: "About", href: "#about" },
+  { label: "Tracks", href: "/tracks" },
   { label: "What to Expect", href: "#what-to-expect" },
   { label: "Timeline", href: "#timeline" },
   { label: "Organized By", href: "#organized-by" },
@@ -104,13 +105,18 @@ export function Navbar() {
 
           {/* Desktop actions */}
           <div className="hidden md:flex items-center gap-3">
-            <div className="flex items-center gap-1 mr-2" aria-label="Social media links">
+            <div
+              className="flex items-center gap-1 mr-2"
+              aria-label="Social media links"
+            >
               {SOCIAL_LINKS.map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}
                   href={href}
                   target={href.startsWith("http") ? "_blank" : undefined}
-                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                  rel={
+                    href.startsWith("http") ? "noopener noreferrer" : undefined
+                  }
                   aria-label={label}
                   className={cn(
                     "h-8 w-8 rounded-md flex items-center justify-center",
@@ -190,13 +196,20 @@ export function Navbar() {
               </li>
             ))}
             <li className="pt-4 mt-2 border-t border-[var(--color-border)]">
-              <div className="flex items-center justify-center gap-4 mb-4" aria-label="Social media links">
+              <div
+                className="flex items-center justify-center gap-4 mb-4"
+                aria-label="Social media links"
+              >
                 {SOCIAL_LINKS.map(({ icon: Icon, label, href }) => (
                   <a
                     key={label}
                     href={href}
                     target={href.startsWith("http") ? "_blank" : undefined}
-                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    rel={
+                      href.startsWith("http")
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                     aria-label={label}
                     className={cn(
                       "h-10 w-10 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)]",
