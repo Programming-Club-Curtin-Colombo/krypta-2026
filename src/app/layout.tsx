@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import Script from "next/script";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { LogoLoader } from "@/components/ui/LogoLoader";
 import "./globals.css";
 
 // ── Google Fonts ─────────────────────────────────────────────────────────────
@@ -241,6 +242,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        <LogoLoader />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
