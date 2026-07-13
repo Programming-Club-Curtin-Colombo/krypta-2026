@@ -13,7 +13,7 @@ import { StayUpdatedSection } from "@/components/sections/StayUpdatedSection";
 import { JsonLdEvent } from "@/components/seo/JsonLdEvent";
 import { JsonLdOrganization } from "@/components/seo/JsonLdOrganization";
 import { generateMetadata } from "@/lib/metadata";
-import { EVENT_INFO, ORGANIZATION, KEY_DATES } from "@/lib/seo-constants";
+import { EVENT_INFO, ORGANIZATION } from "@/lib/seo-constants";
 
 export const metadata: Metadata = generateMetadata({
   title: "Home",

@@ -3,7 +3,6 @@
 import {
   Layers,
   BrainCircuit,
-  Cog,
   Wrench,
   Users,
   Code2,

@@ -120,7 +120,7 @@ export default function FAQPage() {
             Still have questions?
           </h3>
           <p className="text-sm text-[var(--color-foreground-muted)] mb-4">
-            If you couldn't find the answer you're looking for, feel free to contact us directly.
+            If you couldn&apos;t find the answer you&apos;re looking for, feel free to contact us directly.
           </p>
           <a
             href="mailto:krypta.pc.cuc@gmail.com"

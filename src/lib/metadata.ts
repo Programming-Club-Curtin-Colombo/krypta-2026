@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SITE_URL, SITE_NAME, CONTACT_EMAIL } from "./seo-constants";
+import { SITE_URL, SITE_NAME } from "./seo-constants";
 
 interface PageMetadata {
   title: string;
