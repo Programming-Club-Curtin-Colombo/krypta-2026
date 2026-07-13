@@ -2,7 +2,7 @@
 
 ## Event Overview
 
-KRYPTA 2026 is a multi-track technical competition organized by the Programming Club of Curtin University Colombo. The event features three main competition tracks: Buildathon, Capture The Flag (CTF), and Engineering. The competition is designed for university students and includes a special section for school students.
+KRYPTA 2026 is a multi-track technical competition organized by the Programming Club of Curtin University Colombo. The event features two main competition tracks: Buildathon and Capture The Flag (CTF). The competition is designed for university students and includes a special section for school students.
 
 ### Key Information
 - **Event Name**: KRYPTA 2026
@@ -58,22 +58,6 @@ KRYPTA 2026 is a multi-track technical competition organized by the Programming 
   - Analyze binaries and reverse engineer unfamiliar programs
   - Examine forensic artifacts, recover evidence, and submit flags before time expires
 
-### Engineering Track
-**Description**: A practical engineering and problem-solving competition where participants develop and communicate evidence-backed solutions to focused real-world challenges.
-
-**Details**:
-- **Team Size**: 2-5 members per team
-- **Format**:
-  - Online preliminary round
-  - 8-hour on-site Grand Final
-- **Location**: Curtin University Colombo
-- **Duration**: 8-hour final
-- **What Participants Do**:
-  - Break down a technical problem, its constraints, and its success criteria
-  - Develop and compare possible solutions using sound engineering reasoning
-  - Create, test, or simulate a practical response within the competition window
-  - Communicate trade-offs, evidence, and outcomes to the judging panel
-
 ## Participation Benefits
 
 - **Certificates**: All participants receive certificates of participation
@@ -90,7 +74,7 @@ KRYPTA 2026 is a multi-track technical competition organized by the Programming 
 - **Tracks**: https://krypta-2026.vercel.app/tracks - Overview of all competition tracks
 - **Buildathon**: https://krypta-2026.vercel.app/tracks/buildathon - Detailed Buildathon track information
 - **CTF**: https://krypta-2026.vercel.app/tracks/ctf - Detailed CTF track information
-- **Engineering**: https://krypta-2026.vercel.app/tracks/engineering - Detailed Engineering track information
+- **FAQ**: https://krypta-2026.vercel.app/faq - Frequently asked questions
 - **Privacy Policy**: https://krypta-2026.vercel.app/privacy-policy - Data collection and usage policies
 - **Terms & Conditions**: https://krypta-2026.vercel.app/terms - Event rules and legal terms
 

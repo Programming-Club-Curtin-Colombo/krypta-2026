@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Blocks, Clock3, Cog, ShieldCheck } from "lucide-react";
+import { ArrowRight, Blocks, Clock3, ShieldCheck } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Breadcrumb } from "@/components/seo/Breadcrumb";
@@ -10,7 +10,7 @@ import { SITE_URL } from "@/lib/seo-constants";
 export const metadata: Metadata = generateMetadata({
   title: "Competition Tracks",
   description:
-    "Explore the Buildathon, Capture The Flag, and Engineering competition tracks at KRYPTA 2026. Registration opens September 2026.",
+    "Explore the Buildathon and Capture The Flag competition tracks at KRYPTA 2026. Registration opens September 2026.",
   path: "/tracks",
 });
 
@@ -34,15 +34,6 @@ const TRACKS = [
     teamSize: "2-5 members",
     description:
       "Solve cybersecurity challenges across cryptography, web exploitation, reverse engineering, and forensics.",
-  },
-  {
-    href: "/tracks/engineering",
-    icon: Cog,
-    title: "Engineering",
-    duration: "8-hour on-site final",
-    teamSize: "2-5 members",
-    description:
-      "Apply engineering fundamentals, practical reasoning, and teamwork to solve a focused real-world challenge.",
   },
 ];
 
@@ -98,7 +89,7 @@ export default function TracksPage() {
           </div>
 
           <div
-            className="grid grid-cols-1 md:grid-cols-3 gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 gap-5"
             role="list"
             aria-label="KRYPTA 2026 competition tracks"
           >

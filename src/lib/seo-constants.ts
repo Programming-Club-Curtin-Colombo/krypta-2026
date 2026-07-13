@@ -27,7 +27,7 @@ export const EVENT_INFO = {
       addressCountry: "LK",
     },
   },
-  description: "KRYPTA 2026 is a multi-track competition featuring Buildathon, CTF, and Engineering tracks for university and school students.",
+  description: "KRYPTA 2026 is a multi-track competition featuring Buildathon and CTF tracks for university and school students.",
   url: SITE_URL,
   organizer: {
     name: ORGANIZATION.name,
@@ -53,12 +53,6 @@ export const TRACKS = {
     name: "School Students Section",
     description: "A special track for school students with workshops and beginner-friendly challenges.",
     teamCap: 10,
-    teamSize: { min: 2, max: 5 },
-  },
-  engineering: {
-    name: "Engineering Track",
-    description: "A practical engineering and problem-solving competition where participants develop evidence-backed solutions.",
-    teamCap: null,
     teamSize: { min: 2, max: 5 },
   },
 };
