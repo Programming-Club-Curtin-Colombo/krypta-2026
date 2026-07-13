@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Blocks, Clock3, ShieldCheck } from "lucide-react";
+import { ArrowRight, Blocks, Clock3, ShieldCheck, GraduationCap } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Breadcrumb } from "@/components/seo/Breadcrumb";
 import { generateMetadata } from "@/lib/metadata";
 import { SITE_URL } from "@/lib/seo-constants";
+import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = generateMetadata({
   title: "Competition Tracks",
   description:
-    "Explore the Buildathon and Capture The Flag competition tracks at KRYPTA 2026. Registration opens September 2026.",
+    "Explore the Buildathon, Capture The Flag, and School Students competition tracks at KRYPTA 2026. Registration opens September 2026.",
   path: "/tracks",
 });
 
@@ -21,9 +22,9 @@ const TRACKS = [
     title: "Buildathon",
     duration: "24-hour on-site final",
     teamCap: "50 teams",
-    teamSize: "2-5 members",
+    teamSize: "3-4 members",
     description:
-      "Turn an idea into a functional full-stack product through an online preliminary round and an intensive on-site finale. Includes a special section for school students.",
+      "Turn an idea into a functional full-stack product through an online preliminary round and an intensive on-site finale.",
   },
   {
     href: "/tracks/ctf",
@@ -31,9 +32,20 @@ const TRACKS = [
     title: "Capture The Flag",
     duration: "12-hour on-site final",
     teamCap: "25 teams",
-    teamSize: "2-5 members",
+    teamSize: "3-4 members",
     description:
       "Solve cybersecurity challenges across cryptography, web exploitation, reverse engineering, and forensics.",
+  },
+  {
+    href: "#",
+    icon: GraduationCap,
+    title: "School Students",
+    duration: "6-hour on-site event",
+    teamCap: "10 teams",
+    teamSize: "3-4 members",
+    description:
+      "A beginner-friendly track for school students with workshops and hands-on challenges. Perfect for those new to tech competitions.",
+    isSchoolTrack: true,
   },
 ];
 
@@ -89,21 +101,31 @@ export default function TracksPage() {
           </div>
 
           <div
-            className="grid grid-cols-1 md:grid-cols-2 gap-5"
+            className="grid grid-cols-1 md:grid-cols-3 gap-5"
             role="list"
             aria-label="KRYPTA 2026 competition tracks"
           >
             {TRACKS.map(
-              ({ href, icon: Icon, title, duration, teamCap, teamSize, description }) => (
+              ({ href, icon: Icon, title, duration, teamCap, teamSize, description, isSchoolTrack }) => (
                 <Link
                   key={href}
                   href={href}
-                  className="group h-full flex flex-col gap-5 p-6 rounded-2xl border border-[var(--color-card-border)] bg-[var(--color-card)] hover:border-[var(--color-primary)]/40 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1 transition-all duration-300"
+                  className={cn(
+                    "group h-full flex flex-col gap-5 p-6 rounded-2xl border",
+                    isSchoolTrack
+                      ? "border-2 border-[var(--color-primary)]/30 bg-gradient-to-br from-[var(--color-primary)]/5 to-[var(--color-card)]"
+                      : "border-[var(--color-card-border)] bg-[var(--color-card)] hover:border-[var(--color-primary)]/40 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-1 transition-all duration-300"
+                  )}
                   role="listitem"
                   aria-label={`Explore the ${title} track`}
                 >
                   <div
-                    className="flex h-11 w-11 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 group-hover:bg-[var(--color-primary)]/20 transition-colors duration-200"
+                    className={cn(
+                      "flex h-11 w-11 items-center justify-center rounded-xl",
+                      isSchoolTrack
+                        ? "bg-[var(--color-primary)]/20"
+                        : "bg-[var(--color-primary)]/10 group-hover:bg-[var(--color-primary)]/20 transition-colors duration-200"
+                    )}
                     aria-hidden="true"
                   >
                     <Icon className="h-5 w-5 text-[var(--color-primary)]" />
@@ -133,13 +155,19 @@ export default function TracksPage() {
                       {description}
                     </p>
                   </div>
-                  <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)]">
-                    Explore track
-                    <ArrowRight
-                      className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200"
-                      aria-hidden="true"
-                    />
-                  </span>
+                  {isSchoolTrack ? (
+                    <div className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)]">
+                      <span className="bg-[var(--color-primary)]/10 px-3 py-1 rounded-lg">Beginner-Friendly</span>
+                    </div>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-[var(--color-primary)]">
+                      Explore track
+                      <ArrowRight
+                        className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200"
+                        aria-hidden="true"
+                      />
+                    </span>
+                  )}
                 </Link>
               )
             )}

@@ -9,8 +9,11 @@ import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
   { label: "About", href: "/#about" },
+  { label: "Vision", href: "/#vision" },
   { label: "Tracks", href: "/tracks" },
   { label: "What to Expect", href: "/#what-to-expect" },
+  { label: "Competition Framework", href: "/#competition-focus" },
+  { label: "Why Participate", href: "/#why-participate" },
   { label: "Timeline", href: "/#timeline" },
   { label: "Organized By", href: "/#organized-by" },
 ];
@@ -74,11 +77,11 @@ export function Navbar() {
             aria-label="KRYPTA 2026 - Home"
           >
             <Image
-              src="/logo/krypta-logo.png"
+              src="/favicon-32x32.png"
               alt="KRYPTA 2026 Logo"
-              width={140}
-              height={35}
-              className="h-8 w-auto"
+              width={32}
+              height={32}
+              className="h-8 w-8"
               priority
               loading="eager"
             />

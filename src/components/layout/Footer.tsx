@@ -55,11 +55,11 @@ export function Footer() {
               aria-label="KRYPTA 2026 Home"
             >
               <Image
-                src="/logo/krypta-logo.png"
+                src="/favicon-32x32.png"
                 alt="KRYPTA 2026 Logo"
-                width={120}
-                height={30}
-                className="h-7 w-auto"
+                width={32}
+                height={32}
+                className="h-8 w-8"
               />
             </Link>
             <p className="text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-xs mb-6">

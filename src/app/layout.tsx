@@ -201,6 +201,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
       <head>
@@ -215,7 +216,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {/* Skip to content for keyboard / screen-reader users */}
         <a href="#main-content" className="skip-link">
           Skip to main content

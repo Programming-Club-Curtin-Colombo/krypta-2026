@@ -10,7 +10,7 @@ import { EVENT_INFO, TRACKS, KEY_DATES } from "@/lib/seo-constants";
 export const metadata: Metadata = generateMetadata({
   title: "Buildathon Track",
   description:
-    "Build a full-stack product in the KRYPTA 2026 Buildathon. 50 teams cap, 2-5 members per team. Registration opens September 2026. Finals in November 2026 at Curtin University Colombo.",
+    "Build a full-stack product in the KRYPTA 2026 Buildathon. 50 teams cap, 3-4 members per team. Registration opens September 2026. Finals in November 2026 at Curtin University Colombo.",
   path: "/tracks/buildathon",
 });
 
@@ -187,9 +187,14 @@ export default function BuildathonPage() {
                 <span><strong>Finals:</strong> November 2026</span>
               </p>
             </div>
-            <p className="mt-4">
-              Includes a special section for school students with dedicated workshops and beginner-friendly challenges.
-            </p>
+            <div className="mt-4 rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
+              <h3 className="font-semibold text-[var(--color-foreground)] mb-3">Eligibility Criteria</h3>
+              <ul className="list-disc pl-5 space-y-2">
+                <li><strong>Undergraduate Students:</strong> Currently enrolled in a university undergraduate program</li>
+                <li><strong>Masters Students:</strong> Currently enrolled in a postgraduate masters program</li>
+                <li><strong>School Students:</strong> Ages 14-18, currently enrolled in secondary education (special 6-hour section with workshops)</li>
+              </ul>
+            </div>
           </Section>
         </main>
       <Footer />
