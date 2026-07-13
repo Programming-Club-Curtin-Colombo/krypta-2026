@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev --turbopack -p 3000",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
     "test:ci": "vitest run --reporter=verbose --reporter=junit --outputFile.junit=junit.xml",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "tunnel": "wait-on http://localhost:3000 && ngrok http 3000",
+    "dev:tunnel": "concurrently \"npm run dev\" \"npm run tunnel\""
   },
   "dependencies": {
     "@vercel/speed-insights": "^2.0.0",
@@ -31,12 +33,16 @@
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^6.0.3",
     "@vitest/coverage-v8": "^4.1.10",
+    "concurrently": "^10.0.3",
+    "cross-env": "^10.1.0",
     "es-abstract": "^1.24.2",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
     "jsdom": "^29.1.1",
+    "ngrok": "^5.0.0-beta.2",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.1.10"
+    "vitest": "^4.1.10",
+    "wait-on": "^9.0.10"
   }
 }
