@@ -1,0 +1,159 @@
+# KRYPTA 2026 - Complete Event Information
+
+## Event Overview
+
+KRYPTA 2026 is a multi-track technical competition organized by the Programming Club of Curtin University Colombo. The event features three main competition tracks: Buildathon, Capture The Flag (CTF), and Engineering. The competition is designed for university students and includes a special section for school students.
+
+### Key Information
+- **Event Name**: KRYPTA 2026
+- **Organizer**: Programming Club of Curtin University Colombo
+- **Venue**: Curtin University Colombo, Nawam Mawatha, Colombo, Sri Lanka
+- **Registration Opens**: September 2026 (first week)
+- **Primary Rounds Start**: November 1, 2026
+- **Finals**: November 25-30, 2026
+- **Website**: https://krypta-2026.vercel.app
+- **Contact Email**: krypta.pc.cuc@gmail.com
+- **Social Media**: 
+  - Instagram: https://instagram.com/krypta.cuc
+  - LinkedIn: https://linkedin.com/company/krypta-cuc
+  - Facebook: https://facebook.com/krypta.cuc
+
+## Competition Tracks
+
+### Buildathon Track
+**Description**: A product-building competition where teams design, develop, and present functional software solutions through an online preliminary round and an intensive on-site finale.
+
+**Details**:
+- **Team Cap**: 50 teams total
+- **Team Size**: 2-5 members per team
+- **Format**: 
+  - Online preliminary round
+  - 24-hour on-site Grand Final
+- **Special Section**: School Students Section
+  - **Team Cap**: 10 teams
+  - **Team Size**: 2-5 members
+  - **Features**: Dedicated workshops and beginner-friendly challenges
+- **Location**: Curtin University Colombo
+- **Duration**: 24-hour final
+- **What Participants Do**:
+  - Interpret a challenge and define a focused product concept
+  - Design and implement front end, back end, and supporting integrations
+  - Test, refine, and document a functional solution within the competition window
+  - Present the product and its technical decisions to the judging panel
+
+### Capture The Flag (CTF) Track
+**Description**: A cybersecurity competition featuring challenges across cryptography, web exploitation, reverse engineering, and forensics.
+
+**Details**:
+- **Team Cap**: 25 teams
+- **Team Size**: 2-5 members per team
+- **Format**:
+  - Online qualifier
+  - 12-hour on-site Grand Final
+- **Location**: Curtin University Colombo
+- **Duration**: 12-hour final
+- **What Participants Do**:
+  - Break ciphers and identify patterns in cryptographic tasks
+  - Investigate web applications for exploitable behavior and hidden data
+  - Analyze binaries and reverse engineer unfamiliar programs
+  - Examine forensic artifacts, recover evidence, and submit flags before time expires
+
+### Engineering Track
+**Description**: A practical engineering and problem-solving competition where participants develop and communicate evidence-backed solutions to focused real-world challenges.
+
+**Details**:
+- **Team Size**: 2-5 members per team
+- **Format**:
+  - Online preliminary round
+  - 8-hour on-site Grand Final
+- **Location**: Curtin University Colombo
+- **Duration**: 8-hour final
+- **What Participants Do**:
+  - Break down a technical problem, its constraints, and its success criteria
+  - Develop and compare possible solutions using sound engineering reasoning
+  - Create, test, or simulate a practical response within the competition window
+  - Communicate trade-offs, evidence, and outcomes to the judging panel
+
+## Participation Benefits
+
+- **Certificates**: All participants receive certificates of participation
+- **Prizes**: Winning teams receive cash prizes
+- **Workshops**: 
+  - Dedicated workshops available for school students
+  - Support workshops available for university participants
+- **Networking**: Opportunity to connect with peers and industry professionals
+- **Skill Development**: Hands-on experience in technical problem-solving and teamwork
+
+## Important Pages
+
+- **Home**: https://krypta-2026.vercel.app - Main landing page with event overview
+- **Tracks**: https://krypta-2026.vercel.app/tracks - Overview of all competition tracks
+- **Buildathon**: https://krypta-2026.vercel.app/tracks/buildathon - Detailed Buildathon track information
+- **CTF**: https://krypta-2026.vercel.app/tracks/ctf - Detailed CTF track information
+- **Engineering**: https://krypta-2026.vercel.app/tracks/engineering - Detailed Engineering track information
+- **Privacy Policy**: https://krypta-2026.vercel.app/privacy-policy - Data collection and usage policies
+- **Terms & Conditions**: https://krypta-2026.vercel.app/terms - Event rules and legal terms
+
+## Registration Process
+
+Registration opens in September 2026 (first week). Participants can register through the official website. Team registration is required for all tracks. The registration process includes:
+- Team formation (2-5 members)
+- Track selection
+- Eligibility verification
+- Consent to terms and conditions
+
+## Eligibility
+
+- Participants must be currently enrolled students or recent graduates
+- Participants must be at least 18 years old, or have written parental/guardian consent if under 18
+- Organizers, judges, mentors, and their immediate family members are not eligible to compete
+- The organizer reserves the right to verify eligibility and disqualify any participant who does not meet the requirements
+
+## Code of Conduct
+
+All participants, mentors, judges, volunteers, and attendees are expected to uphold a standard of professional and respectful conduct throughout the event. The following are strictly prohibited:
+- Harassment, discrimination, or intimidation of any kind
+- Plagiarism, submission of pre-existing work as original, or violation of intellectual property rights
+- Any attempt to disrupt, sabotage, or gain an unfair advantage over other participants
+- For the CTF track: attacking competition infrastructure or other participants' systems outside of designated challenge boundaries
+
+Violation of the Code of Conduct may result in immediate disqualification and removal from the event without recourse.
+
+## Contact Information
+
+For questions about KRYPTA 2026, please contact:
+- **Email**: krypta.pc.cuc@gmail.com
+- **Address**: Programming Club of Curtin University Colombo, Nawam Mawatha, Colombo, Sri Lanka
+
+## Privacy and Data
+
+KRYPTA 2026 collects and processes personal information including:
+- Email addresses for registration and notifications
+- Analytics data (Google Analytics, Microsoft Clarity, Vercel Speed Insights) with user consent
+- Cookie data with user consent
+
+Detailed information about data collection and usage is available in the Privacy Policy at https://krypta-2026.vercel.app/privacy-policy
+
+## Technical Implementation
+
+The KRYPTA 2026 website is built with:
+- **Framework**: Next.js
+- **Styling**: Tailwind CSS with custom CSS variables for theming
+- **Components**: shadcn/ui
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Theme Management**: next-themes for dark/light mode
+- **Analytics**: Google Analytics, Microsoft Clarity, Vercel Speed Insights (with consent)
+- **Cookie Consent**: Custom implementation with GDPR compliance
+
+## SEO and Discoverability
+
+The website implements:
+- Structured data (JSON-LD) for events, organizations, and web pages
+- Breadcrumb navigation with schema markup
+- Comprehensive metadata for all pages
+- Canonical URLs
+- Open Graph tags for social sharing
+- Twitter/X card support
+- Robots.txt configuration
+- LLM-readable documentation (/llms.txt and /llms-full.txt)

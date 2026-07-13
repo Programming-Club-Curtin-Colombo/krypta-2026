@@ -9,62 +9,18 @@ import {
 } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { Breadcrumb } from "@/components/seo/Breadcrumb";
+import { JsonLdEvent } from "@/components/seo/JsonLdEvent";
+import { generateMetadata } from "@/lib/metadata";
+import { EVENT_INFO, TRACKS, KEY_DATES } from "@/lib/seo-constants";
 
-const SITE_URL = "https://krypta-2026.vercel.app";
-
-export const metadata: Metadata = {
+export const metadata: Metadata = generateMetadata({
   title: "Engineering Track",
   description:
-    "Solve a practical engineering challenge through the KRYPTA 2026 online preliminary round and 8-hour on-premises final.",
-  alternates: {
-    canonical: `${SITE_URL}/tracks/engineering`,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  openGraph: {
-    title: "Engineering Track | KRYPTA 2026",
-    description:
-      "A multi-stage engineering and problem-solving competition culminating in an 8-hour final at Curtin University Colombo.",
-    url: `${SITE_URL}/tracks/engineering`,
-    type: "website",
-  },
-};
+    "Solve practical engineering challenges in the KRYPTA 2026 Engineering track. 2-5 members per team. Registration opens September 2026. Finals in November 2026 at Curtin University Colombo.",
+  path: "/tracks/engineering",
+});
 
-const eventSchema = {
-  "@context": "https://schema.org",
-  "@type": "Event",
-  name: "KRYPTA 2026 - Engineering Grand Final",
-  description:
-    "An 8-hour on-premises engineering and problem-solving final at Curtin University Colombo. Finalists qualify through an online preliminary round.",
-  url: `${SITE_URL}/tracks/engineering`,
-  image: `${SITE_URL}/opengraph-image.png`,
-  startDate: "2026-11-28",
-  duration: "PT8H",
-  eventStatus: "https://schema.org/EventScheduled",
-  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  location: {
-    "@type": "Place",
-    name: "Curtin University Colombo",
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "LK",
-    },
-  },
-  organizer: {
-    "@type": "Organization",
-    name: "Programming Club of Curtin University Colombo",
-    url: SITE_URL,
-  },
-  superEvent: {
-    "@type": "Event",
-    name: "KRYPTA 2026 - Engineering Track",
-    description:
-      "A two-stage competition beginning with an online preliminary round before the on-premises Grand Final.",
-    url: `${SITE_URL}/tracks/engineering`,
-  },
-};
 
 function Section({
   id,
@@ -94,13 +50,28 @@ function Section({
 export default function EngineeringPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
+      <JsonLdEvent
+        name="KRYPTA 2026 - Engineering Grand Final"
+        startDate={KEY_DATES.finals}
+        endDate={KEY_DATES.finals}
+        location={EVENT_INFO.location}
+        description="An 8-hour on-premises engineering and problem-solving final at Curtin University Colombo. Finalists qualify through an online preliminary round."
+        url={`${EVENT_INFO.url}/tracks/engineering`}
+        organizer={EVENT_INFO.organizer}
       />
 
       <Navbar />
       <main id="main-content" className="container-xl py-16 max-w-3xl">
+          <div className="mb-8">
+            <Breadcrumb
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Tracks", href: "/tracks" },
+                { name: "Engineering", href: "/tracks/engineering" },
+              ]}
+              className="mb-6"
+            />
+          </div>
           <div className="mb-12">
             <div
               className="flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 mb-5"
@@ -198,15 +169,29 @@ export default function EngineeringPage() {
               teamwork, iteration, and a defensible result matter as much as
               speed.
             </p>
-            <p className="flex items-start gap-2">
-              <Users
-                className="h-4 w-4 mt-0.5 shrink-0 text-[var(--color-primary)]"
-                aria-hidden="true"
-              />
-              Final team sizes, eligibility requirements, judging criteria,
-              permitted equipment, and submission rules will be published with
-              registration details.
-            </p>
+            <div className="space-y-2">
+              <p className="flex items-center gap-2">
+                <Users
+                  className="h-4 w-4 text-[var(--color-primary)]"
+                  aria-hidden="true"
+                />
+                <span><strong>Team Size:</strong> {TRACKS.engineering.teamSize.min}-{TRACKS.engineering.teamSize.max} members</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <Clock3
+                  className="h-4 w-4 text-[var(--color-primary)]"
+                  aria-hidden="true"
+                />
+                <span><strong>Registration Opens:</strong> {KEY_DATES.registrationOpens}</span>
+              </p>
+              <p className="flex items-center gap-2">
+                <Clock3
+                  className="h-4 w-4 text-[var(--color-primary)]"
+                  aria-hidden="true"
+                />
+                <span><strong>Finals:</strong> November 2026</span>
+              </p>
+            </div>
           </Section>
         </main>
       <Footer />

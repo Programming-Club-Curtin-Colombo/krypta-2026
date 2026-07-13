@@ -3,28 +3,16 @@ import Link from "next/link";
 import { ArrowRight, Blocks, Clock3, Cog, ShieldCheck } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { Breadcrumb } from "@/components/seo/Breadcrumb";
+import { generateMetadata } from "@/lib/metadata";
+import { SITE_URL } from "@/lib/seo-constants";
 
-const SITE_URL = "https://krypta-2026.vercel.app";
-
-export const metadata: Metadata = {
+export const metadata: Metadata = generateMetadata({
   title: "Competition Tracks",
   description:
-    "Explore the Buildathon, Capture The Flag, and Engineering competition tracks at KRYPTA 2026.",
-  alternates: {
-    canonical: `${SITE_URL}/tracks`,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  openGraph: {
-    title: "Competition Tracks | KRYPTA 2026",
-    description:
-      "Choose from three multi-stage competition tracks: Buildathon, Capture The Flag, and Engineering.",
-    url: `${SITE_URL}/tracks`,
-    type: "website",
-  },
-};
+    "Explore the Buildathon, Capture The Flag, and Engineering competition tracks at KRYPTA 2026. Registration opens September 2026.",
+  path: "/tracks",
+});
 
 const TRACKS = [
   {
@@ -32,14 +20,18 @@ const TRACKS = [
     icon: Blocks,
     title: "Buildathon",
     duration: "24-hour on-site final",
+    teamCap: "50 teams",
+    teamSize: "2-5 members",
     description:
-      "Turn an idea into a functional full-stack product through an online preliminary round and an intensive on-site finale.",
+      "Turn an idea into a functional full-stack product through an online preliminary round and an intensive on-site finale. Includes a special section for school students.",
   },
   {
     href: "/tracks/ctf",
     icon: ShieldCheck,
     title: "Capture The Flag",
     duration: "12-hour on-site final",
+    teamCap: "25 teams",
+    teamSize: "2-5 members",
     description:
       "Solve cybersecurity challenges across cryptography, web exploitation, reverse engineering, and forensics.",
   },
@@ -48,6 +40,7 @@ const TRACKS = [
     icon: Cog,
     title: "Engineering",
     duration: "8-hour on-site final",
+    teamSize: "2-5 members",
     description:
       "Apply engineering fundamentals, practical reasoning, and teamwork to solve a focused real-world challenge.",
   },
@@ -75,6 +68,15 @@ export default function TracksPage() {
 
       <Navbar />
       <main id="main-content" className="container-xl py-16">
+          <div className="max-w-3xl mb-8">
+            <Breadcrumb
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Tracks", href: "/tracks" },
+              ]}
+              className="mb-6"
+            />
+          </div>
           <div className="max-w-3xl mb-12">
             <p
               className="text-xs font-semibold uppercase tracking-widest text-[var(--color-primary)] mb-3"
@@ -91,7 +93,7 @@ export default function TracksPage() {
             <p className="text-base text-[var(--color-foreground-muted)] leading-relaxed">
               Every track begins online, where participants take on a
               preliminary or qualifier stage. Successful competitors advance to
-              the Grand Finals at Curtin University Colombo.
+              the Grand Finals at Curtin University Colombo in November 2026. Registration opens September 2026.
             </p>
           </div>
 
@@ -101,7 +103,7 @@ export default function TracksPage() {
             aria-label="KRYPTA 2026 competition tracks"
           >
             {TRACKS.map(
-              ({ href, icon: Icon, title, duration, description }) => (
+              ({ href, icon: Icon, title, duration, teamCap, teamSize, description }) => (
                 <Link
                   key={href}
                   href={href}
@@ -122,10 +124,20 @@ export default function TracksPage() {
                     >
                       {title}
                     </h2>
-                    <p className="flex items-center gap-2 text-xs font-medium text-[var(--color-primary)] mb-3">
-                      <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
-                      {duration}
-                    </p>
+                    <div className="space-y-2 mb-3">
+                      <p className="flex items-center gap-2 text-xs font-medium text-[var(--color-primary)]">
+                        <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
+                        {duration}
+                      </p>
+                      {teamCap && (
+                        <p className="flex items-center gap-2 text-xs font-medium text-[var(--color-foreground-subtle)]">
+                          <span className="font-semibold">Team Cap:</span> {teamCap}
+                        </p>
+                      )}
+                      <p className="flex items-center gap-2 text-xs font-medium text-[var(--color-foreground-subtle)]">
+                        <span className="font-semibold">Team Size:</span> {teamSize}
+                      </p>
+                    </div>
                     <p className="text-sm text-[var(--color-foreground-muted)] leading-relaxed">
                       {description}
                     </p>
