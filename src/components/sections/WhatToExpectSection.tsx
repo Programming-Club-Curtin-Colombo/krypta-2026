@@ -3,7 +3,6 @@
 import {
   Layers,
   BrainCircuit,
-  Cog,
   Wrench,
   Users,
   Code2,
@@ -27,12 +26,6 @@ const FEATURES = [
     title: "CTF Track",
     description:
       "Tackle security challenges across cryptography, web exploitation, reverse engineering, and forensics.",
-  },
-  {
-    icon: Cog,
-    title: "Engineering Track",
-    description:
-      "Apply engineering fundamentals, practical reasoning, and teamwork to solve a focused real-world challenge.",
   },
   {
     icon: Wrench,

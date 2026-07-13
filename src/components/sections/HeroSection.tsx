@@ -7,7 +7,7 @@ import { InteractiveGrid } from "@/components/ui/InteractiveGrid";
 import { useEffect, useState } from "react";
 
 const STATS = [
-  { icon: Cpu, label: "Three Competition Tracks" },
+  { icon: Cpu, label: "Two Competition Tracks" },
   { icon: Users, label: "Industry Mentors" },
   { icon: Zap, label: "Real-world Challenges" },
   { icon: MapPin, label: "Curtin University Colombo" },
@@ -147,15 +147,11 @@ export function HeroSection() {
             <span className="text-[var(--color-foreground)] font-medium">
               Buildathon
             </span>{" "}
-            for full-stack builders, a{" "}
+            for full-stack builders and a{" "}
             <span className="text-[var(--color-foreground)] font-medium">
               CTF
             </span>{" "}
-            for security challengers, and an{" "}
-            <span className="text-[var(--color-foreground)] font-medium">
-              Engineering track
-            </span>{" "}
-            for practical problem-solvers.
+            for security challengers.
           </motion.p>
 
           {/* CTAs */}

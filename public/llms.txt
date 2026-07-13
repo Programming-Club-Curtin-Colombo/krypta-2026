@@ -1,0 +1,46 @@
+# KRYPTA 2026
+
+KRYPTA 2026 is a multi-track competition organized by the Programming Club of Curtin University Colombo.
+
+## Event Overview
+
+- **Event Name**: KRYPTA 2026
+- **Organizer**: Programming Club of Curtin University Colombo
+- **Venue**: Curtin University Colombo, Nawam Mawatha, Colombo, Sri Lanka
+- **Registration Opens**: September 2026
+- **Primary Rounds Start**: November 1, 2026
+- **Finals**: November 25-30, 2026
+- **Website**: https://krypta-2026.vercel.app
+- **Contact**: krypta.pc.cuc@gmail.com
+
+## Competition Tracks
+
+### Buildathon Track
+- **Description**: A product-building competition where teams design, develop, and present functional software solutions
+- **Team Cap**: 50 teams
+- **Team Size**: 2-5 members
+- **Format**: Online preliminary round + 24-hour on-site final
+- **Special Section**: School students section with dedicated workshops (10 teams cap)
+
+### Capture The Flag (CTF) Track
+- **Description**: A cybersecurity competition featuring challenges in cryptography, web exploitation, reverse engineering, and forensics
+- **Team Cap**: 25 teams
+- **Team Size**: 2-5 members
+- **Format**: Online qualifier + 12-hour on-site final
+
+## Important Pages
+
+- **Home**: https://krypta-2026.vercel.app
+- **Tracks**: https://krypta-2026.vercel.app/tracks
+- **Buildathon**: https://krypta-2026.vercel.app/tracks/buildathon
+- **CTF**: https://krypta-2026.vercel.app/tracks/ctf
+- **FAQ**: https://krypta-2026.vercel.app/faq
+- **Privacy Policy**: https://krypta-2026.vercel.app/privacy-policy
+- **Terms & Conditions**: https://krypta-2026.vercel.app/terms
+
+## Participation
+
+- All participants receive certificates of participation
+- Winning teams receive cash prizes
+- Workshops available for school students
+- Support workshops available for other participants

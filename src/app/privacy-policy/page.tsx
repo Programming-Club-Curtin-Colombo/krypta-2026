@@ -2,54 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { Breadcrumb } from "@/components/seo/Breadcrumb";
+import { generateMetadata } from "@/lib/metadata";
+import { SITE_URL, CONTACT_EMAIL } from "@/lib/seo-constants";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-const SITE_URL = "https://krypta-2026.vercel.app";
 const EFFECTIVE_DATE = "July 11, 2025";
-const CONTACT_EMAIL = "krypta.pc.cuc@gmail.com";
 
 // ── Metadata ─────────────────────────────────────────────────────────────────
-export const metadata: Metadata = {
+export const metadata: Metadata = generateMetadata({
   title: "Privacy Policy",
   description:
     "Learn how KRYPTA 2026 collects, uses, and protects your personal information including email addresses, analytics data, and cookies.",
-  alternates: {
-    canonical: `${SITE_URL}/privacy-policy`,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  openGraph: {
-    title: "Privacy Policy | KRYPTA 2026",
-    description:
-      "How KRYPTA 2026 handles your data - email collection, analytics, and cookies.",
-    url: `${SITE_URL}/privacy-policy`,
-    type: "website",
-  },
-};
-
-// ── JSON-LD ───────────────────────────────────────────────────────────────────
-const webPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "Privacy Policy - KRYPTA 2026",
-  description:
-    "Privacy Policy for the KRYPTA 2026 hackathon website, operated by the Programming Club of Curtin University Colombo.",
-  url: `${SITE_URL}/privacy-policy`,
-  inLanguage: "en",
-  isPartOf: {
-    "@type": "WebSite",
-    name: "KRYPTA 2026",
-    url: SITE_URL,
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Programming Club - Curtin University Colombo",
-    url: SITE_URL,
-  },
-  dateModified: new Date().toISOString(),
-};
+  path: "/privacy-policy",
+});
 
 // ── Section helper ────────────────────────────────────────────────────────────
 function Section({
@@ -81,13 +47,17 @@ function Section({
 export default function PrivacyPolicyPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
-      />
-
       <Navbar />
       <main id="main-content" className="container-xl py-16 max-w-3xl">
+          <div className="mb-8">
+            <Breadcrumb
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Privacy Policy", href: "/privacy-policy" },
+              ]}
+              className="mb-6"
+            />
+          </div>
           {/* Page heading */}
           <div className="mb-12">
             <p

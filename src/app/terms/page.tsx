@@ -2,54 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { Breadcrumb } from "@/components/seo/Breadcrumb";
+import { generateMetadata } from "@/lib/metadata";
+import { SITE_URL, CONTACT_EMAIL } from "@/lib/seo-constants";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-const SITE_URL = "https://krypta-2026.vercel.app";
 const EFFECTIVE_DATE = "July 11, 2025";
-const CONTACT_EMAIL = "krypta.pc.cuc@gmail.com";
 
 // ── Metadata ─────────────────────────────────────────────────────────────────
-export const metadata: Metadata = {
+export const metadata: Metadata = generateMetadata({
   title: "Terms & Conditions",
   description:
-    "Terms and Conditions for KRYPTA 2026 - the multi-track Buildathon, CTF, and Engineering competition organised by the Programming Club of Curtin University Colombo.",
-  alternates: {
-    canonical: `${SITE_URL}/terms`,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  openGraph: {
-    title: "Terms & Conditions | KRYPTA 2026",
-    description:
-      "Rules, eligibility, intellectual property, and liability terms for the KRYPTA 2026 hackathon.",
-    url: `${SITE_URL}/terms`,
-    type: "website",
-  },
-};
-
-// ── JSON-LD ───────────────────────────────────────────────────────────────────
-const webPageSchema = {
-  "@context": "https://schema.org",
-  "@type": "WebPage",
-  name: "Terms & Conditions - KRYPTA 2026",
-  description:
-    "Terms and Conditions for participating in KRYPTA 2026, operated by the Programming Club of Curtin University Colombo.",
-  url: `${SITE_URL}/terms`,
-  inLanguage: "en",
-  isPartOf: {
-    "@type": "WebSite",
-    name: "KRYPTA 2026",
-    url: SITE_URL,
-  },
-  publisher: {
-    "@type": "Organization",
-    name: "Programming Club - Curtin University Colombo",
-    url: SITE_URL,
-  },
-  dateModified: new Date().toISOString(),
-};
+    "Terms and Conditions for KRYPTA 2026 - the multi-track Buildathon and CTF competition organised by the Programming Club of Curtin University Colombo.",
+  path: "/terms",
+});
 
 // ── Section helper ────────────────────────────────────────────────────────────
 function Section({
@@ -81,13 +47,17 @@ function Section({
 export default function TermsPage() {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webPageSchema) }}
-      />
-
       <Navbar />
       <main id="main-content" className="container-xl py-16 max-w-3xl">
+          <div className="mb-8">
+            <Breadcrumb
+              items={[
+                { name: "Home", href: "/" },
+                { name: "Terms & Conditions", href: "/terms" },
+              ]}
+              className="mb-6"
+            />
+          </div>
           {/* Page heading */}
           <div className="mb-12">
             <p
@@ -157,14 +127,6 @@ export default function TermsPage() {
                 A cybersecurity competition where participants solve
                 security-focused challenges spanning cryptography, web
                 exploitation, reverse engineering, and forensics.
-              </li>
-              <li>
-                <strong className="text-[var(--color-foreground)]">
-                  Engineering Track:
-                </strong>{" "}
-                A practical engineering and problem-solving competition where
-                participants develop and communicate an evidence-backed solution
-                within a defined timeframe.
               </li>
             </ul>
             <p>

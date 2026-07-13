@@ -13,6 +13,7 @@ const FOOTER_LINKS = {
     { label: "Timeline", href: "#timeline" },
   ],
   info: [
+    { label: "FAQ", href: "/faq" },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms & Conditions", href: "/terms" },
     { label: "Cookie Preferences", isCookieButton: true, href: "" },
