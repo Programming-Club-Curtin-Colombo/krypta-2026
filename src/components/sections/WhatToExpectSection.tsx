@@ -29,12 +29,6 @@ const FEATURES = [
       "Tackle security challenges across cryptography, web exploitation, reverse engineering, and forensics.",
   },
   {
-    icon: Cog,
-    title: "Engineering Track",
-    description:
-      "Apply engineering fundamentals, practical reasoning, and teamwork to solve a focused real-world challenge.",
-  },
-  {
     icon: Wrench,
     title: "Technical Workshops",
     description:

@@ -18,7 +18,7 @@ const PROCESS_STEPS = [
     step: "01",
     title: "Identify",
     description:
-      "Understand the problem space. Define the product, analyse the security challenge, or frame the engineering problem for your chosen track.",
+      "Understand the problem space. Define the product or analyse the security challenge for your chosen track.",
   },
   {
     icon: PenLine,
@@ -53,7 +53,7 @@ const PROCESS_STEPS = [
     step: "06",
     title: "Compete",
     description:
-      "Stand measured against the best. Receive structured feedback and recognition for engineering and security excellence.",
+      "Stand measured against the best. Receive structured feedback and recognition for technical and security excellence.",
   },
 ];
 
@@ -81,7 +81,7 @@ export function CompetitionFocusSection() {
             From problem to <span className="gradient-text">podium.</span>
           </h2>
           <p className="mt-4 text-base text-[var(--color-foreground-muted)]">
-            Every KRYPTA team follows a structured engineering process -
+            Every KRYPTA team follows a structured development process -
             mirroring how professional teams tackle real-world challenges.
           </p>
         </AnimatedSection>

@@ -13,7 +13,7 @@ const EFFECTIVE_DATE = "July 11, 2025";
 export const metadata: Metadata = generateMetadata({
   title: "Terms & Conditions",
   description:
-    "Terms and Conditions for KRYPTA 2026 - the multi-track Buildathon, CTF, and Engineering competition organised by the Programming Club of Curtin University Colombo.",
+    "Terms and Conditions for KRYPTA 2026 - the multi-track Buildathon and CTF competition organised by the Programming Club of Curtin University Colombo.",
   path: "/terms",
 });
 
@@ -127,14 +127,6 @@ export default function TermsPage() {
                 A cybersecurity competition where participants solve
                 security-focused challenges spanning cryptography, web
                 exploitation, reverse engineering, and forensics.
-              </li>
-              <li>
-                <strong className="text-[var(--color-foreground)]">
-                  Engineering Track:
-                </strong>{" "}
-                A practical engineering and problem-solving competition where
-                participants develop and communicate an evidence-backed solution
-                within a defined timeframe.
               </li>
             </ul>
             <p>

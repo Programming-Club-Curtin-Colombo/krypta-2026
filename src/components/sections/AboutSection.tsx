@@ -16,7 +16,7 @@ import { motion } from "framer-motion";
 const OBJECTIVES = [
   { icon: Target, label: "Rapid Problem Solving" },
   { icon: Lightbulb, label: "Real-world Innovation" },
-  { icon: Layers, label: "Engineering Execution" },
+  { icon: Layers, label: "Technical Execution" },
   { icon: Handshake, label: "Industry Engagement" },
   { icon: Users, label: "Team Collaboration" },
   { icon: TrendingUp, label: "Technical Excellence" },
@@ -47,14 +47,14 @@ export function AboutSection() {
                   className="text-3xl sm:text-4xl font-bold text-[var(--color-foreground)] leading-tight"
                   style={{ fontFamily: "var(--font-display)" }}
                 >
-                  Engineering meets
+                  Innovation meets
                   <br />
                   <span className="gradient-text">real-world impact.</span>
                 </h2>
               </div>
 
               <p className="text-base text-[var(--color-foreground-muted)] leading-relaxed">
-                KRYPTA 2026 is a time-bound engineering competition where
+                KRYPTA 2026 is a time-bound technical competition where
                 participants design, build, and demonstrate working technical
                 solutions for real-world challenges. Teams compete across
                 multiple technology tracks while developing functional
@@ -66,7 +66,7 @@ export function AboutSection() {
                 The event brings together students, mentors, judges, industry
                 partners, and technical communities through competitive
                 hackathon challenges, technical workshops, and structured
-                judging - all fostering engineering excellence and
+                judging - all fostering technical excellence and
                 collaboration between academia and industry.
               </p>
             </div>

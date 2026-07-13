@@ -43,7 +43,7 @@ export function VisionSection() {
               To establish KRYPTA as a premier multidisciplinary hackathon
               competition that challenges participants to design and build
               impactful, real-world technical solutions under structured
-              constraints - while fostering engineering excellence and
+              constraints - while fostering technical excellence and
               collaboration between academia and industry.
             </p>
 

@@ -54,3 +54,4 @@ next-env.d.ts
 coverage/
 junit.xml
 next-env.d.ts
+ngrok.yml

@@ -18,7 +18,7 @@ import { EVENT_INFO, ORGANIZATION, KEY_DATES } from "@/lib/seo-constants";
 export const metadata: Metadata = generateMetadata({
   title: "Home",
   description:
-    "KRYPTA 2026 - A multi-track competition featuring Buildathon, CTF, and Engineering tracks for university and school students. Registration opens September 2026. Finals in November 2026 at Curtin University Colombo.",
+    "KRYPTA 2026 - A multi-track competition featuring Buildathon and CTF tracks for university and school students. Registration opens September 2026. Finals in November 2026 at Curtin University Colombo.",
   path: "/",
 });
 
