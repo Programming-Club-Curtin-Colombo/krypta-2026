@@ -7,7 +7,7 @@ import { InteractiveGrid } from "@/components/ui/InteractiveGrid";
 import { useEffect, useState } from "react";
 
 const STATS = [
-  { icon: Cpu, label: "Two Competition Tracks" },
+  { icon: Cpu, label: "Three Competition Tracks" },
   { icon: Users, label: "Industry Mentors" },
   { icon: Zap, label: "Real-world Challenges" },
   { icon: MapPin, label: "Curtin University Colombo" },

@@ -10,7 +10,7 @@ import { EVENT_INFO, TRACKS, KEY_DATES } from "@/lib/seo-constants";
 export const metadata: Metadata = generateMetadata({
   title: "Capture The Flag Track",
   description:
-    "Compete in the KRYPTA 2026 CTF cybersecurity competition. 25 teams cap, 3-4 members per team. Registration opens September 2026. Finals in November 2026 at Curtin University Colombo.",
+    "Compete in the KRYPTA 2026 CTF cybersecurity competition. 20 teams cap, 3-4 members per team. Registration opens September 1st, 2026. Finals in November 2026 at Curtin University Colombo.",
   path: "/tracks/ctf",
 });
 
@@ -101,7 +101,7 @@ export default function CtfPage() {
 
           <Section id="format" title="Format">
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
+              {/* <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
                 <Globe2 className="h-5 w-5 text-[var(--color-primary)] mb-3" />
                 <h3 className="font-semibold text-[var(--color-foreground)] mb-1">
                   Online qualifier
@@ -110,15 +110,16 @@ export default function CtfPage() {
                   The Open Stage establishes the field through online security
                   challenges before finalists advance.
                 </p>
-              </div>
+              </div> */}
               <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
                 <Clock3 className="h-5 w-5 text-[var(--color-primary)] mb-3" />
                 <h3 className="font-semibold text-[var(--color-foreground)] mb-1">
                   12-hour Grand Final
                 </h3>
                 <p>
-                  Qualified competitors face a 12-hour on-premises challenge at
-                  Curtin University Colombo.
+                  Opening Ceremony: Nov 28, 3pm-4pm<br />
+                  Competition: Nov 28, 6pm - Nov 29, 6am<br />
+                  Location: Curtin University Colombo
                 </p>
               </div>
             </div>
@@ -129,6 +130,41 @@ export default function CtfPage() {
               />
               Grand Final location: Curtin University Colombo.
             </p>
+          </Section>
+
+          <Section id="timeline" title="Event Timeline">
+            <div className="space-y-4">
+              <div className="flex gap-4 items-start">
+                <div className="h-8 w-8 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-bold text-[var(--color-primary)]">1</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-[var(--color-foreground)]">Opening Ceremony</h4>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">November 28, 3:00pm - 4:00pm</p>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">Welcome address, rules overview, and team introductions</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="h-8 w-8 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-bold text-[var(--color-primary)]">2</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-[var(--color-foreground)]">Competition</h4>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">November 28, 6:00pm - November 29, 6:00am</p>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">12-hour jeopardy style capture the flag</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="h-8 w-8 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-bold text-[var(--color-primary)]">3</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-[var(--color-foreground)]">Closing Ceremony</h4>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">November 29, 4:00pm - 7:00pm</p>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">All tracks come together for awards and recognition</p>
+                </div>
+              </div>
+            </div>
           </Section>
 
           <Section id="participants-do" title="What Participants Do">
@@ -195,7 +231,6 @@ export default function CtfPage() {
               <ul className="list-disc pl-5 space-y-2">
                 <li><strong>Undergraduate Students:</strong> Currently enrolled in a university undergraduate program</li>
                 <li><strong>Masters Students:</strong> Currently enrolled in a postgraduate masters program</li>
-                <li><strong>School Students:</strong> Ages 14-18, currently enrolled in secondary education (special 6-hour section with workshops)</li>
               </ul>
             </div>
           </Section>

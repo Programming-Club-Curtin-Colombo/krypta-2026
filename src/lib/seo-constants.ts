@@ -40,13 +40,13 @@ export const TRACKS = {
   buildathon: {
     name: "Buildathon Track",
     description: "A product-building competition where teams design, develop, and present functional software solutions.",
-    teamCap: 50,
+    teamCap: 45,
     teamSize: { min: 3, max: 4 },
   },
   ctf: {
     name: "Capture The Flag (CTF) Track",
     description: "A cybersecurity competition featuring challenges in cryptography, web exploitation, reverse engineering, and forensics.",
-    teamCap: 25,
+    teamCap: 20,
     teamSize: { min: 3, max: 4 },
   },
   students: {

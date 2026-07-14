@@ -10,7 +10,7 @@ import { EVENT_INFO, TRACKS, KEY_DATES } from "@/lib/seo-constants";
 export const metadata: Metadata = generateMetadata({
   title: "Buildathon Track",
   description:
-    "Build a full-stack product in the KRYPTA 2026 Buildathon. 50 teams cap, 3-4 members per team. Registration opens September 2026. Finals in November 2026 at Curtin University Colombo.",
+    "Build a full-stack product in the KRYPTA 2026 Buildathon. 45 teams cap, 3-4 members per team. Registration opens September 1st, 2026. Finals in November 2026 at Curtin University Colombo.",
   path: "/tracks/buildathon",
 });
 
@@ -101,7 +101,7 @@ export default function BuildathonPage() {
 
           <Section id="format" title="Format">
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
+              {/* <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
                 <Globe2 className="h-5 w-5 text-[var(--color-primary)] mb-3" />
                 <h3 className="font-semibold text-[var(--color-foreground)] mb-1">
                   Online preliminary
@@ -110,15 +110,17 @@ export default function BuildathonPage() {
                   The Open Stage tests each team&apos;s approach and determines
                   who advances to the on-site finale.
                 </p>
-              </div>
+              </div> */}
               <div className="rounded-xl border border-[var(--color-card-border)] bg-[var(--color-card)] p-5">
                 <Clock3 className="h-5 w-5 text-[var(--color-primary)] mb-3" />
                 <h3 className="font-semibold text-[var(--color-foreground)] mb-1">
                   24-hour Grand Final
                 </h3>
                 <p>
-                  Finalists build on premises at Curtin University Colombo
-                  across an intensive 24-hour competition window.
+                  Opening Ceremony: Nov 28, 8am-9am<br />
+                  Competition: Nov 28, 10am - Nov 29, 10pm<br />
+                  Presentations: Nov 29, 12pm-2pm<br />
+                  Location: Curtin University Colombo
                 </p>
               </div>
             </div>
@@ -129,6 +131,51 @@ export default function BuildathonPage() {
               />
               Grand Final location: Curtin University Colombo.
             </p>
+          </Section>
+
+          <Section id="timeline" title="Event Timeline">
+            <div className="space-y-4">
+              <div className="flex gap-4 items-start">
+                <div className="h-8 w-8 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-bold text-[var(--color-primary)]">1</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-[var(--color-foreground)]">Opening Ceremony</h4>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">November 28, 8:00am - 9:00am</p>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">Welcome address, rules overview, and team introductions</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="h-8 w-8 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-bold text-[var(--color-primary)]">2</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-[var(--color-foreground)]">Competition</h4>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">November 28, 10:00am - November 29, 10:00pm</p>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">24-hour intensive product-building competition on premises</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="h-8 w-8 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-bold text-[var(--color-primary)]">3</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-[var(--color-foreground)]">Presentations</h4>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">November 29, 12:00pm - 2:00pm</p>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">Teams present their products to judges and industry guests</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-start">
+                <div className="h-8 w-8 rounded-full bg-[var(--color-primary)]/10 flex items-center justify-center flex-shrink-0">
+                  <span className="text-xs font-bold text-[var(--color-primary)]">4</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-[var(--color-foreground)]">Closing Ceremony</h4>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">November 29, 4:00pm - 7:00pm</p>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">All tracks come together for awards and recognition</p>
+                </div>
+              </div>
+            </div>
           </Section>
 
           <Section id="participants-do" title="What Participants Do">
@@ -192,7 +239,6 @@ export default function BuildathonPage() {
               <ul className="list-disc pl-5 space-y-2">
                 <li><strong>Undergraduate Students:</strong> Currently enrolled in a university undergraduate program</li>
                 <li><strong>Masters Students:</strong> Currently enrolled in a postgraduate masters program</li>
-                <li><strong>School Students:</strong> Ages 14-18, currently enrolled in secondary education (special 6-hour section with workshops)</li>
               </ul>
             </div>
           </Section>

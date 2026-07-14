@@ -142,28 +142,28 @@ const organizationSchema = {
   sameAs: ["https://www.linkedin.com/showcase/krypta-2026"],
 };
 
-const eventSchemaOpenStage = {
-  "@context": "https://schema.org",
-  "@type": "Event",
-  name: "KRYPTA 2026 - Open Stage",
-  description:
-    "The online preliminary round of KRYPTA 2026. " + SITE_DESCRIPTION,
-  url: SITE_URL,
-  image: `${SITE_URL}/opengraph-image.png`,
-  startDate: "2026-11-07",
-  endDate: "2026-11-08",
-  eventStatus: "https://schema.org/EventScheduled",
-  eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
-  location: {
-    "@type": "VirtualLocation",
-    url: SITE_URL,
-  },
-  organizer: {
-    "@type": "Organization",
-    name: "Programming Club - Curtin University Colombo",
-    url: SITE_URL,
-  },
-};
+// const eventSchemaOpenStage = {
+//   "@context": "https://schema.org",
+//   "@type": "Event",
+//   name: "KRYPTA 2026 - Open Stage",
+//   description:
+//     "The online preliminary round of KRYPTA 2026. " + SITE_DESCRIPTION,
+//   url: SITE_URL,
+//   image: `${SITE_URL}/opengraph-image.png`,
+//   startDate: "2026-11-07",
+//   endDate: "2026-11-08",
+//   eventStatus: "https://schema.org/EventScheduled",
+//   eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+//   location: {
+//     "@type": "VirtualLocation",
+//     url: SITE_URL,
+//   },
+//   organizer: {
+//     "@type": "Organization",
+//     name: "Programming Club - Curtin University Colombo",
+//     url: SITE_URL,
+//   },
+// };
 
 const eventSchemaFinals = {
   "@context": "https://schema.org",
@@ -210,7 +210,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify([
               organizationSchema,
-              eventSchemaOpenStage,
+              // eventSchemaOpenStage,
               eventSchemaFinals,
             ]),
           }}

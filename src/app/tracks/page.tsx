@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = generateMetadata({
   title: "Competition Tracks",
   description:
-    "Explore the Buildathon, Capture The Flag, and School Students competition tracks at KRYPTA 2026. Registration opens September 2026.",
+    "Explore the Buildathon, Capture The Flag, and School Students competition tracks at KRYPTA 2026. Registration opens September 1st, 2026.",
   path: "/tracks",
 });
 
@@ -21,30 +21,30 @@ const TRACKS = [
     icon: Blocks,
     title: "Buildathon",
     duration: "24-hour on-site final",
-    teamCap: "50 teams",
+    teamCap: "45 teams",
     teamSize: "3-4 members",
     description:
-      "Turn an idea into a functional full-stack product through an online preliminary round and an intensive on-site finale.",
+      "Turn an idea into a functional full-stack product through an intensive on-site finale.",
   },
   {
     href: "/tracks/ctf",
     icon: ShieldCheck,
     title: "Capture The Flag",
     duration: "12-hour on-site final",
-    teamCap: "25 teams",
+    teamCap: "20 teams",
     teamSize: "3-4 members",
     description:
       "Solve cybersecurity challenges across cryptography, web exploitation, reverse engineering, and forensics.",
   },
   {
-    href: "#",
+    href: "/tracks/school-students",
     icon: GraduationCap,
     title: "School Students",
     duration: "6-hour on-site event",
     teamCap: "10 teams",
     teamSize: "3-4 members",
     description:
-      "A beginner-friendly track for school students with workshops and hands-on challenges. Perfect for those new to tech competitions.",
+      "A beginner-friendly track for school students. Opening: Nov 28, 8am-9am | Competition: 10am-4pm | Presentations: 5pm-7pm at Curtin University Colombo.",
     isSchoolTrack: true,
   },
 ];
@@ -94,9 +94,9 @@ export default function TracksPage() {
               KRYPTA 2026 <span className="gradient-text">Tracks</span>
             </h1>
             <p className="text-base text-[var(--color-foreground-muted)] leading-relaxed">
-              Every track begins online, where participants take on a
+              {/* Every track begins online, where participants take on a
               preliminary or qualifier stage. Successful competitors advance to
-              the Grand Finals at Curtin University Colombo in November 2026. Registration opens September 2026.
+              the Grand Finals at Curtin University Colombo in November 2026. */} Registration opens September 1st, 2026.
             </p>
           </div>
 
