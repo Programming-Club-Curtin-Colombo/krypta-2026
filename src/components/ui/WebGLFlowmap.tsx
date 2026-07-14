@@ -48,9 +48,9 @@ export function WebGLFlowmap() {
     });
 
     const flowmap = new Flowmap(gl, {
-      falloff: 0.08,
-      alpha: 0.99,
-      dissipation: 0.93,
+      falloff: 0.25,
+      alpha: 0.8,
+      dissipation: 0.92,
     });
 
     flowmap.aspect = window.innerWidth / window.innerHeight;
@@ -64,9 +64,12 @@ export function WebGLFlowmap() {
       lastY: 0.5,
     };
 
-    // Fluid smoke shader — single pass.
-    // The flowmap is used purely as a velocity field that advects and warps
-    // FBM noise; it never draws its own shape, so there are no circular blobs.
+    // Liquid distortion shader — single pass.
+    // The flowmap is treated purely as a velocity/displacement buffer. Nothing
+    // is drawn from length(flow); instead the velocity advects the sampling
+    // domain and a signed refraction ripple is derived from noise gradients
+    // along the flow direction, so the result reads as an invisible fluid being
+    // disturbed rather than circular blobs.
     const smokeProgram = new Program(gl, {
       vertex: `
         attribute vec2 position;
@@ -114,32 +117,42 @@ export function WebGLFlowmap() {
           vec2 velocity = flow.xy;
           float speed = length(velocity);
 
-          // Advect the sampling domain backwards along the velocity so the
-          // smoke stretches behind the direction of motion.
-          vec2 uv = vUv - velocity * 0.3;
+          // Advect the sampling domain along the velocity so the fluid appears
+          // pushed/displaced by the cursor, stretching with faster motion.
+          vec2 uv = vUv - velocity * 0.4;
 
-          // Domain warping: distort the noise coordinates with more noise so
-          // the field looks like flowing ink rather than static grain.
-          vec2 q = vec2(
-            fbm(uv * 3.0 + velocity * 4.0 + uTime * 0.10),
-            fbm(uv * 3.0 - velocity * 4.0 + uTime * 0.12 + 5.2)
+          // Low-frequency domain warp only breaks up uniformity so the field
+          // looks organic rather than like a regular noise grid.
+          vec2 warp = vec2(
+            fbm(uv * 2.5 + uTime * 0.04),
+            fbm(uv * 2.5 - uTime * 0.04 + 7.3)
           );
-          vec2 warpedUv = uv * 4.0 + q * 1.6 + velocity * 5.0 + uTime * 0.08;
+          vec2 duv = uv * 3.0 + warp * 0.5 + velocity * 6.0;
 
-          float smoke = fbm(warpedUv);
+          // Turbulence body of the fluid; higher velocity injects more variation.
+          float turb = fbm(duv);
 
-          // Wispy density — no circular mask, driven only by the warped noise.
-          float density = smoothstep(0.45, 0.75, smoke);
+          // Refraction ripple: signed difference of the noise sampled ahead of
+          // and behind the flow direction — a soft lensing highlight with no
+          // hard boundary, like light bending through moving water.
+          vec2 dir = speed > 0.0001 ? velocity / speed : vec2(0.0);
+          float ahead = fbm(duv + dir * 0.4);
+          float behind = fbm(duv - dir * 0.4);
+          float refractRipple = ahead - behind;
 
-          // Only becomes visible where the field is actually moving, so the
-          // canvas is invisible at rest with no constant fog overlay.
-          float alpha = density * smoothstep(0.01, 0.2, speed);
+          // Smooth, edgeless falloff — visible only where the field is moving,
+          // fully transparent at rest (no fog overlay, no circular mask).
+          float influence = smoothstep(0.0, 0.22, speed);
+          float body = smoothstep(0.35, 0.85, turb);
+          float alpha = influence * (body * 0.22 + abs(refractRipple) * 0.5);
 
-          vec3 lightSmoke = vec3(0.62, 0.70, 0.92);
-          vec3 darkSmoke = vec3(0.45, 0.62, 1.0);
-          vec3 smokeColor = mix(lightSmoke, darkSmoke, uIsDark);
+          vec3 lightTint = vec3(0.65, 0.72, 0.95);
+          vec3 darkTint = vec3(0.50, 0.65, 1.0);
+          vec3 tint = mix(lightTint, darkTint, uIsDark);
+          // Ripple brightens one side and darkens the other like refraction.
+          vec3 color = tint + refractRipple * 0.4;
 
-          gl_FragColor = vec4(smokeColor, alpha * 0.3);
+          gl_FragColor = vec4(color, clamp(alpha, 0.0, 0.6));
         }
       `,
       uniforms: {
