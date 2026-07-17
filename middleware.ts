@@ -39,7 +39,7 @@ export function middleware(request: NextRequest) {
   // Using SameSite=Lax for security and compatibility
   response.cookies.set(CONSENT_REQUIRED_COOKIE, consentRequired.toString(), {
     httpOnly: false, // Allow client-side access
-    secure: true, // Only send over HTTPS
+    secure: process.env.NODE_ENV === "production", // Only secure in production
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 30, // 30 days
     path: "/",
@@ -48,7 +48,7 @@ export function middleware(request: NextRequest) {
   // Set visitor-country cookie for debugging
   response.cookies.set(VISITOR_COUNTRY_COOKIE, countryCode, {
     httpOnly: false,
-    secure: true,
+    secure: process.env.NODE_ENV === "production", // Only secure in production
     sameSite: "lax",
     maxAge: 60 * 60 * 24 * 30, // 30 days
     path: "/",
