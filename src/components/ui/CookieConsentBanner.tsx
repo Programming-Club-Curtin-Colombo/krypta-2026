@@ -7,12 +7,13 @@ import { useCookieConsent } from "@/contexts/CookieConsentContext";
 import { cn } from "@/lib/utils";
 
 export function CookieConsentBanner() {
-  const { hasDecided, acceptAll, rejectNonEssential, updateConsent } =
+  const { hasDecided, consentRequired, acceptAll, rejectNonEssential, updateConsent } =
     useCookieConsent();
   const [showCustomize, setShowCustomize] = useState(false);
   const [analyticsEnabled, setAnalyticsEnabled] = useState(false);
 
-  if (hasDecided) {
+  // Don't show banner if consent is not required or if user has already decided
+  if (hasDecided || consentRequired === false) {
     return null;
   }
 
