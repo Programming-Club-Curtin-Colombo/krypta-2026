@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { logger } from "@/lib/logger";
 
 function isAuthenticated(request: NextRequest): boolean {
   const sessionCookie = request.cookies.get("admin-session");
@@ -12,24 +13,20 @@ const applicationLogs: Array<{
   message: string;
 }> = [];
 
-// Maximum number of logs to keep in memory
-const MAX_LOGS = 1000;
+// Maximum number of logs to keep in memory (reduced from 1000 to save RAM)
+const MAX_LOGS = 500;
 
-// Initialize with some sample logs
-applicationLogs.push(
-  { timestamp: Date.now() - 3600000, level: "info", message: "Server started successfully" },
-  { timestamp: Date.now() - 3000000, level: "info", message: "Database connection established" },
-  { timestamp: Date.now() - 2400000, level: "warn", message: "High memory usage detected: 85%" },
-  { timestamp: Date.now() - 1800000, level: "info", message: "User authentication system active" },
-  { timestamp: Date.now() - 1200000, level: "error", message: "Failed to connect to external API: timeout" },
-  { timestamp: Date.now() - 600000, level: "info", message: "Cache cleared successfully" },
-  { timestamp: Date.now() - 300000, level: "info", message: "Scheduled backup completed" },
-  { timestamp: Date.now() - 60000, level: "warn", message: "Rate limit threshold reached for IP 192.168.1.100" },
-);
+// Initialize with startup log
+applicationLogs.push({
+  timestamp: Date.now(),
+  level: "info",
+  message: "System logging initialized",
+});
 
 export async function GET(request: NextRequest) {
   // Check authentication
   if (!isAuthenticated(request)) {
+    logger.warn("Unauthorized logs access attempt");
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 

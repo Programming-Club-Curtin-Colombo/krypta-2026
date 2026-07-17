@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import os from "os";
+import { logger } from "@/lib/logger";
 
 function isAuthenticated(request: NextRequest): boolean {
   const sessionCookie = request.cookies.get("admin-session");
@@ -13,36 +14,48 @@ let cachedMetrics: {
   uptime: number;
   timestamp: number;
 } | null = null;
-const CACHE_TTL = 2000; // 2 seconds
+const CACHE_TTL = 5000; // 5 seconds (increased from 2s to reduce CPU load)
 
-function getCpuUsage(): number {
+function getCpuUsage(): Promise<number> {
   const cpus = os.cpus();
-  const startMeasure = cpus.map((cpu) => ({
-    idle: cpu.times.idle,
-    total: Object.values(cpu.times).reduce((acc, val) => acc + val, 0),
-  }));
+  const numCpus = cpus.length;
+  const startIdle: number[] = [];
+  const startTotal: number[] = [];
 
-  // Wait a bit to get a delta
+  // Initialize start measurements
+  for (let i = 0; i < numCpus; i++) {
+    const times = cpus[i]?.times;
+    if (times) {
+      startIdle[i] = times.idle;
+      startTotal[i] = (times.user || 0) + (times.nice || 0) + (times.sys || 0) + times.idle + (times.irq || 0);
+    } else {
+      startIdle[i] = 0;
+      startTotal[i] = 0;
+    }
+  }
+
   return new Promise((resolve) => {
     setTimeout(() => {
-      const endMeasure = os.cpus().map((cpu, i) => ({
-        idle: cpu.times.idle,
-        total: Object.values(cpu.times).reduce((acc, val) => acc + val, 0),
-      }));
-
       let totalIdle = 0;
       let total = 0;
 
-      endMeasure.forEach((end, i) => {
-        const idleDiff = end.idle - startMeasure[i].idle;
-        const totalDiff = end.total - startMeasure[i].total;
-        totalIdle += idleDiff;
-        total += totalDiff;
-      });
+      for (let i = 0; i < numCpus; i++) {
+        const times = cpus[i]?.times;
+        if (times) {
+          const endIdle = times.idle;
+          const endTotal = (times.user || 0) + (times.nice || 0) + (times.sys || 0) + times.idle + (times.irq || 0);
 
-      const usage = 100 - (totalIdle / total) * 100;
+          const idleDiff = endIdle - (startIdle[i] || 0);
+          const totalDiff = endTotal - (startTotal[i] || 0);
+
+          totalIdle += idleDiff;
+          total += totalDiff;
+        }
+      }
+
+      const usage = total > 0 ? 100 - (totalIdle / total) * 100 : 0;
       resolve(usage);
-    }, 100);
+    }, 50);
   });
 }
 
@@ -62,6 +75,7 @@ function getMemoryUsage() {
 export async function GET(request: NextRequest) {
   // Check authentication
   if (!isAuthenticated(request)) {
+    logger.warn("Unauthorized metrics access attempt");
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -95,7 +109,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(cachedMetrics);
   } catch (error) {
-    console.error("Failed to fetch metrics:", error);
+    logger.error("Failed to fetch system metrics", { error: error instanceof Error ? error.message : String(error) });
     return NextResponse.json(
       { error: "Failed to fetch system metrics" },
       { status: 500 }
