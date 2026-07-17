@@ -31,6 +31,7 @@ export default function AdminPage() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isPolling, setIsPolling] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,6 +73,9 @@ export default function AdminPage() {
   };
 
   const fetchMetrics = async () => {
+    if (isPolling) return; // Prevent concurrent requests
+    setIsPolling(true);
+
     try {
       const response = await fetch("/api/admin/metrics");
       if (response.ok) {
@@ -80,6 +84,8 @@ export default function AdminPage() {
       }
     } catch (err) {
       console.error("Failed to fetch metrics:", err);
+    } finally {
+      setIsPolling(false);
     }
   };
 
@@ -104,13 +110,13 @@ export default function AdminPage() {
     }
 
     const interval = setInterval(() => {
-      if (isAuthenticated) {
+      if (isAuthenticated && !isPolling) {
         fetchMetrics();
       }
-    }, 5000); // Update metrics every 5 seconds
+    }, 10000); // Update metrics every 10 seconds (reduced from 5s to save resources)
 
     return () => clearInterval(interval);
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isPolling]);
 
   if (!isAuthenticated) {
     return (
@@ -229,8 +235,8 @@ export default function AdminPage() {
               {metrics?.memory.percentage.toFixed(1)}%
             </p>
             <p className="text-sm text-[var(--color-foreground-subtle)] mt-1">
-              {(metrics?.memory.used / 1024 / 1024 / 1024).toFixed(2)} GB /{" "}
-              {(metrics?.memory.total / 1024 / 1024 / 1024).toFixed(2)} GB
+              {metrics?.memory.used ? (metrics.memory.used / 1024 / 1024 / 1024).toFixed(2) : "0"} GB /{" "}
+              {metrics?.memory.total ? (metrics.memory.total / 1024 / 1024 / 1024).toFixed(2) : "0"} GB
             </p>
           </div>
 
