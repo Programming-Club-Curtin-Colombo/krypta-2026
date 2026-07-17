@@ -44,6 +44,20 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
 
         setConsentRequired(isConsentRequired);
 
+        // Debug logging in development to verify geolocation detection
+        // This helps confirm the middleware is setting cookies correctly
+        // and the banner behavior matches the detected country
+        if (process.env.NODE_ENV === "development") {
+          console.log("[CookieConsent] Geolocation debug:", {
+            consentRequiredCookie: consentRequiredCookie?.split("=")[1],
+            isConsentRequired,
+            visitorCountry: document.cookie
+              .split("; ")
+              .find((row) => row.startsWith("visitor-country="))
+              ?.split("=")[1],
+          });
+        }
+
         // Load user's consent decision
         const cookieValue = document.cookie
           .split("; ")
