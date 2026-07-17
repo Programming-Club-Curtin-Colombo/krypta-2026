@@ -6,6 +6,7 @@ import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
 import { LogoLoader } from "@/components/ui/LogoLoader";
 import { AnalyticsLoader } from "@/components/analytics/AnalyticsLoader";
 import { CookieConsentBanner } from "@/components/ui/CookieConsentBanner";
+import { WebGLFlowmap } from "@/components/ui/WebGLFlowmap";
 import "./globals.css";
 
 // ── Google Fonts ─────────────────────────────────────────────────────────────
@@ -221,6 +222,7 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+        <WebGLFlowmap />
         <CookieConsentProvider>
           <LogoLoader />
           <AnalyticsLoader />
