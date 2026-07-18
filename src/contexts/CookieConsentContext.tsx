@@ -49,9 +49,8 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
         // Debug logging in development to verify geolocation detection
         if (process.env.NODE_ENV === "development") {
           console.log("[CookieConsent] Geolocation debug:", {
-            consentRequiredCookie: cookies[CONSENT_REQUIRED_COOKIE],
-            isConsentRequired,
             visitorCountry: cookies["visitor-country"],
+            consentRequired: isConsentRequired,
           });
         }
 
