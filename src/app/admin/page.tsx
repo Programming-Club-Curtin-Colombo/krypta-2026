@@ -113,7 +113,7 @@ export default function AdminPage() {
       if (isAuthenticated && !isPolling) {
         fetchMetrics();
       }
-    }, 10000); // Update metrics every 10 seconds (reduced from 5s to save resources)
+    }, 30000); // Update metrics every 30 seconds (reduced from 10s to save resources)
 
     return () => clearInterval(interval);
   }, [isAuthenticated, isPolling]);

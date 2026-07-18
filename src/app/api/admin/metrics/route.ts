@@ -14,7 +14,7 @@ let cachedMetrics: {
   uptime: number;
   timestamp: number;
 } | null = null;
-const CACHE_TTL = 5000; // 5 seconds (increased from 2s to reduce CPU load)
+const CACHE_TTL = 10000; // 10 seconds (increased from 5s to reduce CPU load)
 
 function getCpuUsage(): Promise<number> {
   const cpus = os.cpus();
