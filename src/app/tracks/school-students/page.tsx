@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Breadcrumb } from "@/components/seo/Breadcrumb";
 import { JsonLdEvent } from "@/components/seo/JsonLdEvent";
 import { generateMetadata } from "@/lib/metadata";
-import { EVENT_INFO, TRACKS, KEY_DATES } from "@/lib/seo-constants";
+import { EVENT_INFO, KEY_DATES } from "@/lib/seo-constants";
 
 export const metadata: Metadata = generateMetadata({
   title: "School Students Track",

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Clock3, Flag, Globe2, MapPin, ShieldCheck, Users } from "lucide-react";
+import { Clock3, Flag, MapPin, ShieldCheck, Users } from "lucide-react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Breadcrumb } from "@/components/seo/Breadcrumb";

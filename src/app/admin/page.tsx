@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Cpu, MemoryStick, Activity, Shield, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -25,13 +25,48 @@ interface LogEntry {
 }
 
 export default function AdminPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("admin-auth") === "true";
+    }
+    return false;
+  });
   const [pemContent, setPemContent] = useState("");
   const [metrics, setMetrics] = useState<SystemMetrics | null>(null);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [isPolling, setIsPolling] = useState(false);
+  const hasFetchedInitial = useRef(false);
+
+  const fetchMetrics = useCallback(async () => {
+    if (isPolling) return; // Prevent concurrent requests
+    setIsPolling(true);
+
+    try {
+      const response = await fetch("/api/admin/metrics");
+      if (response.ok) {
+        const data = await response.json();
+        setMetrics(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch metrics:", err);
+    } finally {
+      setIsPolling(false);
+    }
+  }, [isPolling]);
+
+  const fetchLogs = useCallback(async () => {
+    try {
+      const response = await fetch("/api/admin/system-logs");
+      if (response.ok) {
+        const data = await response.json();
+        setLogs(data.logs || []);
+      }
+    } catch (err) {
+      console.error("Failed to fetch logs:", err);
+    }
+  }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,41 +107,11 @@ export default function AdminPage() {
     localStorage.removeItem("admin-auth");
   };
 
-  const fetchMetrics = async () => {
-    if (isPolling) return; // Prevent concurrent requests
-    setIsPolling(true);
-
-    try {
-      const response = await fetch("/api/admin/metrics");
-      if (response.ok) {
-        const data = await response.json();
-        setMetrics(data);
-      }
-    } catch (err) {
-      console.error("Failed to fetch metrics:", err);
-    } finally {
-      setIsPolling(false);
-    }
-  };
-
-  const fetchLogs = async () => {
-    try {
-      const response = await fetch("/api/admin/system-logs");
-      if (response.ok) {
-        const data = await response.json();
-        setLogs(data.logs || []);
-      }
-    } catch (err) {
-      console.error("Failed to fetch logs:", err);
-    }
-  };
-
   useEffect(() => {
-    const savedAuth = localStorage.getItem("admin-auth");
-    if (savedAuth === "true") {
-      setIsAuthenticated(true);
+    if (isAuthenticated && !hasFetchedInitial.current) {
       fetchMetrics();
       fetchLogs();
+      hasFetchedInitial.current = true;
     }
 
     const interval = setInterval(() => {
@@ -116,7 +121,7 @@ export default function AdminPage() {
     }, 30000); // Update metrics every 30 seconds (reduced from 10s to save resources)
 
     return () => clearInterval(interval);
-  }, [isAuthenticated, isPolling]);
+  }, [isAuthenticated, isPolling, fetchMetrics, fetchLogs]);
 
   if (!isAuthenticated) {
     return (

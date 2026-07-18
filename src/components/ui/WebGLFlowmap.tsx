@@ -9,7 +9,6 @@ import {
   Mesh,
   Flowmap,
   Transform,
-  Texture,
 } from "ogl";
 import { useReducedMotion } from "framer-motion";
 import { useTheme } from "next-themes";
@@ -228,7 +227,7 @@ export function WebGLFlowmap() {
         container.removeChild(gl.canvas);
       }
     };
-  }, [shouldReduceMotion, theme]);
+  }, [shouldReduceMotion, theme, enableWebGL]);
 
   if (shouldReduceMotion) {
     return null;

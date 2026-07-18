@@ -7,7 +7,7 @@ import { useCookieConsent } from "@/contexts/CookieConsentContext";
 import { cn } from "@/lib/utils";
 
 export function CookieConsentBanner() {
-  const { hasDecided, consentRequired, acceptAll, updateConsent } = useCookieConsent();
+  const { hasDecided, consentRequired, updateConsent } = useCookieConsent();
   const [showSettings, setShowSettings] = useState(false);
   const [analyticsEnabled, setAnalyticsEnabled] = useState(true); // Default to enabled
 
