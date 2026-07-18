@@ -101,7 +101,9 @@ export async function POST(request: NextRequest) {
     });
     return response;
   } catch (error) {
-    console.error("Authentication error:", error);
+    logger.error("Authentication error:", {
+      error: error instanceof Error ? error.message : String(error)
+    });
     return NextResponse.json(
       { error: "Authentication failed" },
       { status: 500 }

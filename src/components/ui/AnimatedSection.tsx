@@ -1,9 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion, HTMLMotionProps } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useReducedMotion, HTMLMotionProps, useInView } from "framer-motion";
 import { useRef, ReactNode } from "react";
-import { cn } from "@/lib/utils";
 
 interface AnimatedSectionProps extends HTMLMotionProps<"div"> {
   children: ReactNode;
@@ -11,6 +9,14 @@ interface AnimatedSectionProps extends HTMLMotionProps<"div"> {
   delay?: number;
   once?: boolean;
 }
+
+// ── Static animation configuration ───────────────────────────────────────────
+// Extracted outside the component so the object reference is stable across renders.
+// The delay is the only dynamic part; it is applied at call-site via the transition override.
+const BASE_TRANSITION = {
+  duration: 0.8,
+  ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+};
 
 export function AnimatedSection({
   children,
@@ -28,11 +34,7 @@ export function AnimatedSection({
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
-        delay,
-      },
+      transition: { ...BASE_TRANSITION, delay },
     },
   };
 
@@ -42,7 +44,7 @@ export function AnimatedSection({
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={variants}
-      className={cn(className)}
+      className={className}
       {...props}
     >
       {children}

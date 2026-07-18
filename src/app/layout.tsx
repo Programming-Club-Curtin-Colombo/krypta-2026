@@ -3,10 +3,9 @@ import { headers } from "next/headers";
 import { Space_Grotesk, Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { CookieConsentProvider } from "@/contexts/CookieConsentContext";
-import { LogoLoader } from "@/components/ui/LogoLoader";
+import { LogoLoader, CookieConsentBanner, WebGLFlowmap } from "@/components/ui";
 import { AnalyticsLoader } from "@/components/analytics/AnalyticsLoader";
-import { CookieConsentBanner } from "@/components/ui/CookieConsentBanner";
-import { WebGLFlowmap } from "@/components/ui/WebGLFlowmap";
+import { SITE_URL, SITE_NAME } from "@/lib";
 import "./globals.css";
 
 // ── Google Fonts ─────────────────────────────────────────────────────────────
@@ -22,9 +21,6 @@ const inter = Inter({
   display: "swap",
 });
 
-// ── Site constants ────────────────────────────────────────────────────────────
-const SITE_URL = "https://krypta-2026.vercel.app";
-const SITE_NAME = "KRYPTA 2026";
 const SITE_DESCRIPTION =
   "KRYPTA 2026: A premier multi-track tech arena organized by the Programming Club of Curtin University Colombo, featuring Buildathon, Capture The Flag (CTF), and School Students Hackathon tracks.";
 
@@ -109,7 +105,7 @@ export const metadata: Metadata = {
 
 export async function generateViewport(): Promise<Viewport> {
   const headersList = await headers();
-  const userAgent = headersList.get("user-agent") || "";
+  const userAgent = headersList.get("user-agent") ?? "";
   const isSamsungBrowser = userAgent.includes("SamsungBrowser");
 
   return {
@@ -125,74 +121,6 @@ export async function generateViewport(): Promise<Viewport> {
   };
 }
 
-// ── JSON-LD Structured Data ───────────────────────────────────────────────────
-const organizationSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Programming Club - Curtin University Colombo",
-  alternateName: "Curtin Colombo Programming Club",
-  description:
-    "The official Programming Club of Curtin University Colombo, organizers of KRYPTA 2026.",
-  url: SITE_URL,
-  logo: `${SITE_URL}/logo/club-logo.png`,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Nawam Mawatha",
-    addressLocality: "Colombo",
-    addressCountry: "LK",
-  },
-  sameAs: ["https://www.linkedin.com/showcase/krypta-2026"],
-};
-
-// const eventSchemaOpenStage = {
-//   "@context": "https://schema.org",
-//   "@type": "Event",
-//   name: "KRYPTA 2026 - Open Stage",
-//   description:
-//     "The online preliminary round of KRYPTA 2026. " + SITE_DESCRIPTION,
-//   url: SITE_URL,
-//   image: `${SITE_URL}/opengraph-image.png`,
-//   startDate: "2026-11-07",
-//   endDate: "2026-11-08",
-//   eventStatus: "https://schema.org/EventScheduled",
-//   eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
-//   location: {
-//     "@type": "VirtualLocation",
-//     url: SITE_URL,
-//   },
-//   organizer: {
-//     "@type": "Organization",
-//     name: "Programming Club - Curtin University Colombo",
-//     url: SITE_URL,
-//   },
-// };
-
-const eventSchemaFinals = {
-  "@context": "https://schema.org",
-  "@type": "Event",
-  name: "KRYPTA 2026 - Grand Finals",
-  description: "The grand finals of KRYPTA 2026 multi-track tech arena featuring Buildathon, CTF, and School Students Hackathon tracks.",
-  url: SITE_URL,
-  image: `${SITE_URL}/opengraph-image.png`,
-  startDate: "2026-11-28",
-  endDate: "2026-11-29",
-  eventStatus: "https://schema.org/EventScheduled",
-  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  location: {
-    "@type": "Place",
-    name: "Curtin University Colombo",
-    address: {
-      "@type": "PostalAddress",
-      addressCountry: "LK",
-    },
-  },
-  organizer: {
-    "@type": "Organization",
-    name: "Programming Club - Curtin University Colombo",
-    url: SITE_URL,
-  },
-};
-
 // ── Root Layout ───────────────────────────────────────────────────────────────
 export default function RootLayout({
   children,
@@ -206,18 +134,6 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${spaceGrotesk.variable} ${inter.variable}`}
     >
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([
-              organizationSchema,
-              // eventSchemaOpenStage,
-              eventSchemaFinals,
-            ]),
-          }}
-        />
-      </head>
       <body suppressHydrationWarning>
         {/* Skip to content for keyboard / screen-reader users */}
         <a href="#main-content" className="skip-link">

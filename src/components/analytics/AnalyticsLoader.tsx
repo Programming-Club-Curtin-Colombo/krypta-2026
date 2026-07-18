@@ -4,29 +4,30 @@ import { useEffect } from "react";
 import { useCookieConsent } from "@/contexts/CookieConsentContext";
 import Script from "next/script";
 
+// ── Static array extracted outside component ──────────────────────────────────
+const ANALYTICS_COOKIES = [
+  "_ga",
+  "_gid",
+  "_gat",
+  "_clck",
+  "_clsk",
+  "CLID",
+  "MR",
+  "MUID",
+  "_fbp",
+  "_fbc",
+];
+
 export function AnalyticsLoader() {
   const { consent } = useCookieConsent();
 
   useEffect(() => {
     // Clean up analytics cookies if consent is revoked
     if (!consent.analytics) {
-      const analyticsCookies = [
-        "_ga",
-        "_gid",
-        "_gat",
-        "_clck",
-        "_clsk",
-        "CLID",
-        "MR",
-        "MUID",
-        "_fbp",
-        "_fbc",
-      ];
-
       const hostname = window.location.hostname;
       const domain = hostname.startsWith(".") ? hostname : `.${hostname}`;
 
-      analyticsCookies.forEach((cookie) => {
+      ANALYTICS_COOKIES.forEach((cookie) => {
         document.cookie = `${cookie}=; max-age=0; path=/; domain=${hostname}`;
         document.cookie = `${cookie}=; max-age=0; path=/; domain=${domain}`;
       });

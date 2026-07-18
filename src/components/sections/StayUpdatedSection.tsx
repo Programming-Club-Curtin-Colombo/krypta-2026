@@ -8,15 +8,18 @@ import { motion } from "framer-motion";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
+// ── Validation logic extracted from component body ─────────────────────────────
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateEmail(value: string): boolean {
+  return EMAIL_REGEX.test(value);
+}
+
 export function StayUpdatedSection() {
   const [email, setEmail] = useState("");
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const emailInputId = useId();
-
-  function validateEmail(value: string): boolean {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-  }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

@@ -4,7 +4,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, ChevronRight, Cpu, Users, Zap, MapPin } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { InteractiveGrid } from "@/components/ui/InteractiveGrid";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 const STATS = [
   { icon: Cpu, label: "Three Competition Tracks" },
@@ -13,14 +13,16 @@ const STATS = [
   { icon: MapPin, label: "Curtin University Colombo" },
 ];
 
-const containerVariants = {
+// ── Static animation variants ─────────────────────────────────────────────────
+// Defined outside the component so references are stable across renders.
+const CONTAINER_VARIANTS = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.12, delayChildren: 0.1 },
   },
 };
 
-const itemVariants = {
+const ITEM_VARIANTS = {
   hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
@@ -32,28 +34,43 @@ const itemVariants = {
   },
 };
 
+const REDUCED_CONTAINER_VARIANTS = {};
+
+const REDUCED_ITEM_VARIANTS = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.3 } },
+};
+
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const spotlightRef = useRef<HTMLDivElement>(null);
 
-  const resolvedContainerVariants = shouldReduceMotion ? {} : containerVariants;
-  const resolvedItemVariants = shouldReduceMotion
-    ? {
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration: 0.3 } },
-      }
-    : itemVariants;
-
+  // ── Ref-based mouse tracking ──────────────────────────────────────────────
+  // Using a ref + direct DOM style mutation instead of useState avoids
+  // triggering a React re-render on every mousemove (~60/sec).
   useEffect(() => {
+    if (shouldReduceMotion) return;
+
+    const el = spotlightRef.current;
+    if (!el) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       const x = (e.clientX / window.innerWidth) * 100;
       const y = (e.clientY / window.innerHeight) * 100;
-      setMousePosition({ x, y });
+      el.style.background = `radial-gradient(600px circle at ${x}% ${y}%, rgba(79, 70, 229, 0.08), transparent 40%)`;
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [shouldReduceMotion]);
+
+  const containerVariants = shouldReduceMotion
+    ? REDUCED_CONTAINER_VARIANTS
+    : CONTAINER_VARIANTS;
+
+  const itemVariants = shouldReduceMotion
+    ? REDUCED_ITEM_VARIANTS
+    : ITEM_VARIANTS;
 
   return (
     <section
@@ -61,17 +78,13 @@ export function HeroSection() {
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden gradient-bg-subtle"
       aria-label="KRYPTA 2026 hero"
     >
-      {/* Interactive Background grid decoration */}
+      {/* Interactive background grid */}
       <InteractiveGrid />
 
-      {/* Mouse-following spotlight */}
+      {/* Mouse-following spotlight — updated via ref, no React re-renders */}
       <div
+        ref={spotlightRef}
         className="pointer-events-none fixed inset-0 z-0"
-        style={{
-          background: shouldReduceMotion
-            ? "none"
-            : `radial-gradient(600px circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(79, 70, 229, 0.08), transparent 40%)`,
-        }}
         aria-hidden="true"
       />
 
@@ -88,13 +101,13 @@ export function HeroSection() {
 
       <div className="container-xl relative z-10 flex flex-col items-center text-center pt-24 pb-16">
         <motion.div
-          variants={resolvedContainerVariants}
+          variants={containerVariants}
           initial="hidden"
           animate="visible"
           className="flex flex-col items-center gap-6"
         >
           {/* Coming Soon badge */}
-          <motion.div variants={resolvedItemVariants}>
+          <motion.div variants={itemVariants}>
             <span
               className={cn(
                 "inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold",
@@ -113,7 +126,7 @@ export function HeroSection() {
           </motion.div>
 
           {/* Event name */}
-          <motion.div variants={resolvedItemVariants} className="space-y-2">
+          <motion.div variants={itemVariants} className="space-y-2">
             <h1
               className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tighter gradient-text leading-tight pb-1"
               style={{ fontFamily: "var(--font-display)" }}
@@ -130,16 +143,16 @@ export function HeroSection() {
 
           {/* Full name */}
           <motion.p
-            variants={resolvedItemVariants}
+            variants={itemVariants}
             className="text-sm sm:text-base text-[var(--color-foreground-subtle)] font-medium tracking-widest uppercase"
             style={{ fontFamily: "var(--font-display)" }}
           >
-            Knowledge, Research & Yielding Parallel Technologies Arena
+            Knowledge, Research &amp; Yielding Parallel Technologies Arena
           </motion.p>
 
           {/* Supporting paragraph */}
           <motion.p
-            variants={resolvedItemVariants}
+            variants={itemVariants}
             className="max-w-xl text-base sm:text-lg text-[var(--color-foreground-muted)] leading-relaxed"
           >
             A premier multi-track competition by the Programming Club of Curtin
@@ -160,7 +173,7 @@ export function HeroSection() {
 
           {/* CTAs */}
           <motion.div
-            variants={resolvedItemVariants}
+            variants={itemVariants}
             className="flex flex-col sm:flex-row items-center gap-3 mt-2"
           >
             <motion.a
@@ -208,7 +221,7 @@ export function HeroSection() {
 
           {/* Stats pills */}
           <motion.div
-            variants={resolvedItemVariants}
+            variants={itemVariants}
             className="flex flex-wrap justify-center gap-3 mt-4"
             aria-label="Event highlights"
             role="list"

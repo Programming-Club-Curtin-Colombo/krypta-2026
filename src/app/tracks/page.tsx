@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Blocks, Clock3, ShieldCheck, GraduationCap } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { Breadcrumb } from "@/components/seo/Breadcrumb";
-import { generateMetadata } from "@/lib/metadata";
-import { SITE_URL } from "@/lib/seo-constants";
+import { Navbar, Footer } from "@/components/layout";
+import { Breadcrumb } from "@/components/seo";
+import { generateMetadata, SITE_URL } from "@/lib";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = generateMetadata({

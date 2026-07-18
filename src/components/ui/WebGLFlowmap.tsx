@@ -11,15 +11,13 @@ import {
   Transform,
 } from "ogl";
 import { useReducedMotion } from "framer-motion";
-import { useTheme } from "next-themes";
 
 export function WebGLFlowmap() {
   const ref = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
-  const { theme } = useTheme();
 
-  // Disable WebGLFlowmap by default to save resources
-  // Enable only if explicitly needed via environment variable
+  // Disable WebGLFlowmap by default to save resources.
+  // Enable only if explicitly needed via environment variable.
   const enableWebGL = process.env.NEXT_PUBLIC_ENABLE_WEBGL === "true";
 
   useEffect(() => {
@@ -47,18 +45,14 @@ export function WebGLFlowmap() {
     const geometry = new Geometry(gl, {
       position: {
         size: 2,
-        data: new Float32Array([
-          -1, -1,
-          3, -1,
-          -1, 3
-        ])
-      }
+        data: new Float32Array([-1, -1, 3, -1, -1, 3]),
+      },
     });
 
     const flowmap = new Flowmap(gl, {
       falloff: 0.25,
       alpha: 0.8,
-      dissipation: 0.92
+      dissipation: 0.92,
     });
 
     flowmap.aspect = window.innerWidth / window.innerHeight;
@@ -69,10 +63,10 @@ export function WebGLFlowmap() {
       targetX: 0.5,
       targetY: 0.5,
       lastX: 0.5,
-      lastY: 0.5
+      lastY: 0.5,
     };
 
-    // Refraction shader - creates liquid glass distortion effect
+    // Refraction shader — creates liquid glass distortion effect
     const refractionProgram = new Program(gl, {
       vertex: `
         attribute vec2 position;
@@ -88,12 +82,10 @@ export function WebGLFlowmap() {
         uniform float uTime;
         varying vec2 vUv;
 
-        // Simple hash function
         float hash(vec2 p) {
           return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
         }
 
-        // Smooth noise for glass texture
         float noise(vec2 p) {
           vec2 i = floor(p);
           vec2 f = fract(p);
@@ -110,137 +102,108 @@ export function WebGLFlowmap() {
           vec2 velocity = flow.xy;
           float speed = length(velocity);
 
-          // Calculate distortion strength based on velocity
           float distortionStrength = 0.25;
           vec2 displacement = velocity * distortionStrength;
 
-          // Chromatic aberration - RGB splitting
           float aberrationStrength = 0.015;
-          vec2 uvRed = vUv + displacement * aberrationStrength;
+          vec2 uvRed   = vUv + displacement * aberrationStrength;
           vec2 uvGreen = vUv + displacement * aberrationStrength * 0.5;
-          vec2 uvBlue = vUv - displacement * aberrationStrength;
+          vec2 uvBlue  = vUv - displacement * aberrationStrength;
 
-          // Sample noise at displaced coordinates for glass texture
-          float noiseRed = noise(uvRed * 8.0);
+          float noiseRed   = noise(uvRed   * 8.0);
           float noiseGreen = noise(uvGreen * 8.0);
-          float noiseBlue = noise(uvBlue * 8.0);
+          float noiseBlue  = noise(uvBlue  * 8.0);
 
-          // Create subtle refraction pattern
           float refraction = (noiseRed + noiseGreen + noiseBlue) / 3.0;
-
-          // Fresnel-like edge effect
-          float fresnel = smoothstep(0.0, 0.3, speed) * 0.5;
-
-          // Calculate visibility based on velocity
+          float fresnel    = smoothstep(0.0, 0.3, speed) * 0.5;
           float visibility = smoothstep(0.01, 0.15, speed);
 
-          // Glass-like color - subtle blue tint
           vec3 glassColor = vec3(0.95, 0.97, 1.0);
-          
-          // Add brightness variation from refraction
           glassColor *= 0.9 + 0.2 * refraction;
-
-          // Combine with fresnel edge
           glassColor += fresnel * 0.1;
 
-          // Very subtle alpha for glass effect
-          float alpha = visibility * 0.08;
-
-          gl_FragColor = vec4(glassColor, alpha);
+          gl_FragColor = vec4(glassColor, visibility * 0.08);
         }
       `,
       uniforms: {
         uFlow: { value: flowmap.uniform },
-        uTime: { value: 0 }
-      }
+        uTime: { value: 0 },
+      },
     });
 
     const refractionMesh = new Mesh(gl, {
       geometry,
-      program: refractionProgram
+      program: refractionProgram,
     });
-
     refractionMesh.setParent(scene);
 
     function move(e: MouseEvent) {
       mouse.targetX = e.clientX / window.innerWidth;
       mouse.targetY = 1 - e.clientY / window.innerHeight;
     }
-
     window.addEventListener("mousemove", move);
 
     let frame: number;
-    let isHidden = false;
+    let isPaused = false;
 
     function animate(t: number) {
-      if (isHidden) {
-        frame = requestAnimationFrame(animate);
-        return;
-      }
+      frame = requestAnimationFrame(animate);
 
-      // Smooth mouse movement with inertia
+      if (isPaused) return;
+
       mouse.x += (mouse.targetX - mouse.x) * 0.15;
       mouse.y += (mouse.targetY - mouse.y) * 0.15;
 
       const vx = mouse.x - mouse.lastX;
       const vy = mouse.y - mouse.lastY;
 
-      const velocityStrength = 8.0;
       flowmap.mouse.set(mouse.x, mouse.y);
-      flowmap.velocity.set(vx * velocityStrength, vy * velocityStrength);
+      flowmap.velocity.set(vx * 8.0, vy * 8.0);
       flowmap.update();
 
-      // Update refraction time
       refractionProgram.uniforms.uTime.value = t * 0.001;
-
-      // Single render pass - glass refraction
       renderer.render({ scene, camera });
 
       mouse.lastX = mouse.x;
       mouse.lastY = mouse.y;
-
-      frame = requestAnimationFrame(animate);
     }
 
     animate(0);
 
-    // Resize handler
     function resize() {
       renderer.setSize(window.innerWidth, window.innerHeight);
       flowmap.aspect = window.innerWidth / window.innerHeight;
     }
     window.addEventListener("resize", resize);
 
-    // Visibility handler
-    function visibilityChange() {
-      isHidden = document.hidden;
+    // Fully pause the rAF loop when the tab is hidden to free the GPU thread.
+    function handleVisibilityChange() {
+      isPaused = document.hidden;
     }
-    document.addEventListener("visibilitychange", visibilityChange);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("mousemove", move);
       window.removeEventListener("resize", resize);
-      document.removeEventListener("visibilitychange", visibilityChange);
-      
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+
       if (container.contains(gl.canvas)) {
         container.removeChild(gl.canvas);
       }
     };
-  }, [shouldReduceMotion, theme, enableWebGL]);
+    // theme intentionally omitted: the effect does not adapt to theme changes.
+    // Including it would cause a full WebGL context teardown on every theme toggle.
+  }, [shouldReduceMotion, enableWebGL]);
 
-  if (shouldReduceMotion) {
+  if (shouldReduceMotion || !enableWebGL) {
     return null;
   }
 
   return (
     <div
       ref={ref}
-      className="
-        fixed inset-0
-        pointer-events-none
-        z-[9999]
-      "
+      className="fixed inset-0 pointer-events-none z-[9999]"
     />
   );
 }

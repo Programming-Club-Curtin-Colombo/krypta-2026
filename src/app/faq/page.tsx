@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { Breadcrumb } from "@/components/seo/Breadcrumb";
-import { JsonLdFAQPage } from "@/components/seo/JsonLdFAQPage";
-import { generateMetadata } from "@/lib/metadata";
+import { Navbar, Footer } from "@/components/layout";
+import { Breadcrumb, JsonLdFAQPage } from "@/components/seo";
+import { generateMetadata } from "@/lib";
 
 const FAQS = [
   {
@@ -28,7 +26,7 @@ const FAQS = [
   },
   {
     question: "Where will the competition be held?",
-    answer: "The finals will be held on-site at Curtin University Colombo, Nawam Mawatha, Colombo, Sri Lanka. {/* Preliminary rounds will be conducted online. */}",
+    answer: "The finals will be held on-site at Curtin University Colombo, Nawam Mawatha, Colombo, Sri Lanka.",
   },
   {
     question: "How do I register for KRYPTA 2026?",
@@ -110,8 +108,8 @@ export default function FAQPage() {
         </div>
 
         <div className="space-y-6">
-          {FAQS.map((faq, index) => (
-            <FAQItem key={index} question={faq.question} answer={faq.answer} />
+          {FAQS.map((faq) => (
+            <FAQItem key={faq.question} question={faq.question} answer={faq.answer} />
           ))}
         </div>
 

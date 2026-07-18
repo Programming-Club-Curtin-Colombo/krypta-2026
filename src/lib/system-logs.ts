@@ -3,33 +3,37 @@ const applicationLogs: Array<{
   timestamp: number;
   level: "info" | "warn" | "error";
   message: string;
-}> = [];
+}> = new Array(500);
 
-// Maximum number of logs to keep in memory (reduced from 1000 to save RAM)
+// Maximum number of logs to keep in memory
 const MAX_LOGS = 500;
+let head = 0;
+let size = 0;
 
-// Initialize with startup log
-applicationLogs.push({
-  timestamp: Date.now(),
-  level: "info",
-  message: "System logging initialized",
-});
-
-// Helper function to add logs (can be called from other parts of the app)
+// Helper function to add logs (O(1) insertion via ring buffer)
 export function addLog(level: "info" | "warn" | "error", message: string) {
-  applicationLogs.push({
+  applicationLogs[head] = {
     timestamp: Date.now(),
     level,
     message,
-  });
-
-  // Keep only the most recent logs
-  if (applicationLogs.length > MAX_LOGS) {
-    applicationLogs.shift();
+  };
+  head = (head + 1) % MAX_LOGS;
+  if (size < MAX_LOGS) {
+    size++;
   }
 }
 
-// Helper function to get logs (for internal use)
+// Initialize with startup log
+addLog("info", "System logging initialized");
+
+// Helper function to get logs in chronological order
 export function getLogs() {
-  return [...applicationLogs];
+  if (size < MAX_LOGS) {
+    return applicationLogs.slice(0, size);
+  }
+  // If buffer is full, the oldest log is at `head`, and the newest is at `head - 1`
+  return [
+    ...applicationLogs.slice(head, MAX_LOGS),
+    ...applicationLogs.slice(0, head),
+  ];
 }

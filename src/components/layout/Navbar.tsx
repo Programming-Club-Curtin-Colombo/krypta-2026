@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { Menu, X, Linkedin, Instagram, Mail } from "lucide-react";
 import Image from "next/image";
@@ -36,20 +36,42 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const gradientRef = useRef<HTMLSpanElement>(null);
 
+  // Combine scroll + resize listeners into a single effect to reduce overhead.
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Close mobile menu on route change / resize
-  useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) setMobileOpen(false);
     };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
+
+  // Extract logo hover handlers to stable named callbacks (not inline arrow fns).
+  const handleLogoMouseEnter = useCallback(() => {
+    if (gradientRef.current) {
+      gradientRef.current.style.backgroundPosition = "0 0";
+      gradientRef.current.style.opacity = "1";
+    }
+  }, []);
+
+  const handleLogoMouseLeave = useCallback(() => {
+    if (gradientRef.current) {
+      gradientRef.current.style.backgroundPosition = "100% 0";
+      gradientRef.current.style.opacity = "0";
+    }
+  }, []);
+
+  const closeMobileMenu = useCallback(() => setMobileOpen(false), []);
+  const toggleMobileMenu = useCallback(
+    () => setMobileOpen((open) => !open),
+    [],
+  );
 
   return (
     <header
@@ -83,27 +105,16 @@ export function Navbar() {
             />
             <span
               className="text-2xl font-bold text-[var(--color-foreground)] relative overflow-hidden"
-              style={{
-                fontFamily: "var(--font-display)",
-              }}
-              onMouseEnter={() => {
-                if (gradientRef.current) {
-                  gradientRef.current.style.backgroundPosition = "0 0";
-                  gradientRef.current.style.opacity = "1";
-                }
-              }}
-              onMouseLeave={() => {
-                if (gradientRef.current) {
-                  gradientRef.current.style.backgroundPosition = "100% 0";
-                  gradientRef.current.style.opacity = "0";
-                }
-              }}
+              style={{ fontFamily: "var(--font-display)" }}
+              onMouseEnter={handleLogoMouseEnter}
+              onMouseLeave={handleLogoMouseLeave}
             >
               <span
                 ref={gradientRef}
                 className="gradient-text absolute inset-0 bg-clip-text text-transparent transition-all duration-500 ease-out"
                 style={{
-                  backgroundImage: "linear-gradient(to right, #4f46e5, #8b5cf6, #ec4899)",
+                  backgroundImage:
+                    "linear-gradient(to right, #4f46e5, #8b5cf6, #ec4899)",
                   backgroundSize: "200% 100%",
                   backgroundPosition: "100% 0",
                   opacity: 0,
@@ -180,7 +191,7 @@ export function Navbar() {
           <div className="flex md:hidden items-center gap-2">
             <ThemeToggle />
             <button
-              onClick={() => setMobileOpen(!mobileOpen)}
+              onClick={toggleMobileMenu}
               className={cn(
                 "h-9 w-9 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)]",
                 "flex items-center justify-center",
@@ -214,7 +225,7 @@ export function Navbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  onClick={() => setMobileOpen(false)}
+                  onClick={closeMobileMenu}
                   className={cn(
                     "block px-3 py-2.5 text-sm font-medium rounded-md",
                     "text-[var(--color-foreground-muted)] hover:text-[var(--color-foreground)]",
@@ -256,7 +267,7 @@ export function Navbar() {
               </div>
               <Link
                 href="/#stay-updated"
-                onClick={() => setMobileOpen(false)}
+                onClick={closeMobileMenu}
                 className={cn(
                   "block px-3 py-2.5 text-sm font-semibold rounded-md text-center",
                   "bg-[var(--color-primary)] text-white",
