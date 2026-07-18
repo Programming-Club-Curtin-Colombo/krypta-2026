@@ -12,7 +12,7 @@ const FAQS = [
   },
   {
     question: "When is KRYPTA 2026 taking place?",
-    answer: "Registration opens in September 2026. The primary rounds start on November 1, 2026, and the finals will be held from November 25-30, 2026 at Curtin University Colombo.",
+    answer: "Registration opens September 1st, 2026 and closes September 30th, 2026. The finals will be held November 28-29, 2026 at Curtin University Colombo.",
   },
   {
     question: "Who can participate in KRYPTA 2026?",
@@ -20,19 +20,19 @@ const FAQS = [
   },
   {
     question: "What are the competition tracks?",
-    answer: "KRYPTA 2026 features two main tracks: Buildathon (product-building competition with 50 teams cap) and Capture The Flag (CTF) cybersecurity competition with 25 teams cap. The Buildathon also includes a special section for school students (10 teams cap).",
+    answer: "KRYPTA 2026 features three tracks: Buildathon (product-building competition with 45 teams cap), Capture The Flag (CTF) cybersecurity competition with 20 teams cap), and a School Students section (10 teams cap).",
   },
   {
     question: "What is the team size for each track?",
-    answer: "All tracks require teams of 2-5 members. Participants must form their own teams before registration.",
+    answer: "All tracks require teams of 3-4 members. Participants must form their own teams before registration.",
   },
   {
     question: "Where will the competition be held?",
-    answer: "The finals will be held on-site at Curtin University Colombo, Nawam Mawatha, Colombo, Sri Lanka. Preliminary rounds will be conducted online.",
+    answer: "The finals will be held on-site at Curtin University Colombo, Nawam Mawatha, Colombo, Sri Lanka. {/* Preliminary rounds will be conducted online. */}",
   },
   {
     question: "How do I register for KRYPTA 2026?",
-    answer: "Registration opens in September 2026 through the official website. You will need to form a team (2-5 members), select your track, provide eligibility verification, and consent to the terms and conditions.",
+    answer: "Registration opens September 1st, 2026 through the official website and will be open throughout September. You will need to form a team (3-4 members), select your track, provide eligibility verification, and consent to the terms and conditions.",
   },
   {
     question: "Is there a registration fee?",

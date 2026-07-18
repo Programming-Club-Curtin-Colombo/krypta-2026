@@ -81,8 +81,10 @@ export function CompetitionFocusSection() {
             From problem to <span className="gradient-text">podium.</span>
           </h2>
           <p className="mt-4 text-base text-[var(--color-foreground-muted)]">
-            Every KRYPTA team follows a structured development process -
-            mirroring how professional teams tackle real-world challenges.
+            Every KRYPTA team follows a structured process - mirroring how
+            professional teams tackle real-world challenges. The framework below
+            primarily applies to the Buildathon track, while CTF participants focus
+            on problem-solving through the Identify, Design, Build, and Test phases.
           </p>
         </AnimatedSection>
 

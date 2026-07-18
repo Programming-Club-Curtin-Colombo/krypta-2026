@@ -25,6 +25,10 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Security - PEM keys
+*.pem
+admin-key.pem
+
 # IDEs
 .vscode/
 !.vscode/extensions.json

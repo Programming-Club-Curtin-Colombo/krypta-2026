@@ -7,10 +7,12 @@ import {
   CONSENT_VERSION,
   DEFAULT_CONSENT,
 } from "@/lib/cookie-consent";
+import { CONSENT_REQUIRED_COOKIE } from "@/lib/geolocation";
 
 interface CookieConsentContextValue {
   consent: CookieConsent;
   hasDecided: boolean;
+  consentRequired: boolean | null;
   acceptAll: () => void;
   rejectNonEssential: () => void;
   updateConsent: (consent: Partial<CookieConsent>) => void;
@@ -25,21 +27,45 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
   const [consent, setConsent] = useState<CookieConsent>(DEFAULT_CONSENT);
   const [hasDecided, setHasDecided] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [consentRequired, setConsentRequired] = useState<boolean | null>(null);
 
   // Load consent from cookies on mount
   useEffect(() => {
     const loadConsent = () => {
       try {
-        const cookieValue = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith(`${CONSENT_COOKIE_NAME}=`));
+        // Parse cookies once to avoid repeated split() operations
+        const cookies: Record<string, string> = {};
+        document.cookie.split("; ").forEach((cookie) => {
+          const [key, value] = cookie.split("=");
+          if (key && value) {
+            cookies[key] = value;
+          }
+        });
+
+        // Check if consent is required based on geolocation
+        const isConsentRequired = cookies[CONSENT_REQUIRED_COOKIE] === "true" || !cookies[CONSENT_REQUIRED_COOKIE];
+        setConsentRequired(isConsentRequired);
+
+        // Debug logging in development to verify geolocation detection
+        if (process.env.NODE_ENV === "development") {
+          console.log("[CookieConsent] Geolocation debug:", {
+            visitorCountry: cookies["visitor-country"],
+            consentRequired: isConsentRequired,
+          });
+        }
+
+        // Load user's consent decision
+        const cookieValue = cookies[CONSENT_COOKIE_NAME];
 
         if (cookieValue) {
-          const value = cookieValue.split("=")[1];
-          if (!value) {
-            throw new Error("Invalid cookie format");
+          const value = cookieValue;
+          if (!value || value.trim() === "") {
+            throw new Error("Invalid cookie format: empty value");
           }
           const decoded = decodeURIComponent(value);
+          if (!decoded || decoded.trim() === "") {
+            throw new Error("Invalid cookie format: empty decoded value");
+          }
           const savedConsent = JSON.parse(decoded) as CookieConsent;
 
           // Check if consent version matches current version
@@ -51,6 +77,16 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
             setConsent(DEFAULT_CONSENT);
             setHasDecided(false);
           }
+        } else if (!isConsentRequired) {
+          // If consent is not required and user hasn't decided, auto-accept analytics
+          const autoConsent: CookieConsent = {
+            essential: true,
+            analytics: true,
+            version: CONSENT_VERSION,
+            timestamp: Date.now(),
+          };
+          setConsent(autoConsent);
+          setHasDecided(true);
         }
       } catch (error) {
         console.error("Failed to load cookie consent:", error);
@@ -117,6 +153,7 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
       value={{
         consent,
         hasDecided,
+        consentRequired,
         acceptAll,
         rejectNonEssential,
         updateConsent,

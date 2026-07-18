@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X, Linkedin, Instagram, Mail } from "lucide-react";
 import Image from "next/image";
@@ -10,9 +10,7 @@ import { cn } from "@/lib/utils";
 const NAV_LINKS = [
   { label: "About", href: "/#about" },
   { label: "Tracks", href: "/tracks" },
-  { label: "What to Expect", href: "/#what-to-expect" },
   { label: "Timeline", href: "/#timeline" },
-  { label: "Organized By", href: "/#organized-by" },
 ];
 
 const SOCIAL_LINKS = [
@@ -36,6 +34,7 @@ const SOCIAL_LINKS = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const gradientRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -74,14 +73,46 @@ export function Navbar() {
             aria-label="KRYPTA 2026 - Home"
           >
             <Image
-              src="/logo/krypta-logo.png"
+              src="/favicon-32x32.png"
               alt="KRYPTA 2026 Logo"
-              width={140}
-              height={35}
-              className="h-8 w-auto"
+              width={32}
+              height={32}
+              className="h-8 w-8"
               priority
               loading="eager"
             />
+            <span
+              className="text-2xl font-bold text-[var(--color-foreground)] relative overflow-hidden"
+              style={{
+                fontFamily: "var(--font-display)",
+              }}
+              onMouseEnter={() => {
+                if (gradientRef.current) {
+                  gradientRef.current.style.backgroundPosition = "0 0";
+                  gradientRef.current.style.opacity = "1";
+                }
+              }}
+              onMouseLeave={() => {
+                if (gradientRef.current) {
+                  gradientRef.current.style.backgroundPosition = "100% 0";
+                  gradientRef.current.style.opacity = "0";
+                }
+              }}
+            >
+              <span
+                ref={gradientRef}
+                className="gradient-text absolute inset-0 bg-clip-text text-transparent transition-all duration-500 ease-out"
+                style={{
+                  backgroundImage: "linear-gradient(to right, #4f46e5, #8b5cf6, #ec4899)",
+                  backgroundSize: "200% 100%",
+                  backgroundPosition: "100% 0",
+                  opacity: 0,
+                }}
+              >
+                KRYPTA
+              </span>
+              <span className="relative z-10">KRYPTA</span>
+            </span>
           </Link>
 
           {/* Desktop nav */}
