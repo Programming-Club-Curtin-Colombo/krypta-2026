@@ -3,7 +3,7 @@
 // admin panel's log viewer. All application logs are stored in memory and
 // accessible via the admin dashboard.
 
-import { addLog as addSystemLog } from "@/app/api/admin/system-logs/route";
+import { addLog as addSystemLog } from "@/lib/system-logs";
 
 export type LogLevel = "info" | "warn" | "error";
 
