@@ -60,6 +60,8 @@ export function Footer() {
                 width={32}
                 height={32}
                 className="h-8 w-8"
+                priority
+                loading="eager"
               />
             </Link>
             <p className="text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-xs mb-6">

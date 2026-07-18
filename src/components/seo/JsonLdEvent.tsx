@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 interface JsonLdEventProps {
   name: string;
   startDate: string;
@@ -73,7 +75,8 @@ export function JsonLdEvent({
   };
 
   return (
-    <script
+    <Script
+      id={`json-ld-event-${name.replace(/\s+/g, "-").toLowerCase()}`}
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />

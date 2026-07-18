@@ -19,10 +19,8 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="bg-gray-50 dark:bg-gray-900">
-        {children}
-      </body>
-    </html>
+    <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 ${inter.variable}`}>
+      {children}
+    </div>
   );
 }

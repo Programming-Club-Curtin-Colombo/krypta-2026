@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 interface JsonLdOrganizationProps {
   name: string;
   url: string;
@@ -35,7 +37,8 @@ export function JsonLdOrganization({
   };
 
   return (
-    <script
+    <Script
+      id="json-ld-organization"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />
