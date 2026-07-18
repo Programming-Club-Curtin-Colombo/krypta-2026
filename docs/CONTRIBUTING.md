@@ -130,4 +130,4 @@ Every PR triggers the Standard CI Pipeline defined in [`.github/workflows/ci.yml
 
 ## Code of Conduct
 
-All contributors are expected to be respectful and professional in every interaction - in issues, PRs, and commit messages. Harassment of any kind will not be tolerated.
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.

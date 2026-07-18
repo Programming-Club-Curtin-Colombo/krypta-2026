@@ -61,7 +61,8 @@
       ]
     ],
     "publicFiles": [
-      "docs/CONTRIBUTING.md"
+      "docs/CONTRIBUTING.md",
+      "docs/CODE_OF_CONDUCT.md"
     ],
     "publicAnyOfFiles": [
       [

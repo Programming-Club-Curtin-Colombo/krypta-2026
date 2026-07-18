@@ -201,7 +201,13 @@ The following pages are planned for future expansion. The sitemap already contai
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for branch naming, commit format, local check commands, and the PR checklist.
+See [CONTRIBUTING.md](./docs/CONTRIBUTING.md) for branch naming, commit format, local check commands, and the PR checklist.
+
+---
+
+## Community Guidelines
+
+We want KRYPTA 2026 to be a safe and welcoming environment for everyone. Please read and adhere to our [Code of Conduct](./docs/CODE_OF_CONDUCT.md).
 
 ---
 
