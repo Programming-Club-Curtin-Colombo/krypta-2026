@@ -47,7 +47,7 @@
       ".gitignore",
       ".governance.json",
       "README.md",
-      "ARCHITECTURE.md",
+      "docs/ARCHITECTURE.md",
       ".github/ISSUE_TEMPLATE/config.yml"
     ],
     "anyOfFiles": [
@@ -61,7 +61,7 @@
       ]
     ],
     "publicFiles": [
-      "CONTRIBUTING.md"
+      "docs/CONTRIBUTING.md"
     ],
     "publicAnyOfFiles": [
       [

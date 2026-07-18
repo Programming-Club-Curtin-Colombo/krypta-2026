@@ -106,61 +106,64 @@ export function TimelineSection() {
             aria-hidden="true"
           />
 
-          {MILESTONES.map((milestone, index) => (
-            <li key={milestone.title}>
-              <AnimatedSection
-                delay={index * 0.1}
-                className="relative flex items-start gap-6 sm:gap-8 h-24 sm:h-28"
-              >
-                {/* Node */}
-                <div
-                  className={cn(
-                    "relative z-10 flex h-12 w-12 sm:h-14 sm:w-14 flex-shrink-0 items-center justify-center rounded-2xl",
-                    "border-2 bg-[var(--color-card)]",
-                    index === 0
-                      ? "border-[var(--color-primary)] shadow-[0_0_20px_rgba(79,70,229,0.3)]"
-                      : "border-[var(--color-border)]"
-                  )}
-                  aria-hidden="true"
+          {MILESTONES.map((milestone, index) => {
+            const isFirst = index === 0;
+            return (
+              <li key={milestone.title}>
+                <AnimatedSection
+                  delay={index * 0.1}
+                  className="relative flex items-start gap-6 sm:gap-8 h-24 sm:h-28"
                 >
-                  <milestone.icon
+                  {/* Node */}
+                  <div
                     className={cn(
-                      "h-5 w-5 sm:h-6 sm:w-6",
-                      index === 0
-                        ? "text-[var(--color-primary)]"
-                        : "text-[var(--color-foreground-subtle)]"
+                      "relative z-10 flex h-12 w-12 sm:h-14 sm:w-14 flex-shrink-0 items-center justify-center rounded-2xl",
+                      "border-2 bg-[var(--color-card)]",
+                      isFirst
+                        ? "border-[var(--color-primary)] shadow-[0_0_20px_rgba(79,70,229,0.3)]"
+                        : "border-[var(--color-border)]"
                     )}
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="flex flex-col justify-center gap-1.5 min-h-[3.5rem]">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <h3
-                      className="text-base sm:text-lg font-bold text-[var(--color-foreground)]"
-                      style={{ fontFamily: "var(--font-display)" }}
-                    >
-                      {milestone.title}
-                    </h3>
-                    <span
+                    aria-hidden="true"
+                  >
+                    <milestone.icon
                       className={cn(
-                        "inline-block px-2 py-0.5 rounded-md text-xs font-medium",
-                        index === 0
-                          ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
-                          : "bg-[var(--color-surface-2)] text-[var(--color-foreground-muted)]"
+                        "h-5 w-5 sm:h-6 sm:w-6",
+                        isFirst
+                          ? "text-[var(--color-primary)]"
+                          : "text-[var(--color-foreground-subtle)]"
                       )}
-                      aria-label={`Status: ${STATUS_LABELS[milestone.status]}`}
-                    >
-                      {milestone.date} · {STATUS_LABELS[milestone.status]}
-                    </span>
+                    />
                   </div>
-                  <p className="text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-lg">
-                    {milestone.description}
-                  </p>
-                </div>
-              </AnimatedSection>
-            </li>
-          ))}
+
+                  {/* Content */}
+                  <div className="flex flex-col justify-center gap-1.5 min-h-[3.5rem]">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <h3
+                        className="text-base sm:text-lg font-bold text-[var(--color-foreground)]"
+                        style={{ fontFamily: "var(--font-display)" }}
+                      >
+                        {milestone.title}
+                      </h3>
+                      <span
+                        className={cn(
+                          "inline-block px-2 py-0.5 rounded-md text-xs font-medium",
+                          isFirst
+                            ? "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
+                            : "bg-[var(--color-surface-2)] text-[var(--color-foreground-muted)]"
+                        )}
+                        aria-label={`Status: ${STATUS_LABELS[milestone.status]}`}
+                      >
+                        {milestone.date} · {STATUS_LABELS[milestone.status]}
+                      </span>
+                    </div>
+                    <p className="text-sm text-[var(--color-foreground-muted)] leading-relaxed max-w-lg">
+                      {milestone.description}
+                    </p>
+                  </div>
+                </AnimatedSection>
+              </li>
+            );
+          })}
         </ol>
       </div>
     </section>

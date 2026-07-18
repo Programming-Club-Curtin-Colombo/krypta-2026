@@ -36,12 +36,12 @@ export default function AdminPage() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isPolling, setIsPolling] = useState(false);
+  const isPolling = useRef(false);
   const hasFetchedInitial = useRef(false);
 
   const fetchMetrics = useCallback(async () => {
-    if (isPolling) return; // Prevent concurrent requests
-    setIsPolling(true);
+    if (isPolling.current) return; // Prevent concurrent requests
+    isPolling.current = true;
 
     try {
       const response = await fetch("/api/admin/metrics");
@@ -52,9 +52,9 @@ export default function AdminPage() {
     } catch (err) {
       console.error("Failed to fetch metrics:", err);
     } finally {
-      setIsPolling(false);
+      isPolling.current = false;
     }
-  }, [isPolling]);
+  }, []);
 
   const fetchLogs = useCallback(async () => {
     try {
@@ -115,13 +115,13 @@ export default function AdminPage() {
     }
 
     const interval = setInterval(() => {
-      if (isAuthenticated && !isPolling) {
+      if (isAuthenticated && !isPolling.current) {
         fetchMetrics();
       }
     }, 30000); // Update metrics every 30 seconds (reduced from 10s to save resources)
 
     return () => clearInterval(interval);
-  }, [isAuthenticated, isPolling, fetchMetrics, fetchLogs]);
+  }, [isAuthenticated, fetchMetrics, fetchLogs]);
 
   if (!isAuthenticated) {
     return (

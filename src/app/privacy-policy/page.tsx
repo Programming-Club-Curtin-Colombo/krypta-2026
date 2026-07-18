@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { Breadcrumb } from "@/components/seo/Breadcrumb";
-import { generateMetadata } from "@/lib/metadata";
-import { SITE_URL, CONTACT_EMAIL } from "@/lib/seo-constants";
+import { Navbar, Footer } from "@/components/layout";
+import { Breadcrumb } from "@/components/seo";
+import { generateMetadata, SITE_URL, CONTACT_EMAIL } from "@/lib";
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 const EFFECTIVE_DATE = "July 11, 2025";

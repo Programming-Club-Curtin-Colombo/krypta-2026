@@ -19,32 +19,35 @@ const LOGO_PATHS = [
   "M 692.53355,498.2126 383.91104,700.25042 V 1111.4355 L 515.9099,1031.6373 513.17195,758.16219 692.84986,642.90733 Z",
 ];
 
+// ── Module-level constants ────────────────────────────────────────────────────
+// Computed once at module load — LOGO_PATHS is static and never changes.
+const TOTAL_ANIMATION_DURATION = LOGO_PATHS.length * 0.15 + 2.5;
+const FADE_OUT_DELAY = (TOTAL_ANIMATION_DURATION + 0.5) * 1000;
+const REMOVE_DELAY = (TOTAL_ANIMATION_DURATION + 0.5 + 0.8) * 1000;
+
 export function LogoLoader() {
   const [isVisible, setIsVisible] = useState(true);
   const controls = useAnimation();
 
-  // Calculate total animation duration: stagger delay + path duration
-  const totalAnimationDuration = LOGO_PATHS.length * 0.15 + 2.5;
-
   useEffect(() => {
-    // Start fade out after all paths complete + brief pause
     const fadeOutTimer = setTimeout(() => {
       controls.start({
         opacity: 0,
         transition: { duration: 0.8, ease: "easeInOut" },
       });
-    }, (totalAnimationDuration + 0.5) * 1000);
+    }, FADE_OUT_DELAY);
 
-    // Remove from DOM after fade out completes
     const removeTimer = setTimeout(() => {
       setIsVisible(false);
-    }, (totalAnimationDuration + 0.5 + 0.8) * 1000);
+    }, REMOVE_DELAY);
 
     return () => {
       clearTimeout(fadeOutTimer);
       clearTimeout(removeTimer);
     };
-  }, [controls, totalAnimationDuration]);
+    // controls is a stable object from useAnimation — it never changes reference.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!isVisible) {
     return null;

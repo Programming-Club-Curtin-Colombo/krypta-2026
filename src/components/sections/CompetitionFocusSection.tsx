@@ -57,6 +57,12 @@ const PROCESS_STEPS = [
   },
 ];
 
+// ── Shared animation configurations ──────────────────────────────────────────
+const HOVER_EVEN = { x: -4 };
+const HOVER_ODD = { x: 4 };
+const HOVER_ICON_MOBILE = { scale: 1.1, rotate: 5 };
+const HOVER_ICON_DESKTOP = { scale: 1.15, rotate: 10 };
+
 export function CompetitionFocusSection() {
   return (
     <section
@@ -114,7 +120,7 @@ export function CompetitionFocusSection() {
                   >
                     {/* Content - alternates sides on desktop */}
                     <motion.div
-                      whileHover={{ x: isEven ? -4 : 4 }}
+                      whileHover={isEven ? HOVER_EVEN : HOVER_ODD}
                       transition={{ duration: 0.2 }}
                       className={cn(
                         "flex flex-row lg:flex-col gap-5 lg:gap-1.5 items-start",
@@ -125,7 +131,7 @@ export function CompetitionFocusSection() {
                     >
                       {/* Mobile Icon */}
                       <motion.div
-                        whileHover={{ scale: 1.1, rotate: 5 }}
+                        whileHover={HOVER_ICON_MOBILE}
                         transition={{ duration: 0.2 }}
                         className="lg:hidden flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20"
                         aria-hidden="true"
@@ -165,7 +171,7 @@ export function CompetitionFocusSection() {
 
                     {/* Desktop Center Icon */}
                     <motion.div
-                      whileHover={{ scale: 1.15, rotate: 10 }}
+                      whileHover={HOVER_ICON_DESKTOP}
                       transition={{ duration: 0.3 }}
                       className={cn(
                         "hidden lg:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2",

@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 interface FAQItem {
   question: string;
   answer: string;
@@ -22,7 +24,8 @@ export function JsonLdFAQPage({ faqs }: JsonLdFAQPageProps) {
   };
 
   return (
-    <script
+    <Script
+      id="json-ld-faq"
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
     />

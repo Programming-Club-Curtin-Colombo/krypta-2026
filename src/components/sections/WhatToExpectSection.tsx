@@ -65,6 +65,10 @@ const FEATURES = [
   },
 ];
 
+// ── Shared animation configurations ──────────────────────────────────────────
+const HOVER_CARD = { y: -4, scale: 1.02 };
+const HOVER_ICON = { rotate: 360, scale: 1.1 };
+
 export function WhatToExpectSection() {
   return (
     <section
@@ -103,7 +107,7 @@ export function WhatToExpectSection() {
               role="listitem"
             >
               <motion.article
-                whileHover={{ y: -4, scale: 1.02 }}
+                whileHover={HOVER_CARD}
                 transition={{ duration: 0.2 }}
                 className={cn(
                   "group h-full flex flex-col gap-4 p-6 rounded-2xl",
@@ -115,7 +119,7 @@ export function WhatToExpectSection() {
                 aria-label={feature.title}
               >
                 <motion.div
-                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  whileHover={HOVER_ICON}
                   transition={{ duration: 0.4 }}
                   className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 group-hover:bg-[var(--color-primary)]/20 transition-colors duration-200"
                   aria-hidden="true"

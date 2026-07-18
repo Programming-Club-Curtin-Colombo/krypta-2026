@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import { Blocks, Clock3, MapPin, Users } from "lucide-react";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { Breadcrumb } from "@/components/seo/Breadcrumb";
-import { JsonLdEvent } from "@/components/seo/JsonLdEvent";
-import { generateMetadata } from "@/lib/metadata";
-import { EVENT_INFO, TRACKS, KEY_DATES } from "@/lib/seo-constants";
+import { Navbar, Footer } from "@/components/layout";
+import { Breadcrumb, JsonLdEvent } from "@/components/seo";
+import { generateMetadata, EVENT_INFO, TRACKS, KEY_DATES } from "@/lib";
 
 export const metadata: Metadata = generateMetadata({
   title: "Buildathon Track",
