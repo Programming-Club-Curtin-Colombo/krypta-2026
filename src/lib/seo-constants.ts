@@ -7,7 +7,7 @@ export const CONTACT_EMAIL = "krypta.pc.cuc@gmail.com";
 export const ORGANIZATION = {
   name: "Programming Club - Curtin University Colombo",
   url: SITE_URL,
-  description: "The Programming Club of Curtin University Colombo organizes technical competitions, hackathons, and educational events for students.",
+  description: "The Programming Club of Curtin University Colombo organizes technical competitions, tech arenas, and educational events for students.",
   contactPoint: {
     email: CONTACT_EMAIL,
     contactType: "customer service",
@@ -27,7 +27,7 @@ export const EVENT_INFO = {
       addressCountry: "LK",
     },
   },
-  description: "KRYPTA 2026 is a multi-track competition featuring Buildathon and CTF tracks for university and school students.",
+  description: "KRYPTA 2026 is a multi-track tech arena featuring Buildathon, Capture The Flag (CTF), and School Students Hackathon tracks for university and school students.",
   url: SITE_URL,
   organizer: {
     name: ORGANIZATION.name,
