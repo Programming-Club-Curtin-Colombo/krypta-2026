@@ -33,38 +33,33 @@ export function CookieConsentProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const loadConsent = () => {
       try {
+        // Parse cookies once to avoid repeated split() operations
+        const cookies: Record<string, string> = {};
+        document.cookie.split("; ").forEach((cookie) => {
+          const [key, value] = cookie.split("=");
+          if (key && value) {
+            cookies[key] = value;
+          }
+        });
+
         // Check if consent is required based on geolocation
-        const consentRequiredCookie = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith(`${CONSENT_REQUIRED_COOKIE}=`));
-
-        const isConsentRequired = consentRequiredCookie
-          ? consentRequiredCookie.split("=")[1] === "true"
-          : true; // Default to requiring consent if cookie is missing
-
+        const isConsentRequired = cookies[CONSENT_REQUIRED_COOKIE] === "true" || !cookies[CONSENT_REQUIRED_COOKIE];
         setConsentRequired(isConsentRequired);
 
         // Debug logging in development to verify geolocation detection
-        // This helps confirm the middleware is setting cookies correctly
-        // and the banner behavior matches the detected country
         if (process.env.NODE_ENV === "development") {
           console.log("[CookieConsent] Geolocation debug:", {
-            consentRequiredCookie: consentRequiredCookie?.split("=")[1],
+            consentRequiredCookie: cookies[CONSENT_REQUIRED_COOKIE],
             isConsentRequired,
-            visitorCountry: document.cookie
-              .split("; ")
-              .find((row) => row.startsWith("visitor-country="))
-              ?.split("=")[1],
+            visitorCountry: cookies["visitor-country"],
           });
         }
 
         // Load user's consent decision
-        const cookieValue = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith(`${CONSENT_COOKIE_NAME}=`));
+        const cookieValue = cookies[CONSENT_COOKIE_NAME];
 
         if (cookieValue) {
-          const value = cookieValue.split("=")[1];
+          const value = cookieValue;
           if (!value || value.trim() === "") {
             throw new Error("Invalid cookie format: empty value");
           }

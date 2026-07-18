@@ -23,9 +23,12 @@ export function AnalyticsLoader() {
         "_fbc",
       ];
 
+      const hostname = window.location.hostname;
+      const domain = hostname.startsWith(".") ? hostname : `.${hostname}`;
+
       analyticsCookies.forEach((cookie) => {
-        document.cookie = `${cookie}=; max-age=0; path=/; domain=${window.location.hostname}`;
-        document.cookie = `${cookie}=; max-age=0; path=/; domain=.${window.location.hostname}`;
+        document.cookie = `${cookie}=; max-age=0; path=/; domain=${hostname}`;
+        document.cookie = `${cookie}=; max-age=0; path=/; domain=${domain}`;
       });
     }
   }, [consent.analytics]);
